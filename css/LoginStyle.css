@@ -3,34 +3,34 @@ body {
     padding: 0;
     background-color: #2e2e2e;
     font-family: Arial, sans-serif;
-}
-.login-container {
+    }
+    .login-container {
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.login-box {
+    }
+    .login-box {
     background-color: #f1f1f1;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 300px;
-}
-h2 {
+    }
+    h2 {
     margin-bottom: 20px;
-}
-input[type="text"], input[type="password"] {
+    }
+    input[type="text"], input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-}
-input[type="submit"] {
+    }
+    input[type="submit"] {
     background-color: #333;
     color: white;
     padding: 10px;
@@ -39,11 +39,11 @@ input[type="submit"] {
     width: 100%;
     cursor: pointer;
     margin-top: 10px;
-}
-input[type="submit"]:hover {
+    }
+    input[type="submit"]:hover {
     background-color: #555;
-}
-.error {
+    }
+    .error {
     color: red;
     margin-top: 10px;
-}
+    }
