@@ -1,0 +1,157 @@
+/* Basic styling for the sidebar */
+.sidebar {
+    background-color: #61009F; /* Purple background */
+    width: 250px;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 18px;
+    color: white;
+    text-align: center;
+}
+
+/* Sidebar link styles */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    color: #FCFCFC; /* White text */
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.sidebar-link i {
+    margin-right: 10px;
+}
+
+/* Active state */
+.sidebar-link.active {
+    background-color: #4A0066 !important; /* Darker purple */
+    color: #FFFFFF !important; /* White text */
+}
+
+/* Hover state */
+.sidebar-link:hover {
+    background-color: #4A0066 !important; /* Same color as active */
+    color: #FFFFFF !important; /* White text */
+}
+
+/* Dropdown button (Documents) styling to match other links */
+.dropdown .sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    color: #FCFCFC; /* White text */
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown .sidebar-link.active {
+    background-color: #4A0066 !important; /* Darker purple for active */
+    color: #FFFFFF !important;
+}
+
+.dropdown .sidebar-link:hover {
+    background-color: #4A0066 !important; /* Ensure hover matches active */
+    color: #FFFFFF !important;
+}
+
+.dropdown .sidebar-link i {
+    margin-right: 10px;
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    flex-direction: column;
+    padding-left: 20px;
+    margin-top: 10px;
+    background-color: #7A00CC; /* Slightly darker purple */
+    border-radius: 5px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+}
+
+/* Dropdown items */
+.dropdown .dropdown-item {
+    padding: 10px;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px 0;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown .dropdown-item:hover {
+    background-color: #50008A !important; /* Slightly darker on hover */
+    color: #FFFFFF !important;
+}
+
+.dropdown .dropdown-item.active {
+    background-color: #4A0066 !important; /* Same active color */
+    color: #FFFFFF !important;
+}
+
+/* Hover and active state for dropdown items */
+.dropdown-content .dropdown-item:hover {
+    background-color: #50008A !important; /* Darker on hover */
+}
+
+.dropdown-content .dropdown-item.active {
+    background-color: #4A0066 !important;
+    color: #FFFFFF !important;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar-link {
+        justify-content: center;
+    }
+
+    .logo-section {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+}
