@@ -6,13 +6,12 @@
     <title></title>
     <link rel="stylesheet" href="css/Sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 <body>
 <div class="sidebar">
     <div class="logo-section">
-        <img src="path-to-your-logo.png" alt="Logo" class="logo">
-        <h2>Barangay Post Proper Southside Barangay Information System</h2>
+        <img src="assets/Southside.png" alt="Logo" class="logo">
+            <h3>Barangay Post Proper Southside Information System</h3>
     </div>
 
     <?php
@@ -37,7 +36,7 @@
     <!-- Dropdown for Documents -->
     <div class="dropdown">
         <button class="sidebar-link dropdown-toggle <?= in_array($current_page, ['barangayclearance.php', 'barangayId.php', 'certificateofIndigency.php', 'barangaycertificate.php']) ? 'active' : '' ?>">
-            <i class="fas fa-folder"></i> Documents
+            <i class="fas fa-folder"></i>Documents      <p style="visibility :hidden;">..................</p><i class="fa-solid fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
             <a class="dropdown-item <?= $current_page == 'barangayclearance.php' ? 'active' : '' ?>" href="barangayclearance.php">
