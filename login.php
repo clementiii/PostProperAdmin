@@ -31,14 +31,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
+<div class = "logo-container">
+    <div class = "logo-section">
+        <img src="assets/Southside.png" alt="Logo">
+        <h1>Post Proper Southside</h1>
+    </div>
+</div>
+
 <div class="login-container">
     <div class="login-box">
         <h2>ADMIN</h2>
-        <form action="" method="post">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="submit" value="Login">
+        <form action="" method="POST">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit">Login</button>
         </form>
+
         <?php
         if (isset($error)) {
             echo '<p class="error">' . $error . '</p>';

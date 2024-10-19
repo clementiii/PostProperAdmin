@@ -10,6 +10,7 @@
             font-family: 'Poppins';
             src: url(assets/Poppins/Poppins-Bold.ttf);
         }
+        
         * {
             margin: 0;
             padding: 0;
