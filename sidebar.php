@@ -28,32 +28,20 @@
         <i class="fas fa-users"></i> Admin Staff
     </a>
 
+    <!-- Users link -->
+    <a href="users.php" class="sidebar-link <?= $current_page == 'users.php' ? 'active' : '' ?>">
+    <i class="fa-solid fa-user"></i> Users
+    </a>
+
     <!-- Announcement link -->
     <a href="announcement.php" class="sidebar-link <?= $current_page == 'announcement.php' ? 'active' : '' ?>">
         <i class="fas fa-bullhorn"></i> Announcement
     </a>
 
-    <!-- Dropdown for Documents -->
-    <div class="dropdown">
-        <button class="sidebar-link dropdown-toggle <?= in_array($current_page, ['barangayclearance.php', 'barangayId.php', 'certificateofIndigency.php', 'barangaycertificate.php']) ? 'active' : '' ?>">
-            <i class="fas fa-folder"></i>Documents      <p style="visibility :hidden;">..................</p><i class="fa-solid fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a class="dropdown-item <?= $current_page == 'barangayclearance.php' ? 'active' : '' ?>" href="barangayclearance.php">
-                <i class="fas fa-file-alt"></i> Barangay Clearance
-            </a>
-            <a class="dropdown-item <?= $current_page == 'barangayId.php' ? 'active' : '' ?>" href="barangayId.php">
-                <i class="fas fa-id-card"></i> Barangay ID
-            </a>
-            <a class="dropdown-item <?= $current_page == 'certificateofIndigency.php' ? 'active' : '' ?>" href="certificateofIndigency.php">
-                <i class="fas fa-certificate"></i> Certificate of Indigency
-            </a>
-            <a class="dropdown-item <?= $current_page == 'barangaycertificate.php' ? 'active' : '' ?>" href="barangaycertificate.php">
-                <i class="fas fa-award"></i> Barangay Certificate
-            </a>
-        </div>
-    </div>
-
+    <!-- Documents link-->
+    <a href="documents.php" class="sidebar-link <?= $current_page == 'documents.php' ? 'active' : '' ?>">
+        <i class="fas fa-folder"></i>Documents
+    </a>
     <!-- Reports link -->
     <a href="reports.php" class="sidebar-link <?= $current_page == 'reports.php' ? 'active' : '' ?>">
         <i class="fas fa-flag"></i> Reports
