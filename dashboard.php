@@ -13,11 +13,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
-
     <title>Barangay Post Proper Southside Barangay Information System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/DashboardStyle.css">
 </head>
 <body>
@@ -28,10 +28,103 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <img src="assets/mckinley.jpg" alt="city">
 </div>
 
-
-
-
-
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Welcome, Admin Joyce Madrigal</h1>
+    
+    <!-- Summary Cards -->
+    <div class="row text-center mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Registered Residents</h5>
+                    <h3 class="card-text">
+                        <!-- PHP to fetch data -->
+                        <?php // echo $registeredResidents; ?>
+                        555
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Document Requests</h5>
+                    <h3 class="card-text">
+                        <!-- PHP to fetch data -->
+                        <?php // echo $documentRequests; ?>
+                        125
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Incident Reports</h5>
+                    <h3 class="card-text">
+                        <!-- PHP to fetch data -->
+                        <?php // echo $incidentReports; ?>
+                        67
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scrollable Transactions Table -->
+    <div class="card">
+        <div class="card-header">
+            Recent Document Requests
+        </div>
+        <div class="table-container">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Name</th>
+                        <th>Document Type</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Date Requested</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- PHP to fetch data -->
+                    <?php // foreach ($transactions as $transaction): ?>
+                    <tr>
+                        <td>TXN-20230927</td>
+                        <td>Robert Youngstown</td>
+                        <td>Barangay Clearance</td>
+                        <td>2</td>
+                        <td>100.00</td>
+                        <td>10/12/2024</td>
+                        <td><a href="#" class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>TXN-20230928</td>
+                        <td>Angelica Santos</td>
+                        <td>Barangay Certificate</td>
+                        <td>2</td>
+                        <td>100.00</td>
+                        <td>10/11/2024</td>
+                        <td><a href="#" class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>TXN-20230929</td>
+                        <td>Maria Gonzales</td>
+                        <td>Certificate of Indigency</td>
+                        <td>1</td>
+                        <td>60.00</td>
+                        <td>10/10/2024</td>
+                        <td><a href="#" class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;">View</a></td>
+                    </tr>
+                    <!-- <?php // endforeach; ?> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
