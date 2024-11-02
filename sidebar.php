@@ -11,7 +11,7 @@
 <div class="sidebar">
     <div class="logo-section">
         <img src="assets/Southside.png" alt="Logo" class="logo">
-            <h3 class="sidebar-title">Barangay Post Proper Southside Information System</h3>
+            <h3 class="sidebar-title">Post Proper Southside</h3>
     </div>
 
     <?php
@@ -30,7 +30,7 @@
 
     <!-- Users link -->
     <a href="users.php" class="sidebar-link <?= $current_page == 'users.php' ? 'active' : '' ?>">
-    <i class="fa-solid fa-user"></i> Users
+    <i class="fa-solid fa-user"></i> Users Account
     </a>
 
     <!-- Announcement link -->
@@ -53,8 +53,8 @@
     </a>
 
     <!-- Logout link -->
-    <a href="logout.php" class="sidebar-link <?= $current_page == 'logout.php' ? 'active' : '' ?>">
-        <i class="fas fa-sign-out-alt"></i> Logout
+    <a href="logout.php" class="btn-logout <?= $current_page == 'logout.php' ? 'active' : '' ?>">
+        <i class="fas fa-sign-out-alt"></i> Log Out
     </a>
 </div>
 

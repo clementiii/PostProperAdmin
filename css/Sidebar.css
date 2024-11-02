@@ -1,41 +1,42 @@
 /* Basic styling for the sidebar */
 .sidebar {
-    background-color: #61009F; /* Purple background */
+    background-color: #3f0070; /* Purple background */
     width: 250px;
     height: 100vh;
     padding: 20px;
-    position: fixed;
+    position: fixed; /* Keeps the sidebar fixed on the side */
     top: 0;
     left: 0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     font-family: 'Poppins', sans-serif;
+    overflow-y: auto; /* Allows sidebar to scroll on smaller screens */
+    transition: width 0.3s ease; /* Smooth transition for width change */
+    z-index: 1000; /* Ensures the sidebar stays on top */
 }
 
 /* Ensuring consistent font size for the sidebar title */
 .sidebar-title {
     font-size: 18px !important; /* Adjust size as desired */
     color: white;
-    text-align: center;
+    text-align: left;
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    padding: 10px 0;
+    padding: 20px 0;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .logo-section {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    background-color: #6f05b1; /* Lighter violet background */
-    padding: 10px;
+    margin-bottom: 3rem;
+    padding: 0;
     border-radius: 7px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for the box */
 }
 
 .logo {
     width: 80px;
     height: 80px;
-    margin-right: 15px;
+    margin-right: 10px;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for the logo */
     object-fit: cover; /* Ensures the image fits within the circle */
@@ -64,7 +65,8 @@ h3 {
     transition: background-color 0.3s ease, color 0.3s ease;
     cursor: pointer;
     font: 'Poppins', sans-serif;
-    font-size: 16px;
+    font-size: 20px;
+    white-space: nowrap; /* Prevents wrapping */
 }
 
 .sidebar-link i {
@@ -73,33 +75,67 @@ h3 {
 
 /* Active state */
 .sidebar-link.active {
-    background-color: #4A0066 !important; /* Darker purple */
+    background-color: #61009F !important; /* Darker purple */
     color: #FFFFFF !important; /* White text */
 }
 
 /* Hover state */
 .sidebar-link:hover {
-    background-color: #4A0066 !important; /* Same color as active */
+    background-color: #61009f !important; /* Same color as active */
     color: #FFFFFF !important; /* White text */
 }
 
-/* Responsiveness */
+/* Logout button styling */
+.btn-logout {
+    display: inline-flex;
+    margin-top: 80px;
+    margin-left: 8px;
+    align-items: left;
+    background-color: #8a2be2; /* Purple color */
+    color: #fff;
+    font-size: 16px;
+    padding: 1vh 3vh;
+    border-radius: 10px; /* Rounded corners */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Prevents wrapping */
+}
+
+.btn-log-out {
+    background-color: #8A43C5; /* Bootstrap primary color */
+    border-color: black;
+}
+
+.btn-logout:hover {
+    background-color: #61009F; /* Darker shade on hover */
+}
+
+/* Main content styling */
+.main-content {
+    padding: 20px;
+    margin-left: 270px; /* Leave space for the sidebar */
+    flex: 1;
+}
+
+.main-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #4b0082; /* Dark violet for title */
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
+    .main-content {
+        margin-left: 270px; /* Keeps the main content aligned next to sidebar */
+    }
+
+    /* Reduce sidebar width on small screens */
     .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    .sidebar-link {
-        justify-content: center;
+        width: 200px;
     }
 
-    .logo-section {
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    h2 {
-        font-size: 18px;
+    /* Adjust padding for main content */
+    .main-content {
+        padding: 15px;
     }
 }
