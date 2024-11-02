@@ -11,6 +11,7 @@ body {
     justify-content: space-around;
     margin-top: 20px;
     flex-wrap: wrap;
+    margin-left: 20px;
 }
 
 .dashboard .box {
@@ -42,6 +43,7 @@ body {
 .table-section {
     margin-top: 20px;
     overflow-x: auto;
+    margin-left: 20px;
 }
 
 table {

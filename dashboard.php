@@ -23,10 +23,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <body>
 
 <?php include 'sidebar.php'; ?> 
-
-<div class="header-section">
-    <img src="assets/mckinley.jpg" alt="city">
-</div>
+<div class="main-content">
+    <div class="header-section">
+        <img src="assets/mckinley.jpg" alt="city">
+    </div>
 
 <div class="container mt-5">
     <h1 class="text-center mb-4">Welcome, Admin Joyce Madrigal</h1>
@@ -119,9 +119,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                         <td>10/10/2024</td>
                         <td><a href="#" class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;">View</a></td>
                     </tr>
-                    <!-- <?php // endforeach; ?> -->
-                </tbody>
-            </table>
+                        <!-- <?php // endforeach; ?> -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

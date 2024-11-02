@@ -2,13 +2,19 @@
 .sidebar {
     background-color: #61009F; /* Purple background */
     width: 250px;
-    height: 100vh;
+    height: 100%;
     padding: 20px;
     position: fixed;
     top: 0;
     left: 0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     font-family: 'Poppins', sans-serif;
+    overflow-y: auto;
+}
+
+.main-content {
+    margin-left: 250px; 
+    padding: 20px;
 }
 
 .logo-section {
@@ -78,6 +84,10 @@ h3 {
         width: 100%;
         height: auto;
         position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
     }
 
     .sidebar-link {
