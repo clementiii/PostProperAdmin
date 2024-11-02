@@ -56,7 +56,7 @@
 <body>
     <div class="splash-container">
         <div class="splash-content">
-            <img src="assets/Southside.png" alt="Logo" width="200">
+            <img src="assets/Southside.png" alt="Logo" width="150">
             <h1>Post Proper Southside</h1>
         </div>
     </div>
