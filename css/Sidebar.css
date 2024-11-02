@@ -11,6 +11,17 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* Ensuring consistent font size for the sidebar title */
+.sidebar-title {
+    font-size: 18px !important; /* Adjust size as desired */
+    color: white;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 10px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 .logo-section {
     display: flex;
     align-items: center;

@@ -1,137 +1,163 @@
+/* Base styling */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
+    font-size: 20px;
     background-color: #f0f0f0;
 }
 
-/* Dashboard content */
-.dashboard {
+/* Wrapper for sidebar and main content */
+.main-container {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    margin-left: 20px;
 }
 
-.dashboard .box {
-    width: 30%;
-    background-color: #fff;
+/* Main content wrapper */
+.main-content {
+    margin-left: 250px; /* Adjust this to your sidebar width */
+}
+
+/* Dashboard container */
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 30px 0 0; /* Adjusted margin */
     padding: 20px;
-    border-radius: 10px;
+    flex-grow: 1;
+}
+
+/* Dashboard Box styling */
+.dashboard .box {
+    width: calc(33.333% - 20px); /* Three boxes per row with spacing */
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
     min-width: 250px;
-    border: 1px solid #ccc; /* Add a subtle border */
+    border: 1px solid #e0e0e0; /* Soft border */
 }
 
 .dashboard .box:hover {
-    background-color: #f5f5f5;
+    background-color: #e8e8ff; /* Light violet background on hover */
+    transform: translateY(-5px); /* Slight lift effect */
 }
 
 .dashboard .box h2 {
-    font-size: 24px; /* Increase font size for box titles */
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    color: #8e44ad; /* Violet for titles */
 }
 
 .dashboard .box p {
-    font-size: 20px; /* Increase font size for box values */
+    font-weight: bold;
+    color: #333; /* Darker text for values */
 }
 
-/* Table Section */
+/* Table Section styling */
 .table-section {
-    margin-top: 20px;
+    margin: 20px 30px 0 0; /* Account for sidebar */
+    padding: 20px;
     overflow-x: auto;
-    margin-left: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
 }
 
+/* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
     margin-top: 20px;
     table-layout: fixed;
-    border: 1px solid #ccc; /* Add a border around the table */
+    border: 1px solid #ccc;
 }
 
 th, td {
     padding: 15px;
     text-align: center;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     font-size: 16px;
 }
 
 th {
     background-color: #f2f2f2;
-    font-weight: bold; /* Make header bold */
+    color: #8e44ad; /* Violet header color */
+    font-weight: bold;
 }
 
 td {
     word-wrap: break-word;
+    color: #333;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-    }
-
-    .dashboard {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .dashboard .box {
-        width: 80%;
-        margin: 10px auto;
-    }
-
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .profile img {
-        margin-left: 0;
-        margin-top: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .table-section table {
-        font-size: 14px;
-    }
-    .header h1 {
-        font-size: 18px;
-    }
-}
-
+/* Header Section styling */
 .header-section {
-    width: 100%; /* Make the section full width */
+    width: 100%;
     height: 300px;
-    margin: 0; /* Remove margins for full-width display */
+    margin: 0;
     overflow: hidden;
     display: flex;
     justify-content: center;
 }
 
 .header-section img {
-    width: 100%; /* Make the image fill the section */
+    width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the image fills the section without distortion */
+    object-fit: cover;
 }
+
+/* Card styling */
 .card {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
 }
 
 .card-title {
     font-size: 18px;
     font-weight: bold;
+    color: #61009F;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Added shadow */
 }
 
 .card-text {
-    font-size: 24px;
-    font-weight: bold;
+    color: #fff;
+    margin-top: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 2); /* Added shadow */
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-content {
+        margin-left: 200px; /* Adjust for smaller screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 0; /* Remove left margin for smaller screens */
+    }
+    .header-section {
+        height: 200px; /* Reduce header height on smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem; /* Adjust margin for cards */
+    }
+}
+
+@media (max-width: 480px) {
+    table {
+        font-size: 14px; /* Adjust font size for smaller devices */
+    }
+    th, td {
+        padding: 10px;
+    }
 }

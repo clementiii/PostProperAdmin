@@ -11,7 +11,7 @@
 <div class="sidebar">
     <div class="logo-section">
         <img src="assets/Southside.png" alt="Logo" class="logo">
-            <h3>Barangay Post Proper Southside Information System</h3>
+            <h3 class="sidebar-title">Barangay Post Proper Southside Information System</h3>
     </div>
 
     <?php
