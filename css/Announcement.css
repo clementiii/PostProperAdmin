@@ -1,0 +1,206 @@
+/* announcements.css */
+.main-content {
+    padding: 20px 30px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    margin-left: 270px; /* Add margin to the left equal to the sidebar width */
+    font-family: 'Poppins', sans-serif;
+}
+
+.main-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #4b0082; /* Dark violet for title */
+}
+
+.content-layout {
+    display: grid;
+    grid-template-columns: 1fr 400px; /* Responsive layout */
+    gap: 30px;
+}
+
+.white-card {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Enhanced shadow for a card effect */
+    transition: transform 0.2s; /* Add a hover effect */
+}
+
+.white-card:hover {
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.white-card h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #4b0082; /* Dark violet for card titles */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    margin-right: 18px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333; /* Keep label color for readability */
+    font-weight: 500;
+}
+
+.full-width-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.upload-section {
+    margin: 25px 0;
+}
+
+.upload-box {
+    border: 2px dashed #8e44ad; /* Violet dashed border */
+    border-radius: 4px;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #fafafa; /* Keep the light background for contrast */
+    cursor: pointer;
+    position: relative;
+}
+
+.upload-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #8e44ad; /* Violet icon color */
+}
+
+.upload-text {
+    color: #666; /* Keep the text color for clarity */
+    margin-bottom: 10px;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-save,
+.btn-clear {
+    padding: 8px 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.2s; /* Smooth transition for buttons */
+}
+
+.btn-save {
+    background-color: #61009F; /* Violet save button */
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #732d8b; /* Darker violet on hover */
+}
+
+.btn-clear {
+    background-color: #6c757d; /* Neutral color for clear button */
+    color: white;
+}
+
+.btn-clear:hover {
+    background-color: #5a6268; /* Darker shade on hover */
+}
+
+/* Recent Posts Styling */
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.post-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white; /* Keep items white for contrast */
+    border-radius: 4px; /* Rounded corners for post items */
+    transition: background-color 0.2s; /* Smooth transition for post items */
+}
+
+.post-item:hover {
+    background-color: #f0e5f5; /* Light violet background on hover */
+}
+
+.post-item:last-child {
+    border-bottom: none;
+}
+
+.post-content h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333; /* Text color for post content */
+}
+
+.post-date {
+    font-size: 12px;
+    color: #666; /* Keep date color for readability */
+}
+
+.post-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.btn-edit {
+    background-color: #61009F; /* Violet edit button */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #732d8b; /* Darker violet on hover */
+}
+
+.btn-delete {
+    background-color: #dc3545; /* Keep delete button red */
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+textarea {
+    resize: none; /* Prevent resizing */
+    padding: 10px; /* Add padding for textarea */
+    border: 1px solid #ddd; /* Border for textarea */
+    border-radius: 4px; /* Rounded corners for textarea */
+    font-size: 14px; /* Consistent font size */
+}
