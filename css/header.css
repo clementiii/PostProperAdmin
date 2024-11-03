@@ -9,7 +9,7 @@
 .header-container {
     background-color: #3f0070; /* Purple background matching sidebar */
     padding: 50px; /* Adjusted padding to make header smaller */
-    margin-left: 39vh; /* Adjust to match sidebar width */
+    margin-left: 30vh; /* Adjust to match sidebar width */
     text-align: left;
     position: relative;
 }
