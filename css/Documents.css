@@ -3,7 +3,7 @@ body {
     padding: 0;
     font-family: 'Poppins', sans-serif;
     font-size: 20px;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
 }
 
 /* Wrapper for sidebar and main content */
@@ -14,6 +14,7 @@ body {
 /* Main content wrapper */
 .main-content {
     margin-left: 200vh; /* Add margin to the left equal to the sidebar width */
+    background-color: #ffffff;
 }
 
 /* Dashboard container */

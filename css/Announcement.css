@@ -1,7 +1,7 @@
 /* announcements.css */
 .main-content {
     padding: 20px 30px;
-    background-color: #f5f5f5;
+    background-color: #fff;
     min-height: 100vh;
     margin-left: 250px; /* Add margin to the left equal to the sidebar width */
     font-family: 'Poppins', sans-serif;
