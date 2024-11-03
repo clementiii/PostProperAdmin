@@ -1,9 +1,10 @@
 /* Basic styling for the sidebar */
 .sidebar {
     background-color: #3f0070; /* Purple background */
-    width: 40vh;
+    width: 20vw;
+    max-width: 280px;
     height: 100vh;
-    padding: 3vh;
+    padding: 2vh 1.5vw; /* Responsive padding */
     position: fixed; /* Keeps the sidebar fixed on the side */
     top: 0;
     left: 0;
@@ -16,12 +17,12 @@
 
 /* Ensuring consistent font size for the sidebar title */
 .sidebar-title {
-    font-size: 18px !important; /* Adjust size as desired */
+    font-size: 1.125rem; /* Adjust size as desired */
     color: white;
     text-align: left;
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    padding: 20px 0;
+    padding: 1.5rem 0;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -29,21 +30,20 @@
     display: flex;
     align-items: center;
     margin-bottom: 3rem;
-    padding: 0;
     border-radius: 7px;
 }
 
 .logo {
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-right: 1rem;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for the logo */
     object-fit: cover; /* Ensures the image fits within the circle */
 }
 
 h3 {
-    font-size: 16px;
+    font-size: 1rem;
     font-family: 'Poppins', sans-serif;
     color: white;
     text-align: center;
@@ -56,21 +56,21 @@ h3 {
 .sidebar-link {
     display: flex;
     align-items: center;
-    padding: 12px;
-    margin: 12px 0;
+    padding: 0.75rem;
+    margin: 0.75rem 0;
     color: #FCFCFC; /* White text */
     text-decoration: none;
     border-radius: 5px;
     background-color: transparent;
     transition: background-color 0.3s ease, color 0.3s ease;
     cursor: pointer;
-    font: 'Poppins', sans-serif;
-    font-size: 20px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
     white-space: nowrap; /* Prevents wrapping */
 }
 
 .sidebar-link i {
-    margin-right: 12px;
+    margin-right: 0.75rem;
 }
 
 /* Active state */
@@ -88,13 +88,13 @@ h3 {
 /* Logout button styling */
 .btn-logout {
     display: inline-flex;
-    margin-top: 80px;
-    margin-left: 8px;
+    margin-top: 4vh;
+    margin-left: 0.5rem;
     align-items: left;
     background-color: #8a2be2; /* Purple color */
     color: #fff;
-    font-size: 16px;
-    padding: 1vh 3vh;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
     border-radius: 10px; /* Rounded corners */
     text-decoration: none;
     transition: background-color 0.3s ease;
@@ -112,30 +112,50 @@ h3 {
 
 /* Main content styling */
 .main-content {
-    padding: 20px;
-    margin-left: 270px; /* Leave space for the sidebar */
+    padding: 2rem;
+    margin-left: 21vw; /* Leave space for the sidebar */
     flex: 1;
 }
 
 .main-title {
-    font-size: 24px;
-    margin-bottom: 30px;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
     color: #4b0082; /* Dark violet for title */
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 270px; /* Keeps the main content aligned next to sidebar */
-    }
-
-    /* Reduce sidebar width on small screens */
+@media (max-width: 1024px) {
     .sidebar {
-        width: 200px;
+        width: 25vw;
     }
-
-    /* Adjust padding for main content */
     .main-content {
-        padding: 15px;
+        margin-left: 26vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 30vw;
+        max-width: 200px;
+    }
+    .main-content {
+        margin-left: 32vw;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 60vw;
+        left: -60vw;
+        position: fixed;
+        transition: left 0.3s ease;
+    }
+    .sidebar.open {
+        left: 0;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
     }
 }
