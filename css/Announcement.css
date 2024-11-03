@@ -198,3 +198,58 @@ textarea {
     border-radius: 4px; /* Rounded corners for textarea */
     font-size: 14px; /* Consistent font size */
 }
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 0; /* Remove left margin on smaller screens */
+        padding: 20px; /* Adjust padding */
+    }
+    .content-layout {
+        grid-template-columns: 1fr; /* Single column layout on tablets */
+    }
+}
+
+/* Small screen adjustments */
+@media (max-width: 768px) {
+    .white-card h2 {
+        font-size: 16px; /* Smaller font size for headings */
+    }
+    .input-group {
+        margin-bottom: 15px;
+    }
+    .btn-save, .btn-clear, .btn-edit, .btn-delete {
+        font-size: 12px; /* Adjust button font size */
+        padding: 6px 18px; /* Adjust button padding */
+    }
+}
+
+/* Extra small screens (phones) */
+@media (max-width: 480px) {
+    .content-layout {
+        grid-template-columns: 1fr; /* Single column for phones */
+    }
+    .white-card h2 {
+        font-size: 14px;
+    }
+    .input-group label,
+    .post-content h3 {
+        font-size: 12px; /* Smaller text */
+    }
+    .full-width-input,
+    textarea {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .button-group {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .posts-list .post-item {
+        flex-direction: column; /* Stack post items on small screens */
+        align-items: flex-start;
+    }
+    .post-actions {
+        justify-content: flex-end;
+    }
+}

@@ -27,11 +27,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <div class="main-content">
     <div class="header-section">
         <img src="assets/mckinley.jpg" alt="city">
+        <h1 class="text-center mb-4">Welcome, Admin Joyce Madrigal</h1>
     </div>
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Welcome, Admin Joyce Madrigal</h1>
-        
         <!-- Summary Cards -->
         <div class="row text-center mb-4">
             <div class="col-md-4 col-sm-6 mb-4">
