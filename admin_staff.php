@@ -14,7 +14,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barangay Staff</title>
-    <link rel="stylesheet" href="css/DashboardStyle.css">
+    <link rel="stylesheet" href="css/AdminStaff.css">
 </head>
 <body>
 <?php 
@@ -22,6 +22,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     include 'header.php';
     ?>
 <?php include 'sidebar.php'; ?> 
-
+<div class="main-content">
+    
+</div>
 </body>
 </html>
