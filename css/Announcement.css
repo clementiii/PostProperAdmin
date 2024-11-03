@@ -3,14 +3,8 @@
     padding: 20px 30px;
     background-color: #f5f5f5;
     min-height: 100vh;
-    margin-left: 270px; /* Add margin to the left equal to the sidebar width */
+    margin-left: 250px; /* Add margin to the left equal to the sidebar width */
     font-family: 'Poppins', sans-serif;
-}
-
-.main-title {
-    font-size: 24px;
-    margin-bottom: 30px;
-    color: #4b0082; /* Dark violet for title */
 }
 
 .content-layout {

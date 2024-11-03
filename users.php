@@ -18,13 +18,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-
+<?php 
+    $pageTitle = "Resident Users";
+    include 'header.php';
+    ?>
 <?php include 'sidebar.php'; ?> 
 <div class="main-content">
     <div class="container mt-4">
             <!-- Scrollable Transactions Table -->
             <div class="card">
-        <h1 class="main-title">Resident Users</h1>
         <div class="table-container">
             <table class="table table-striped mb-0">
                 <thead>

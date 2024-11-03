@@ -17,12 +17,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <link rel="stylesheet" href="css/Announcement.css">
 </head>
 <body>
+<?php 
+    $pageTitle = "Announcements";
+    include 'header.php';
+    ?>
 <?php include 'sidebar.php'; ?> 
 <!-- announcements.php -->
 <!-- announcements.php -->
 <div class="main-content">
-    <h1 class="main-title">ANNOUNCEMENTS</h1>
-
     <div class="content-layout">
         <!-- Left Section -->
         <div class="left-section">

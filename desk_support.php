@@ -17,7 +17,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <link rel="stylesheet" href="css/DashboardStyle.css">
 </head>
 <body>
-
+<?php 
+    $pageTitle = "Help Desk Chat";
+    include 'header.php';
+    ?>
 <?php include 'sidebar.php'; ?> 
 
 </body>

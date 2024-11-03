@@ -1,0 +1,23 @@
+/* header.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header-container {
+    background-color: #3f0070; /* Purple background matching sidebar */
+    padding: 50px; /* Adjusted padding to make header smaller */
+    margin-left: 250px; /* Adjust to match sidebar width */
+    text-align: left;
+    position: relative;
+}
+
+.page-title {
+    font-size: 28px;
+    color: #FFFFFF; /* White text color */
+    margin: 0;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
