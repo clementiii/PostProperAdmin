@@ -1,8 +1,7 @@
 /* Basic styling for the sidebar */
 .sidebar {
     background-color: #3f0070; /* Purple background */
-    width: 30vw;
-    max-width: 280px;
+    width: 18vw;
     height: 100vh;
     padding: 2vh 1.5vw; /* Responsive padding */
     position: fixed; /* Keeps the sidebar fixed on the side */
