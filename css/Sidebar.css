@@ -1,9 +1,9 @@
 /* Basic styling for the sidebar */
 .sidebar {
     background-color: #3f0070; /* Purple background */
-    width: 250px;
+    width: 40vh;
     height: 100vh;
-    padding: 20px;
+    padding: 3vh;
     position: fixed; /* Keeps the sidebar fixed on the side */
     top: 0;
     left: 0;
