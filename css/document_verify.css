@@ -1,0 +1,27 @@
+.profile-img {
+   width: 10em; /* Approximately 150px */
+   height: 10em; /* Approximately 150px */
+   border-radius: 50%;
+   object-fit: cover;
+}
+.details-section {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 2rem;
+}
+.details-section .detail-item {
+   flex: 1;
+   min-width: 250px;
+}
+.id-img {
+   max-width: 100%;
+            height: auto;
+   border: 1px solid #ddd;
+}
+.status-select {
+   max-width: 200px;
+}
+.main-content {
+   margin-left: 250px; /* Adjust based on sidebar width */
+   padding: 2rem;
+}

@@ -61,7 +61,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <div class="card text-white bg-danger mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Incident Reports</h5>
-                        <h3 class="card-text">
+                            <h3 class="card-text">
                             <!-- PHP to fetch data -->
                             <?php // echo $incidentReports; ?>
                             67

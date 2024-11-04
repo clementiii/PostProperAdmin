@@ -50,7 +50,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     </div>
 
                     <div class="button-group">
-                        <button type="submit" class="btn-save">Save</button>
+                        <button type="submit" class="btn-save">Publish</button>
                         <button type="reset" class="btn-clear">Clear</button>
                     </div>
                 </form>
