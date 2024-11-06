@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2024 at 06:33 AM
+-- Generation Time: Nov 06, 2024 at 07:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,7 +39,9 @@ CREATE TABLE `admin_accounts` (
 --
 
 INSERT INTO `admin_accounts` (`id`, `name`, `username`, `password`) VALUES
-(1, 'Rannie Camba', 'rannie', 'password');
+(1, 'Rannie Camba', 'rannie', 'password'),
+(2, 'Era ganaban', 'eraganaban', 'password'),
+(4, 'Kap Saruno', 'saruno', 'password');
 
 -- --------------------------------------------------------
 
@@ -94,7 +96,7 @@ ALTER TABLE `user_accounts`
 -- AUTO_INCREMENT for table `admin_accounts`
 --
 ALTER TABLE `admin_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`
