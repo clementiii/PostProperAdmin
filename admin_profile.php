@@ -48,8 +48,8 @@ echo "<script>alert('Profile updated successfully.');</script>";
                     <label class="form-label">Confirm Password</label>
                     <input type="password" name="confirm_password" class="form-control input-field">
                 </div>
-                <button type="button" class="btn edit-btn" onclick="enableEditing()">Edit Profile</button>
-                <button type="submit" class="btn save-btn d-none mt-2">Save Changes</button>
+                <button type="button" class="action-btn edit-btn" onclick="enableEditing()">Edit Profile</button>
+                <button type="submit" class="action-btn save-btn d-none mt-2">Save Changes</button>
             </form>
         </div>
     </div>

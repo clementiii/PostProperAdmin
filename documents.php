@@ -27,16 +27,34 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         .action-button {
             width: 7vw;
             height: 4vh;
-            background-color: #61009F !important; /* Overrides Bootstrap styles */
+            background-color: #61009F !important; 
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: none; /* Removes border for a cleaner look */
-            border-radius: 8px; /* Rounded corners */
-            text-decoration: none; /* Removes underline from link */
+            border: none; 
+            border-radius: 8px; 
+            text-decoration: none; 
             
         }
+
+        .card .card-text {
+            position: relative;
+            display: inline-block; 
+            width: 14vw; 
+            height: 7vh; 
+            background-color: rgba(255, 255, 255, 0.1) !important; 
+            border-radius: 0.5em !important; /* Rounded corners */
+            text-shadow: 0.06em 0.06em 0.12em rgba(0, 0, 0, 0.2) !important; 
+            font-weight: bold !important; 
+            color: inherit !important; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
     </style>
 </head>
 <body>

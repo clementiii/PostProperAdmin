@@ -1,98 +1,137 @@
-/* Main Content */
+/* Main content styling to account for sidebar */
 .main-content {
-    padding: 20px;
-    margin-left: 250px; /* Adjust to match sidebar width */
-    flex: 1;
-    font-family: 'Poppins', sans-serif;
+   padding: 2rem;
+   margin-left: 18vw; /* Adjust based on sidebar width */
+   flex: 1;
 }
 
-/* Title Styling */
-.main-title {
-    font-size: 24px;
-    margin-bottom: 30px;
-    color: #4b0082; /* Dark violet for title */
+/* Statistic boxes styling */
+.stat-container {
+   display: flex;
+   justify-content: space-between;
+   gap: 4.25rem; /* Approximately 68px equivalent */
+   margin-bottom: 2.8rem; /* Space between the containers and table, approximately 45px */
 }
 
-/* Table Container */
-.table-container {
-    padding: 25px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+.stat-box {
+   flex: 1;
+   max-width: 19rem; /* Approximately 300px equivalent */
+   height: 9.375rem; /* Approximately 150px equivalent */
+   border-radius: 8px;
+   opacity: 0.9;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow to match the reference */
+   transition: transform 0.2s ease; /* Hover effect */
 }
 
-/* Table Styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    table-layout: auto;
-    border: none;
+/* Hover effect */
+.stat-box:hover {
+   transform: translateY(-4px);
 }
 
-th, td {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
+.stat-box h4 {
+   font-size: 1.25rem;
+   font-weight: bold;
+   margin-bottom: 0.5rem;
 }
 
-th {
-    background-color: #8e44ad; /* Violet header color */
-    color: #ffffff;
-    font-weight: bold;
+.stat-number {
+   font-size: 2.5rem;
+   width: 15.625rem; /* Approximately 250px equivalent */
+   height: 3.125rem; /* Approximately 50px equivalent */
+   background: rgba(255, 255, 255, 0.1);
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 5px;
+   margin-top: 0.5rem;
+   background-color: rgba(255, 255, 255, 0.15); /* Light overlay background */
 }
 
-td {
-    word-wrap: break-word;
-    color: #333;
+/* Table styling */
+.table-responsive {
+   width: 64.6875rem; /* Approximately 1035px equivalent */
+   max-width: 100%;
+   margin: 0 auto;
 }
 
-/* Alternate Row Background */
-tr:nth-child(odd) {
-    background-color: #f9f9f9;
+.table {
+   width: 100;
+   border: 1px solid #dcdcdc;
+   border-radius: 10px;
+   overflow: hidden;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for table */
 }
 
-tr:nth-child(even) {
-    background-color: #ffffff;
+.table thead th {
+   font-weight: bold;
+   color: #555;
+   background-color: #f8f9fa;
 }
 
-/* Button Styling */
-.btn {
-    display: inline-block;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 4px;
-    text-decoration: none;
-    white-space: nowrap;
-    color: #fff;
-    width: 70px;
-    text-align: center;
+.table-bordered th,
+.table-bordered td {
+   vertical-align: middle;
+   text-align: center;
+   padding: 1rem;
 }
 
-/* Edit Button */
-.btn-edit {
-    background-color: #007bff; /* Bootstrap primary color */
-    border: none;
+/* Button styling for delete button */
+.table tbody tr td button.btn-danger {
+   padding: 0.5rem 1rem;
+   font-size: 0.9rem;
+   border-radius: 4px;
+   background-color: #e74c3c; /* Red color for delete button */
+   color: white;
+   transition: background-color 0.2s ease;
+   border: none;
 }
 
-.btn-edit:hover {
-    background-color: #0056b3;
+.table tbody tr td button.btn-danger:hover {
+   background-color: #c0392b;
 }
 
-/* Delete Button */
-.btn-delete {
-    background-color: #dc3545; /* Bootstrap danger color */
-    border: none;
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+   .stat-container {
+      gap: 3rem; /* Adjusts the gap for smaller screens */
+      flex-direction: column; /* Stacks containers vertically on small screens */
+      align-items: center;
+   }
+
+   .table-responsive {
+      width: 100%; /* Full width on smaller screens */
+      margin-left: 0;
+   }
 }
 
-.btn-delete:hover {
-    background-color: #c82333;
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-    }
+   .stat-box {
+      max-width: 80%;
+      height: auto;
+   }
+
+   .stat-number {
+      font-size: 2rem;
+      width: 100%;
+      height: 2.5rem;
+   }
+}
+
+@media (max-width: 480px) {
+   .stat-box {
+      max-width: 90%;
+      height: auto;
+   }
+
+   .stat-number {
+      font-size: 1.8rem;
+   }
+
+   .main-content {
+      padding: 1rem;
+   }
 }
