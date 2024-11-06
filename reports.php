@@ -1,10 +1,21 @@
 <?php
 session_start();
+include 'db.php'; // Include your database connection file
 
 // Check if the user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: splash.php"); // Redirect to the login page if not logged in
     exit;
+}
+
+try {
+    // Query to fetch incident reports
+    $sql = "SELECT id, name, title, description, date_submitted, status FROM incident_reports";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
 ?>
 
@@ -55,23 +66,16 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Robert Youngstown</td>
-                    <td>Noise Disturbance</td>
-                    <td>Maingay pa dito banda sa Sampaguita St...</td>
-                    <td>05/17/204</td>
-                    <td>Resolved</td>
-                    <td><a href="report_verify.php" class="action-button">View</a></td>
-                </tr>
-                <tr>
-                    <td>Pamela Padilla</td>
-                    <td>Noise Disturbance</td>
-                    <td>Maingay pa dito banda sa Sampaguita St...</td>
-                    <td>10/17/204</td>
-                    <td>Pending</td>
-                    <td><a href="report_verify.php" class="action-button">View</a></td>
-                </tr>
-                <!-- Additional rows as needed -->
+                <?php foreach ($reports as $report): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($report['name']); ?></td>
+                        <td><?php echo htmlspecialchars($report['title']); ?></td>
+                        <td><?php echo htmlspecialchars($report['description']); ?></td>
+                        <td><?php echo date('m/d/Y', strtotime($report['date_submitted'])); ?></td>
+                        <td><?php echo htmlspecialchars($report['status']); ?></td>
+                        <td><a href="report_verify.php?id=<?php echo $report['id']; ?>" class="action-button">View</a></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

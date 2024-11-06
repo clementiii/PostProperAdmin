@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2024 at 07:15 AM
+-- Generation Time: Nov 06, 2024 at 03:39 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,6 +46,29 @@ INSERT INTO `admin_accounts` (`id`, `name`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `incident_reports`
+--
+
+CREATE TABLE `incident_reports` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `date_submitted` datetime NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `incident_reports`
+--
+
+INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `date_submitted`, `status`) VALUES
+(1, 'Robert Youngstown', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '2024-11-01 22:29:27', 'pending'),
+(2, 'Clement Cabus', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '2024-11-06 15:37:08', 'pending');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_accounts`
 --
 
@@ -82,6 +105,12 @@ ALTER TABLE `admin_accounts`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `incident_reports`
+--
+ALTER TABLE `incident_reports`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
@@ -97,6 +126,12 @@ ALTER TABLE `user_accounts`
 --
 ALTER TABLE `admin_accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `incident_reports`
+--
+ALTER TABLE `incident_reports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`

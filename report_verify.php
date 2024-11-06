@@ -1,3 +1,40 @@
+<?php
+session_start();
+include 'db.php'; // Include your database connection file
+
+// Check if the user is logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: splash.php"); // Redirect to the login page if not logged in
+    exit;
+}
+
+// Get the report ID from the URL
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $report_id = $_GET['id'];
+
+    try {
+        // Query to fetch the specific report based on the ID
+        $sql = "SELECT id, name, title, description, date_submitted, status FROM incident_reports WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $report_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $report = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if the report exists
+        if (!$report) {
+            echo "Report not found.";
+            exit;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        exit;
+    }
+} else {
+    echo "Invalid report ID.";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,11 +97,11 @@
           <form action="update_report.php" method="post" class="text-center">
             <div class="mb-3">
               <label for="title" class="form-label">Title:</label>
-              <input type="text" class="form-control" id="title" name="title" value="Noise Disturbance">
+              <input type="text" class="form-control" id="title" name="title" value="<?php echo htmlspecialchars($report['title']); ?>">
             </div>
             <div class="mb-3">
               <label for="description" class="form-label">Description:</label>
-              <textarea class="form-control" id="description" name="description" rows="4">Maingay pa dito banda sa Sampaguita St..</textarea>
+              <textarea class="form-control" id="description" name="description" rows="4"><?php echo htmlspecialchars($report['description']); ?></textarea>
             </div>
             <div class="mb-3">
               <label class="form-label">Images:</label>
