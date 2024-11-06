@@ -87,39 +87,40 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     ?>
 
   <!-- Centering the container with padding on the left side -->
-  <div class="center-container content-container">
+<div class="center-container content-container">
     <div class="container mt-5">
-      <div class="card">
-        <div class="card-header bg-purple text-white text-center">
-          <span class="header-text">Incident Report and Monitoring</span>
+        <div class="card">
+            <div class="card-header bg-purple text-white text-center">
+                <span class="header-text">Incident Report and Monitoring</span>
+            </div>
+            <div class="card-body">
+                <form action="update_report.php" method="post" class="text-center">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title:</label>
+                        <input type="text" class="form-control" id="title" name="title" value="<?php echo htmlspecialchars($report['title']); ?>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <div class="form-control" style="height: auto; white-space: pre-wrap;"><?php echo htmlspecialchars($report['description']); ?></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Images:</label>
+                        <div class="image-container d-flex justify-content-center">
+                            <img src="assets/profile.jpg" alt="Incident Image 1" class="img-thumbnail">
+                            <img src="assets/profile.jpg" alt="Incident Image 2" class="img-thumbnail">
+                            <img src="assets/profile.jpg" alt="Incident Image 3" class="img-thumbnail">
+                        </div>
+                    </div>
+                    <div class="button-group mt-4">
+                        <button type="submit" class="btn btn-success" name="status" value="resolved">Resolved</button>
+                        <button type="submit" class="btn btn-warning" name="status" value="pending">Pending</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="card-body">
-          <form action="update_report.php" method="post" class="text-center">
-            <div class="mb-3">
-              <label for="title" class="form-label">Title:</label>
-              <input type="text" class="form-control" id="title" name="title" value="<?php echo htmlspecialchars($report['title']); ?>">
-            </div>
-            <div class="mb-3">
-              <label for="description" class="form-label">Description:</label>
-              <textarea class="form-control" id="description" name="description" rows="4"><?php echo htmlspecialchars($report['description']); ?></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Images:</label>
-              <div class="image-container d-flex justify-content-center">
-                <img src="assets/profile.jpg" alt="Incident Image 1" class="img-thumbnail">
-                <img src="assets/profile.jpg" alt="Incident Image 2" class="img-thumbnail">
-                <img src="assets/profile.jpg" alt="Incident Image 3" class="img-thumbnail">
-              </div>
-            </div>
-            <div class="button-group mt-4">
-              <button type="submit" class="btn btn-success" name="status" value="resolved">Resolved</button>
-              <button type="submit" class="btn btn-warning" name="status" value="pending">Pending</button>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
