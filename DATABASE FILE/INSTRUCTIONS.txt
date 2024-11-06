@@ -1,0 +1,6 @@
+TO USE THE .SQL FILE
+
+1. Turn on MySQL in XAMPP and press the Admin button
+2. create a new database and name it "pps_barangay_system"
+3. drag and drag the .sql file inside the database.
+

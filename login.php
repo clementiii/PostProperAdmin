@@ -1,22 +1,35 @@
 <?php
 session_start();
+include 'db.php'; // Ensure this file is correctly set up to connect to your `pps_barangay_system` database
 
-// Sample hardcoded credentials (replace this with database validation in a real application)
-$valid_username = "admin";
-$valid_password = "admin123";
+// Initialize error message
+$error = '';
 
-// Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if ($username == $valid_username && $password == $valid_password) {
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
-        header("Location: dashboard.php"); // Redirect to a protected page
-        exit;
-    } else {
-        $error = "Invalid username or password";
+    try {
+        // Prepare the SQL statement to fetch the password hash based on the entered username
+        $sql = "SELECT password FROM admin_accounts WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if username exists and password matches
+        if ($result && $password == $result['password']) {
+            // Successful login
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            header("Location: dashboard.php");
+            exit;
+        } else {
+            // Either username not found or password mismatch
+            $error = "Invalid username or password.";
+        }
+    } catch (PDOException $e) {
+        // Handle any database errors
+        $error = "Database error: " . $e->getMessage();
     }
 }
 ?>
@@ -31,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-<div class = "logo-container">
-    <div class = "logo-section">
+<div class="logo-container">
+    <div class="logo-section">
         <img src="assets/Southside.png" alt="Logo">
         <h1>Post Proper Southside</h1>
     </div>
@@ -49,19 +62,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <div style="position: relative;">
+                    <input type="password" id="password" name="password" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                </div>
             </div>
 
             <button type="submit">Login</button>
         </form>
 
         <?php
-        if (isset($error)) {
+        if ($error) {
             echo '<p class="error">' . $error . '</p>';
         }
         ?>
     </div>
 </div>
+
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById('password');
+        const toggleIcon = document.querySelector('.toggle-password');
+        
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
+</script>
 
 </body>
 </html>
