@@ -16,7 +16,7 @@ $adminId = isset($_GET['id']) ? (int)$_GET['id'] : $_SESSION['admin_id']; // Use
 $admin = null;
 if ($adminId > 0) {
     try {
-        $sql = "SELECT id, name, username, password FROM admin_accounts WHERE id = ?";
+        $sql = "SELECT id, name, username, password, profile_picture FROM admin_accounts WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$adminId]);
         $admin = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -62,7 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['password'])) {
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="profile-card p-4">
             <div class="text-center mb-3">
-                <img src="assets/profile.jpg" alt="Admin Profile" class="profile-image rounded-circle">
+                <!-- Display the profile picture, use a default if not available -->
+                <img src="<?php echo !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg'; ?>" alt="Admin Profile" class="profile-image rounded-circle">
                 <p class="admin-title">ADMIN</p>
             </div>
             <h2 class="section-title">Admin Information</h2>
