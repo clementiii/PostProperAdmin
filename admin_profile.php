@@ -2,15 +2,15 @@
 session_start();
 
 // Check if the user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: splash.php"); // Redirect to the login page if not logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_SESSION['admin_id'])) {
+    header("Location: splash.php"); // Redirect to login page if not logged in or admin ID is missing
     exit;
 }
 
 include 'db.php'; // Make sure this file connects to your `pps_barangay_system` database
 
-// Get the admin ID from the URL parameter
-$adminId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+// Check if we are editing another admin's profile or the current logged-in admin's profile
+$adminId = isset($_GET['id']) ? (int)$_GET['id'] : $_SESSION['admin_id']; // Use session ID if no URL parameter
 
 // Fetch the admin details from the database
 $admin = null;
@@ -26,7 +26,7 @@ if ($adminId > 0) {
 }
 
 // Handle form submission (profile update)
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['password'])) {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
