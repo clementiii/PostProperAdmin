@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2024 at 04:18 AM
+-- Generation Time: Nov 07, 2024 at 06:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,17 +31,18 @@ CREATE TABLE `admin_accounts` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `profile_picture` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin_accounts`
 --
 
-INSERT INTO `admin_accounts` (`id`, `name`, `username`, `password`) VALUES
-(1, 'Rannie Camba', 'rannie', 'password'),
-(2, 'Era ganaban', 'eraganaban', 'password'),
-(4, 'Kap Saruno', 'saruno', 'password');
+INSERT INTO `admin_accounts` (`id`, `name`, `username`, `password`, `profile_picture`) VALUES
+(1, 'Rannie Camba', 'rannie', 'password', 'assets/admin_profile_pictures/testprof1.jpg\n'),
+(2, 'Era ganaban', 'eraganaban', 'password', 'assets/admin_profile_pictures/testprof2.jpg'),
+(4, 'Kap Saruno', 'saruno', 'password', 'assets/admin_profile_pictures/testprof3.jpg');
 
 -- --------------------------------------------------------
 
@@ -89,6 +90,7 @@ CREATE TABLE `incident_reports` (
   `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `incident_picture` varchar(255) NOT NULL,
   `date_submitted` datetime NOT NULL,
   `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -97,9 +99,9 @@ CREATE TABLE `incident_reports` (
 -- Dumping data for table `incident_reports`
 --
 
-INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `date_submitted`, `status`) VALUES
-(1, 'Robert Youngstown', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '2024-11-01 22:29:27', 'pending'),
-(2, 'Clement Cabus', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '2024-11-06 15:37:08', 'pending');
+INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `incident_picture`, `date_submitted`, `status`) VALUES
+(1, 'Robert Youngstown', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '', '2024-11-01 22:29:27', 'pending'),
+(2, 'Clement Cabus', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'pending');
 
 -- --------------------------------------------------------
 
