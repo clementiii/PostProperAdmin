@@ -28,18 +28,8 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users</title>
     <link rel="stylesheet" href="css/Users.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"">
-    <style>
-        .stat-box {
-            border-radius: 8px;
-            color: white;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    
 </head>
 <body>
 <?php 
@@ -49,10 +39,10 @@ try {
 ?>
 
 <div class="main-content">
-    <div class="container mt-5">
+    <div class="container" style="margin-top: 5px;">
     
         <!-- User Statistics Boxes -->
-        <div class="row justify-content-center mb-4">
+        <div class="row justify-content-center" style="margin-bottom: 45px;">
             <div class="col-md-4">
                 <div class="stat-box bg-primary text-center py-3">
                     <h4>Registered Residents</h4>
@@ -74,9 +64,9 @@ try {
         </div>
 
         <!-- User Table -->
-        <div class="table-responsive">
+        <div class="table-responsive" style="margin-left:">
             <table class="table table-bordered text-center align-middle">
-                <thead class="table-light">
+                <thead style="background-color: #D9D9E6;">
                     <tr>
                         <th>Last Name</th>
                         <th>First Name</th>
@@ -89,7 +79,7 @@ try {
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user): ?>
-                    <tr>
+                    <tr style="background-color: <?php echo ($user['id'] % 2 == 0) ? '#FFFFFF' : '#F5F5FB'; ?>;">
                         <td><?php echo htmlspecialchars($user['lastName']); ?></td>
                         <td><?php echo htmlspecialchars($user['firstName']); ?></td>
                         <td>
@@ -110,5 +100,6 @@ try {
         </div>
     </div>
 </div>
+
 </body>
 </html>

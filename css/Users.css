@@ -5,19 +5,21 @@
    flex: 1;
 }
 
-/* Statistic boxes styling */
+/* Adjust gap between header and statistics boxes */
 .stat-container {
    display: flex;
    justify-content: space-between;
-   gap: 4.25rem; /* Approximately 68px equivalent */
-   margin-bottom: 2.8rem; /* Space between the containers and table, approximately 45px */
+   gap: 45px; /* Space between the containers and table */
+   margin-top: 36px; /* Space between the header and stat boxes */
 }
 
+/* Statistic boxes styling */
 .stat-box {
+   color: #ffffff;
    flex: 1;
-   max-width: 19rem; /* Approximately 300px equivalent */
+   max-width: 20rem; /* Approximately 300px equivalent */
    height: 9.375rem; /* Approximately 150px equivalent */
-   border-radius: 8px;
+   border-radius: 0.5rem;
    opacity: 0.9;
    display: flex;
    flex-direction: column;
@@ -28,9 +30,9 @@
 }
 
 /* Hover effect */
-.stat-box:hover {
+/* .stat-box:hover {
    transform: translateY(-4px);
-}
+} */
 
 .stat-box h4 {
    font-size: 1.25rem;
@@ -39,7 +41,8 @@
 }
 
 .stat-number {
-   font-size: 2.5rem;
+   font-size: 2rem;
+   font-weight: bold;
    width: 15.625rem; /* Approximately 250px equivalent */
    height: 3.125rem; /* Approximately 50px equivalent */
    background: rgba(255, 255, 255, 0.1);
@@ -53,30 +56,33 @@
 
 /* Table styling */
 .table-responsive {
-   width: 64.6875rem; /* Approximately 1035px equivalent */
-   max-width: 100%;
-   margin: 0 auto;
+   display: flex;
+   justify-content: center;
+   padding-left: 0; /* Ensures no unintended padding */
+   padding-right: 0;
 }
 
 .table {
-   width: 100;
+   width: 100%;
    border: 1px solid #dcdcdc;
    border-radius: 10px;
    overflow: hidden;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for table */
 }
 
+/* Column header background color */
 .table thead th {
    font-weight: bold;
    color: #555;
-   background-color: #f8f9fa;
+   background-color: #d9d9e6; /* Updated color */
 }
 
-.table-bordered th,
-.table-bordered td {
-   vertical-align: middle;
-   text-align: center;
-   padding: 1rem;
+/* Row colors: odd rows (#F5F5FB), even rows (#FFFFFF) */
+.table tbody tr:nth-child(odd) {
+   background-color: #f5f5fb;
+}
+.table tbody tr:nth-child(even) {
+   background-color: #ffffff;
 }
 
 /* Button styling for delete button */

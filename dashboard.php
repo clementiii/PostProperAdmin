@@ -29,14 +29,14 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
 </head>
 <body>
 
-<?php include 'sidebar.php'; ?> 
+<?php include 'sidebar.php'; 
+?> 
 
 <div class="main-content">
     <div class="header-section">
         <img src="assets/mckinley.jpg" alt="city">
         <h1 class="text-center mb-4">Welcome, Admin <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
     </div>
-
     <div class="container mt-5">
         <!-- Summary Cards -->
         <div class="row text-center mb-4">

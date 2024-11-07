@@ -26,24 +26,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .action-button {
-            width: 7vw;
-            height: 4vh;
-            background-color: #61009F !important; /* Overrides Bootstrap styles */
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none; /* Removes border for a cleaner look */
-            border-radius: 8px; /* Rounded corners */
-            text-decoration: none; /* Removes underline from link */
-        }
-        .table td, .table th {
-            text-align: center;
-            vertical-align: middle;
-        }
-    </style>
+    <link rel="stylesheet" href="css/Reports.css">
 </head>
 <body>
 <?php 
@@ -53,8 +36,23 @@ try {
 <?php include 'sidebar.php'; ?>
 
 <div class="main-content p-4">
+    <div class="statistic-boxes d-flex justify-content-around mb-4 p-3 rounded">
+    <div class="stat-box text-white p-3 rounded" style="background-color: #73C2FB; width: 18.75rem; height: 9.375rem;">
+        <h5 class="text-center">Total Reports</h5>
+        <p class="text-center">555</p>
+    </div>
+    <div class="stat-box text-dark p-3 rounded" style="background-color: #F5A623; width: 18.75rem; height: 9.375rem;">
+        <h5 class="text-center">Pending</h5>
+        <p class="text-center">555</p>
+    </div>
+    <div class="stat-box text-white p-3 rounded" style="background-color: #4CAF50; width: 18.75rem; height: 9.375rem;">
+        <h5 class="text-center">Resolved</h5>
+        <p class="text-center">555</p>
+    </div>
+</div>
+
     <div class="container">
-        <table class="table table-striped table-bordered">
+        <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
                     <th>Name</th>

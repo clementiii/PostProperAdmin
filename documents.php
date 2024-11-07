@@ -22,7 +22,7 @@ $documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documents</title>
+    <title>Document Requests</title>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Documents.css">
@@ -44,30 +44,53 @@ $documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
             border-radius: 8px;
             text-decoration: none; 
         }
-        .card .card-text {
-            position: relative;
-            display: inline-block; 
-            width: 14vw; 
-            height: 7vh; 
-            background-color: rgba(255, 255, 255, 0.1) !important; 
-            border-radius: 0.5em !important;
-            text-shadow: 0.06em 0.06em 0.12em rgba(0, 0, 0, 0.2) !important; 
-            font-weight: bold !important; 
-            color: inherit !important; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      
     </style>
 </head>
 <body>
 <?php 
-    $pageTitle = "Documents";
+    $pageTitle = "Document Requests";
     include 'header.php';
 ?>
 <?php include 'sidebar.php'; ?> 
 
 <div class="main-content">
+    <div class="statistic-container row text-center mb-4">
+    <div class="col">
+        <div class="card" style="background: linear-gradient(180deg, #3498DB, #5DADE2); width: 250px; height: 150px; color: white;">
+            <h2 class="card-title">Total Request</h2>
+            <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                245
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card" style="background: linear-gradient(180deg, #D68910, #F5B041); width: 250px; height: 150px; color: white;">
+            <h2 class="card-title">Pending</h2>
+            <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                56
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card" style="background: linear-gradient(180deg, #229954, #27AE60); width: 250px; height: 150px; color: white;">
+            <h2 class="card-title">Approved</h2>
+            <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                165
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card" style="background: linear-gradient(180deg, #A93226, #E74C3C); width: 250px; height: 150px; color: white;">
+            <h2 class="card-title">Rejected</h2>
+            <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                4
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <div class="row text-center mb-4">
         <!-- Summary Cards -->
         <!-- Keep your existing summary card code here -->
