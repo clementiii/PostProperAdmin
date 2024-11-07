@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: splash.php"); // Redirect to the login page if not logged in
+    exit;
+}
+
+include 'db.php'; // Make sure this file connects to your `pps_barangay_system` database
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
