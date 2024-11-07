@@ -6,6 +6,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: splash.php"); // Redirect to the login page if not logged in
     exit;
 }
+
+$price = 100.00; // Default price for document requests
+include 'db.php'; // Include the database connection
+
+// Query to get document requests from the database
+$query = "SELECT Id, Name, DocumentType, Quantity, $price*Quantity AS Price, DateRequested FROM document_requests";
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
 ?>
 
 <!DOCTYPE html>
@@ -20,10 +29,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <style>
         /* Table and button styling */
         .table td, .table th {
-            text-align: center; /* Centers text in table cells */
-            vertical-align: middle; /* Aligns text in the middle vertically */
+            text-align: center;
+            vertical-align: middle;
         }
-        
         .action-button {
             width: 7vw;
             height: 4vh;
@@ -32,19 +40,17 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             display: flex;
             align-items: center;
             justify-content: center;
-            border: none; 
-            border-radius: 8px; 
+            border: none;
+            border-radius: 8px;
             text-decoration: none; 
-            
         }
-
         .card .card-text {
             position: relative;
             display: inline-block; 
             width: 14vw; 
             height: 7vh; 
             background-color: rgba(255, 255, 255, 0.1) !important; 
-            border-radius: 0.5em !important; /* Rounded corners */
+            border-radius: 0.5em !important;
             text-shadow: 0.06em 0.06em 0.12em rgba(0, 0, 0, 0.2) !important; 
             font-weight: bold !important; 
             color: inherit !important; 
@@ -52,9 +58,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             align-items: center;
             justify-content: center;
         }
-
-
-
     </style>
 </head>
 <body>
@@ -63,91 +66,49 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     include 'header.php';
 ?>
 <?php include 'sidebar.php'; ?> 
-    <div class="main-content">
-        <!-- Summary Cards -->
-        <div class="row text-center mb-4">
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card text-white bg-primary mb-3 custom-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Request</h5>
-                        <h3 class="card-text">555</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card text-white bg-warning mb-3 custom-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Pending</h5>
-                        <h3 class="card-text">125</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card text-white bg-success mb-3 custom-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Approved</h5>
-                        <h3 class="card-text">67</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card text-white bg-danger mb-3 custom-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Rejected</h5>
-                        <h3 class="card-text">67</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Scrollable Transactions Table -->
-        <div>
-            <div class="table-container">
-                <table class="table table-striped mb-0">
-                    <thead>
-                        <tr>
-                            <th>Transaction ID</th>
-                            <th>Name</th>
-                            <th>Document Type</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Date Requested</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>TXN-20230927</td>
-                            <td>Robert Youngstown</td>
-                            <td>Barangay Clearance</td>
-                            <td>2</td>
-                            <td>100.00</td>
-                            <td>10/12/2024</td>
-                            <td><a href="document_verify.php" class="action-button">View</a></td>
-                        </tr>
-                        <tr>
-                            <td>TXN-20230928</td>
-                            <td>Angelica Santos</td>
-                            <td>Barangay Certificate</td>
-                            <td>2</td>
-                            <td>100.00</td>
-                            <td>10/11/2024</td>
-                            <td><a href="document_verify.php" class="action-button">View</a></td>
-                        </tr>
-                        <tr>
-                            <td>TXN-20230929</td>
-                            <td>Maria Gonzales</td>
-                            <td>Certificate of Indigency</td>
-                            <td>1</td>
-                            <td>60.00</td>
-                            <td>10/10/2024</td>
-                            <td><a href="document_verify.php" class="action-button">View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>         
+<div class="main-content">
+    <div class="row text-center mb-4">
+        <!-- Summary Cards -->
+        <!-- Keep your existing summary card code here -->
+    </div>
+
+    <div class="table-container">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Name</th>
+                    <th>Document Type</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Date Requested</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Check if there are results
+                if (!empty($documentRequests)) {
+                    foreach ($documentRequests as $row) {
+                        echo "<tr>";
+                        echo "<td>TXN-" . htmlspecialchars($row['Id']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['Name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DocumentType']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
+                        echo "<td>₱ " . htmlspecialchars($row['Price']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
+                        echo '<td><a href="document_verify.php" class="action-button">View</a></td>';
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>No document requests found.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>         
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -166,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return 0;
             });
             
-            // Append sorted rows back to the table
             const tbody = table.querySelector("tbody");
             sortedRows.forEach(row => tbody.appendChild(row));
         });
@@ -177,3 +137,8 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<?php
+// Close the database connection
+$conn = null;
+?>

@@ -1,4 +1,4 @@
-`<?php
+<?php
 session_start();
 include 'db.php'; // Ensure this file is correctly set up to connect to your `pps_barangay_system` database
 
@@ -10,8 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     try {
-        // Prepare the SQL statement to fetch the password hash based on the entered username
-        $sql = "SELECT password FROM admin_accounts WHERE username = ?";
+        // Prepare the SQL statement to fetch the password based on the entered username
+        $sql = "SELECT id, name, password FROM admin_accounts WHERE username = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$username]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -21,6 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Successful login
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
+            $_SESSION['admin_id'] = $result['id']; // Store admin ID
+            $_SESSION['name'] = $result['name'];   // Store admin name
+
             header("Location: dashboard.php");
             exit;
         } else {
@@ -42,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Admin Login</title>
     <link rel="stylesheet" href="css/LoginStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
 </head>
 <body>
 
@@ -100,4 +102,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </body>
 </html>
-`

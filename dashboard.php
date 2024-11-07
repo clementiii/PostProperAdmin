@@ -6,6 +6,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: splash.php"); // Redirect to the login page if not logged in
     exit;
 }
+
+// Database connection
+require 'db.php';
+
+// Fetch the recent document requests for the table
+$documentRequestsTableQuery = "SELECT * FROM document_requests ORDER BY DateRequested DESC LIMIT 5";
+$documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +34,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <div class="main-content">
     <div class="header-section">
         <img src="assets/mckinley.jpg" alt="city">
-        <h1 class="text-center mb-4">Welcome, Admin Joyce Madrigal</h1>
+        <h1 class="text-center mb-4">Welcome, Admin <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
     </div>
 
     <div class="container mt-5">
@@ -37,7 +44,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Registered Residents</h5>
-                        <h3 class="card-text">555</h3>
+                        <h3 class="card-text">200</h3>
                     </div>
                 </div>
             </div>
@@ -45,7 +52,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <div class="card text-white bg-warning mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Document Requests</h5>
-                        <h3 class="card-text">125</h3>
+                        <h3 class="card-text">50</h3>
                     </div>
                 </div>
             </div>
@@ -53,7 +60,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <div class="card text-white bg-danger mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Incident Reports</h5>
-                        <h3 class="card-text">67</h3>
+                        <h3 class="card-text">34</h3>
                     </div>
                 </div>
             </div>
@@ -78,49 +85,34 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Example Data Rows -->
-                        <tr>
-                            <td>TXN-20230927</td>
-                            <td>Robert Youngstown</td>
-                            <td>Barangay Clearance</td>
-                            <td>2</td>
-                            <td>100.00</td>
-                            <td>10/12/2024</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;"
-                                        onclick="openModal('TXN-20230927', 'Robert Youngstown', 'Robert', 'Barangay Clearance', '10/12/2024', 2, '100.00', '165 Sampaguita St. Post Proper Southside, Taguig City', 'Male', 'Single', 'Gamer', '123-456-789-000', '123-456-789-000')">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>TXN-20230928</td>
-                            <td>Angelica Santos</td>
-                            <td>Barangay Certificate</td>
-                            <td>2</td>
-                            <td>100.00</td>
-                            <td>10/11/2024</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;"
-                                        onclick="openModal('TXN-20230928', 'Angelica Santos', 'Angel', 'Barangay Certificate', '10/11/2024', 2, '100.00', '123 Sampaguita St. Post Proper Southside, Taguig City', 'Female', 'Married', 'Teacher', '123-456-789-111', '123-456-789-111')">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>TXN-20230929</td>
-                            <td>Maria Gonzales</td>
-                            <td>Certificate of Indigency</td>
-                            <td>1</td>
-                            <td>60.00</td>
-                            <td>10/10/2024</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;"
-                                        onclick="openModal('TXN-20230929', 'Maria Gonzales', 'Maria', 'Certificate of Indigency', '10/10/2024', 1, '60.00', '321 Sampaguita St. Post Proper Southside, Taguig City', 'Female', 'Single', 'Nurse', '123-456-789-222', '123-456-789-222')">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
+                        <?php foreach ($documentRequestsTableResult as $request): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($request['Id']); ?></td>
+                                <td><?php echo htmlspecialchars($request['Name']); ?></td>
+                                <td><?php echo htmlspecialchars($request['DocumentType']); ?></td>
+                                <td><?php echo htmlspecialchars($request['Quantity']); ?></td>
+                                <td><?php echo number_format($request['Quantity'] * 50, 2); // Assuming a fixed price of 50 for simplicity ?></td>
+                                <td><?php echo htmlspecialchars($request['DateRequested']); ?></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;"
+                                            onclick="openModal('<?php echo htmlspecialchars($request['Id']); ?>', 
+                                                                '<?php echo htmlspecialchars($request['Name']); ?>',
+                                                                '<?php echo htmlspecialchars($request['Alias']); ?>',
+                                                                '<?php echo htmlspecialchars($request['DocumentType']); ?>',
+                                                                '<?php echo htmlspecialchars($request['DateRequested']); ?>',
+                                                                '<?php echo htmlspecialchars($request['Quantity']); ?>',
+                                                                '<?php echo number_format($request['Quantity'] * 50, 2); ?>',
+                                                                '<?php echo htmlspecialchars($request['Address']); ?>',
+                                                                '<?php echo htmlspecialchars($request['Gender']); ?>',
+                                                                '<?php echo htmlspecialchars($request['CivilStatus']); ?>',
+                                                                'Occupation',
+                                                                'TIN',
+                                                                'CTC')">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -161,10 +153,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
-// Function to open modal and populate with data
 // Function to open modal and populate with data
 function openModal(transactionID, name, alias, documentType, dateRequested, quantity, price, address, gender, civilStatus, occupation, tin, ctc) {
     // Set Transaction ID as the header title
@@ -185,10 +175,10 @@ function openModal(transactionID, name, alias, documentType, dateRequested, quan
     document.getElementById('modalTIN').textContent = tin;
     document.getElementById('modalCTC').textContent = ctc;
 
-    var userModal = new bootstrap.Modal(document.getElementById('userModal'));
-    userModal.show();
+    // Show the modal
+    var myModal = new bootstrap.Modal(document.getElementById('userModal'));
+    myModal.show();
 }
-
 </script>
 </body>
 </html>
