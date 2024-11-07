@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2024 at 06:17 AM
+-- Generation Time: Nov 07, 2024 at 12:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -120,15 +120,16 @@ CREATE TABLE `user_accounts` (
   `adrZone` varchar(20) DEFAULT NULL,
   `adrStreet` varchar(100) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `password_hash` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_accounts`
 --
 
-INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password_hash`) VALUES
-(1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', NULL, 'Kalaw Street', '0000-00-00', 'clempassword11');
+INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`) VALUES
+(1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', NULL, 'Kalaw Street', '0000-00-00', 'clempassword11'),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', NULL, 'Kalaw Street', '0000-00-00', 'password');
 
 --
 -- Indexes for dumped tables
@@ -186,7 +187,7 @@ ALTER TABLE `incident_reports`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
