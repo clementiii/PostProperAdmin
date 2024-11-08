@@ -5,14 +5,6 @@
    flex: 1;
 }
 
-/* Adjust gap between header and statistics boxes */
-.stat-container {
-   display: flex;
-   justify-content: space-between;
-   gap: 45px; /* Space between the containers and table */
-   margin-top: 36px; /* Space between the header and stat boxes */
-}
-
 /* Statistic boxes styling */
 .stat-box {
    color: #ffffff;
@@ -35,8 +27,8 @@
 } */
 
 .stat-box h4 {
-   font-size: 1.25rem;
-   font-weight: bold;
+   font-size: 1.5rem;
+   font-weight: 500;
    margin-bottom: 0.5rem;
 }
 
@@ -49,7 +41,7 @@
    display: inline-flex;
    align-items: center;
    justify-content: center;
-   border-radius: 5px;
+   border-radius: 0.5rem;
    margin-top: 0.5rem;
    background-color: rgba(255, 255, 255, 0.15); /* Light overlay background */
 }
@@ -98,6 +90,16 @@
 
 .table tbody tr td button.btn-danger:hover {
    background-color: #c0392b;
+}
+
+.total-reports {
+   background: linear-gradient(to bottom, #4a9ed9, #73c2fb);
+}
+.pending {
+   background: linear-gradient(to bottom, #d68910, #f5b041);
+}
+.resolved {
+   background: linear-gradient(to bottom, #229954, #27ae60);
 }
 
 /* Responsive adjustments */

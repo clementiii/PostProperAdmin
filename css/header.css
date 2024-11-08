@@ -1,62 +1,63 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
 }
 
 .header-container {
-    background-color: #3f0070; /* Purple background */
-    padding: 20px 50px; /* Adjusted for smaller padding */
-    margin-left: 35vh; /* Adjust to match sidebar width */
-    text-align: left;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+   background-color: #3f0070; /* Purple background */
+   padding: 20px 50px; /* Adjusted for smaller padding */
+   margin-left: 18.5rem; /* Adjust to match sidebar width */
+   text-align: left;
+   position: relative;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: auto;
 }
 
 .page-title {
-    font-size: 28px;
-    color: #FFFFFF;
-    font-weight: bold;
-    font-family: 'Poppins', sans-serif;
+   font-size: 28px;
+   color: #ffffff;
+   font-weight: bold;
+   font-family: "Poppins", sans-serif;
 }
 
 .account {
-    display: flex;
-    align-items: center;
+   display: flex;
+   align-items: center;
 }
 
 .account-link {
-    display: inline-block;
+   display: inline-block;
 }
 
 .account-icon {
-    width: 3.75rem; /* Responsive equivalent of 60px */
-    height: auto; /* Ensures the height follows the aspect ratio */
-    border-radius: 50%; /* Circular shape */
-    aspect-ratio: 1 / 1; /* Maintains a perfect circle */
-    object-fit: cover;
-    border: 0.125rem solid #FFFFFF; /* White border */
-    transition: transform 0.3s ease;
+   width: 3.75rem; /* Responsive equivalent of 60px */
+   height: auto; /* Ensures the height follows the aspect ratio */
+   border-radius: 50%; /* Circular shape */
+   aspect-ratio: 1 / 1; /* Maintains a perfect circle */
+   object-fit: cover;
+   border: 0.125rem solid #ffffff; /* White border */
+   transition: transform 0.3s ease;
 }
 
 .account-icon:hover {
-    transform: scale(1.1); /* Hover effect */
+   transform: scale(1.1); /* Hover effect */
 }
 
 @media (max-width: 768px) {
-    .header-container {
-        padding: 15px; /* Adjust padding for smaller screens */
-        margin-left: 0; /* Remove sidebar margin on small screens */
-    }
+   .header-container {
+      padding: 15px; /* Adjust padding for smaller screens */
+      margin-left: 0; /* Remove sidebar margin on small screens */
+   }
 
-    .page-title {
-        font-size: 24px;
-    }
+   .page-title {
+      font-size: 24px;
+   }
 
-    .account-icon {
-        width: 40px; /* Smaller icon for small screens */
-        height: 40px;
-    }
+   .account-icon {
+      width: 40px; /* Smaller icon for small screens */
+      height: 40px;
+   }
 }

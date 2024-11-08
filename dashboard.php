@@ -22,14 +22,32 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barangay Post Proper Southside Barangay Information System</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/DashboardStyle.css">
+    <link rel="stylesheet" href="css/DashboardStyle.css">  
+    <style>
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #ffffff;
+    }
+    .card-text {
+        color: #ffffff;
+        margin-top: 0.625rem;
+        font-weight: 700;
+        font-size: 2rem;
+        border-radius: 0.5rem;
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+    </style>
+    
 </head>
 <body>
 
-<?php include 'sidebar.php'; 
+  <?php include 'sidebar.php'; 
 ?> 
 
 <div class="main-content">
@@ -72,7 +90,7 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
                 Recent Document Requests
             </div>
             <div class="table-container">
-                <table class="table table-striped mb-0">
+                <table class="table mb-0" >
                     <thead>
                         <tr>
                             <th>Transaction ID</th>
@@ -94,7 +112,7 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
                                 <td><?php echo number_format($request['Quantity'] * 50, 2); // Assuming a fixed price of 50 for simplicity ?></td>
                                 <td><?php echo htmlspecialchars($request['DateRequested']); ?></td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm" style="background-color: #61009F; color: white;"
+                                    <button class="action-btn btn-primary btn-sm"
                                             onclick="openModal('<?php echo htmlspecialchars($request['Id']); ?>', 
                                                                 '<?php echo htmlspecialchars($request['Name']); ?>',
                                                                 '<?php echo htmlspecialchars($request['Alias']); ?>',

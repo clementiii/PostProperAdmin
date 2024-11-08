@@ -27,6 +27,50 @@ try {
     <title>Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/Reports.css">
+    <style>
+        .stat-box {
+            color: #ffffff;
+            flex: 1;
+            max-width: 20rem; /* Approximately 300px equivalent */
+            height: 9.375rem; /* Approximately 150px equivalent */
+            border-radius: 0.5rem;
+            opacity: 0.9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow to match the reference */
+            transition: transform 0.2s ease; 
+        }
+        .stat-box h4 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            width: 15.625rem; /* Approximately 250px equivalent */
+            height: 3.125rem; /* Approximately 50px equivalent */
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.15); /* Light overlay background */
+        }
+        .total-reports {
+            background: linear-gradient(to bottom, #4A9ED9, #73C2FB);
+        }
+        .pending {
+            background: linear-gradient(to bottom, #D68910, #F5B041);
+        }
+        .resolved {
+            background: linear-gradient(to bottom, #229954, #27AE60);
+        }
+    </style>
 </head>
 <body>
 <?php 
@@ -36,20 +80,27 @@ try {
 <?php include 'sidebar.php'; ?>
 
 <div class="main-content p-4">
-    <div class="statistic-boxes d-flex justify-content-around mb-4 p-3 rounded">
-    <div class="stat-box text-white p-3 rounded" style="background-color: #73C2FB; width: 18.75rem; height: 9.375rem;">
-        <h5 class="text-center">Total Reports</h5>
-        <p class="text-center">555</p>
-    </div>
-    <div class="stat-box text-dark p-3 rounded" style="background-color: #F5A623; width: 18.75rem; height: 9.375rem;">
-        <h5 class="text-center">Pending</h5>
-        <p class="text-center">555</p>
-    </div>
-    <div class="stat-box text-white p-3 rounded" style="background-color: #4CAF50; width: 18.75rem; height: 9.375rem;">
-        <h5 class="text-center">Resolved</h5>
-        <p class="text-center">555</p>
-    </div>
-</div>
+    <div class="container">
+    <div class="row justify-content-center" style="margin-bottom: 2.813rem;">
+            <div class="col-md-4">
+                <div class="stat-box total-reports bg-primary text-center py-3">
+                    <h4>Total Reports</h4>
+                    <div class="stat-number">200</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-box pending bg-success text-center py-3">
+                    <h4>Pending</h4>
+                    <div class="stat-number">130</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-box resolved bg-secondary text-center py-3">
+                    <h4>Resolved</h4>
+                    <div class="stat-number">70</div>
+                </div>
+            </div>
+        </div>
 
     <div class="container">
         <table class="table table-bordered">
@@ -76,6 +127,7 @@ try {
                 <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
     </div>
 </div>
 

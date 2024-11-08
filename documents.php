@@ -23,29 +23,12 @@ $documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Requests</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Documents.css">
-    <style>
-        /* Table and button styling */
-        .table td, .table th {
-            text-align: center;
-            vertical-align: middle;
-        }
-        .action-button {
-            width: 7vw;
-            height: 4vh;
-            background-color: #61009F !important; 
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none; 
-        }
-      
-    </style>
+    
 </head>
 <body>
 <?php 

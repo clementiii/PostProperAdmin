@@ -95,6 +95,24 @@ td {
    color: #333;
 }
 
+.table td,
+.table th {
+   text-align: center;
+   vertical-align: middle;
+}
+.action-button {
+   width: 7vw;
+   height: 4vh;
+   background-color: #61009f !important;
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: none;
+   border-radius: 8px;
+   text-decoration: none;
+}
+
 /* Header Section styling */
 .header-section {
    width: 100%;
