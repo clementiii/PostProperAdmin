@@ -61,13 +61,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="" method="POST">
             <div class="input-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <input class="textfield" type="text" id="username" name="username" required>
             </div>
 
             <div class="input-group">
                 <label for="password">Password</label>
                 <div style="position: relative;">
-                    <input type="password" id="password" name="password" required>
+                    <input class="textfield" type="password" id="password" name="password" required>
                     <i class="fas fa-eye toggle-password" onclick="togglePassword()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
                 </div>
             </div>

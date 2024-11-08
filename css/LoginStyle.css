@@ -1,84 +1,95 @@
 @font-face {
-    font-family: 'Poppins';
-    src: url(assets/Poppins/Poppins-Bold.ttf);
+   font-family: "Poppins";
+   src: url(assets/Poppins/Poppins-Bold.ttf);
 }
 
-body, html {
-    height: 100%;
-    font-family: 'Poppins', sans-serif;
+body,
+html {
+   height: 100%;
+   font-family: "Poppins", sans-serif;
 }
 
 .logo-section {
-    padding-top: 150px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
+   padding-top: 5rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .logo-section img {
-    width: 80px;
-    height: auto;
-    margin-right: 10px;
+   width: 5rem;
+   height: auto;
+   margin-right: 0.6rem;
 }
 
 .logo-section h1 {
-    font-size: 36px;
-    font-weight: bold;
-    margin-top: 30px;
+   font-size: 3rem;
+   font-weight: 700;
+   margin-top: 1.9rem;
 }
 
 .login-box {
-    background-color: #3f0070;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    width: 300px;
+   background-color: #3f0070;
+   padding: 1.9rem;
+   border-radius: 0.6rem;
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+   text-align: left;
 }
 
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 
-.login-box h2{
-    text-align: center;
-    color: #ffffff;
+.login-box h2 {
+   text-align: center;
+   color: #ffffff;
+   font-size: 2rem;
+   font-weight: 700;
 }
 
 .input-group {
-    margin-bottom: 15px;
+   margin-bottom: 1rem;
 }
 
 .input-group label {
-    display: block;
-    text-align: left;
-    color: #ffffff;
-    font-size: 14px;
-    margin-bottom: 5px;
+   display: block;
+   text-align: left;
+   color: #ffffff;
+   font-size: 1.2rem;
+   font-weight: 500;
+   margin-bottom: 0.313rem;
 }
 
 .input-group input {
-    border-radius: 5px;
-    border: none;
-    padding-left: 12px;
-    padding-right: 126px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+   border-radius: 0.5rem;
+   border: none;
+   padding-left: 0.75rem;
+   padding-right: 7.9rem;
+   padding-top: 0.313rem;
+   padding-bottom: 0.313rem;
+   height: 1.9rem;
+}
+
+.input-group:last-of-type {
+   margin-bottom: 2rem;
 }
 
 button {
-    background-color: #8A43C5;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 16px;
+   background-color: #8a43c5;
+   color: #fff;
+   padding: 10px 15px;
+   border: none;
+   border-radius: 0.5rem;
+   cursor: pointer;
+   width: 100%;
+   font-size: 1rem;
+}
+button:hover {
+   background-color: #b52aff;
 }
 
 .error {
-    color: #ff0000;
+   color: #ff0000;
 }

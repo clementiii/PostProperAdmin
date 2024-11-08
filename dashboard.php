@@ -54,6 +54,9 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
     <div class="header-section">
         <img src="assets/mckinley.jpg" alt="city">
         <h1 class="text-center mb-4">Welcome, Admin <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
+            <a href="admin_profile.php">
+        <img src="assets/profile.jpg" alt="Profile" class="profile-icon">
+            </a>
     </div>
     <div class="container mt-5">
         <!-- Summary Cards -->

@@ -44,11 +44,11 @@ try {
 
 <div class="main-content">
     <div class="container">
-        <table class="table table-bordered mt-4">
-            <thead class="table-light">
+        <table class="table table-bordered mt-4 custom-table">
+            <thead>
                 <tr>
                     <th scope="col">Admin Name</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" class="action-column">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,11 +56,9 @@ try {
                 if (!empty($admins)) {
                     foreach ($admins as $admin) {
                         echo "<tr>";
-                        echo "<td>" . htmlspecialchars($admin['name']) . "</td>"; // Escape name to prevent XSS
+                        echo "<td>" . htmlspecialchars($admin['name']) . "</td>";
                         echo "<td class='text-center'>";
-                        // Link to the profile page and pass the admin's ID as a parameter for editing
                         echo "<a href='admin_profile.php?id=" . $admin['id'] . "' class='btn btn-primary'>Edit</a>";
-                        // Add Delete button
                         echo "<a href='delete_admin.php?id=" . $admin['id'] . "' class='btn btn-danger ms-2' onclick='return confirm(\"Are you sure you want to delete this admin?\");'>Delete</a>";
                         echo "</td>";
                         echo "</tr>";
@@ -73,6 +71,7 @@ try {
         </table>
     </div>
 </div>
+
 
 </body>
 </html>

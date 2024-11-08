@@ -1,3 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+body {
+   font-family: "Poppins", sans-serif;
+}
+
+.custom-table thead tr {
+   background-color: #d9d9e6; 
+   color: #06070f;
+}
+
+.custom-table tbody tr:nth-child(odd) {
+   background-color: #ffffff; 
+}
+
+.custom-table tbody tr:nth-child(even) {
+   background-color: #f5f5fb; 
+}
+
+/* Set equal width for all columns */
+.custom-table th,
+.custom-table td {
+   width: 50%; /* Adjust this percentage depending on the number of columns */
+   text-align: center;
+   vertical-align: middle;
+   font-size: 1.125rem;
+}
+
+.custom-table th {
+    font-weight: 700;
+}
+
+.custom-table .action-column .btn {
+   padding: 0.375rem 0.75rem;
+   font-size: 0.875rem; 
+   width: 100px;
+   height: 40px;
+   margin-bottom: 12px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.custom-table .action-column .btn:last-child {
+   margin-bottom: 0;
+}
+
 .main-content {
-    margin-left: 20vh;
+   margin-left: 20vh;
 }

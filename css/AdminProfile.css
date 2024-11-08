@@ -1,28 +1,56 @@
 body {
    background-color: #f0f0fa;
    font-family: "Poppins", sans-serif;
-   overflow: hidden; /* Prevents scrolling */
+   overflow: hidden;
 }
 
 .container {
    display: flex;
    justify-content: center;
    align-items: center;
+   max-width: 100vw;
+   overflow-y: hidden;
 }
 
+/* Back button */
+.back-btn {
+   position: absolute;
+   top: 1rem;
+   left: 1.2rem;
+   background: none;
+   border: none;
+   color: #ffffff;
+   font-size: 1.5rem;
+   cursor: pointer;
+   z-index: 10; /* Ensure back button appears above other content */
+}
+
+.back-btn i {
+   color: #ffffff;
+}
+
+/* Profile Card */
 .profile-card {
    background-color: #3f0070;
    color: #ffffff;
    border-radius: 1rem;
    width: 90vw;
    max-width: 500px;
+   max-height: 90vh; /* Adjust max-height for better responsiveness */
    padding: 2rem;
+   padding-top: 3rem; /* Add padding-top to avoid overlap with back button */
    text-align: center;
+   overflow-y: auto; /* Enable vertical scrolling */
+   scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+.profile-card::-webkit-scrollbar {
+   display: none; /* Hide scrollbar in Chrome, Safari, and Edge */
 }
 
 .profile-image {
-   width: 13vw;
-   max-width: 13vw;
+   width: 12vw;
+   max-width: 80px;
    height: auto;
    aspect-ratio: 1 / 1;
    object-fit: cover;
@@ -34,21 +62,20 @@ body {
    font-weight: bold;
    font-size: 1.5em;
    color: #ffffff;
-   margin-bottom: 1.5rem;
+   margin-bottom: 1.2rem;
 }
 
 .section-title {
    font-size: 1.2em;
    font-weight: 600;
-   margin-bottom: 1.5rem;
+   margin-bottom: 1.2rem;
    color: #ffffff;
 }
 
 .form-label {
    font-weight: bold;
    color: #ffffff;
-   margin-bottom: 0.5rem;
-   text-align: left;
+   margin-bottom: 0.3rem; /* Reduced margin */
 }
 
 .input-field {
@@ -57,9 +84,9 @@ body {
    color: #6c757d;
    border-radius: 0.25em;
    border: none;
-   font-size: 1em;
-   margin-bottom: 1rem;
-   padding-left: 0.5em;
+   font-size: 0.9em; /* Reduced font size */
+   padding: 0.4em 0.5em; /* Reduced padding */
+   margin-bottom: 0.8rem; /* Reduced margin */
 }
 
 .input-field:disabled {
@@ -69,16 +96,16 @@ body {
 
 .edit-btn,
 .save-btn {
-   background-color: #ffffff !important;
+   background-color: #8a43c5 !important;
    color: #ffffff;
    font-weight: bold;
    width: 100%;
-   height: 2.5em;
+   height: 2.2em; /* Reduced height */
    border: none;
    border-radius: 0.25em;
    font-size: 1em;
    transition: background-color 0.3s ease;
-   margin-top: 1.5rem;
+   margin-top: 1.2rem; /* Reduced margin */
 }
 
 .edit-btn:hover,
