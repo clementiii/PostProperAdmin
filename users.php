@@ -19,6 +19,12 @@ try {
     echo "Error: " . $e->getMessage();
     exit;
 }
+
+// Fetch count of registered residents (user accounts)
+$registeredResidentsQuery = "SELECT COUNT(*) AS count FROM user_accounts";
+$registeredResidentsResult = $conn->query($registeredResidentsQuery)->fetch(PDO::FETCH_ASSOC);
+$registeredResidentsCount = $registeredResidentsResult['count'];
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +52,7 @@ try {
             <div class="col-md-4">
                 <div class="stat-box total-reports bg-primary text-center py-3">
                     <h4>Registered Residents</h4>
-                    <div class="stat-number">200</div>
+                    <div class="stat-number"><?php echo $registeredResidentsCount; ?></div>
                 </div>
             </div>
             <div class="col-md-4">

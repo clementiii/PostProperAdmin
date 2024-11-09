@@ -10,9 +10,24 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 // Database connection
 require 'db.php';
 
-// Fetch the recent document requests for the table
+// Fetch recent document requests for the table
 $documentRequestsTableQuery = "SELECT * FROM document_requests ORDER BY DateRequested DESC LIMIT 5";
 $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch count of registered residents (user accounts)
+$registeredResidentsQuery = "SELECT COUNT(*) AS count FROM user_accounts";
+$registeredResidentsResult = $conn->query($registeredResidentsQuery)->fetch(PDO::FETCH_ASSOC);
+$registeredResidentsCount = $registeredResidentsResult['count'];
+
+// Fetch count of document requests
+$documentRequestsQuery = "SELECT COUNT(*) AS count FROM document_requests";
+$documentRequestsResult = $conn->query($documentRequestsQuery)->fetch(PDO::FETCH_ASSOC);
+$documentRequestsCount = $documentRequestsResult['count'];
+
+// Fetch count of incident reports
+$incidentReportsQuery = "SELECT COUNT(*) AS count FROM incident_reports";
+$incidentReportsResult = $conn->query($incidentReportsQuery)->fetch(PDO::FETCH_ASSOC);
+$incidentReportsCount = $incidentReportsResult['count'];
 ?>
 
 <!DOCTYPE html>
@@ -47,8 +62,7 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
 </head>
 <body>
 
-  <?php include 'sidebar.php'; 
-?> 
+  <?php include 'sidebar.php'; ?> 
 
 <div class="main-content">
     <div class="header-section">
@@ -65,7 +79,7 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Registered Residents</h5>
-                        <h3 class="card-text">200</h3>
+                        <h3 class="card-text"><?php echo $registeredResidentsCount; ?></h3>
                     </div>
                 </div>
             </div>
@@ -73,7 +87,7 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
                 <div class="card text-white bg-warning mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Document Requests</h5>
-                        <h3 class="card-text">50</h3>
+                        <h3 class="card-text"><?php echo $documentRequestsCount; ?></h3>
                     </div>
                 </div>
             </div>
@@ -81,7 +95,7 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
                 <div class="card text-white bg-danger mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Incident Reports</h5>
-                        <h3 class="card-text">34</h3>
+                        <h3 class="card-text"><?php echo $incidentReportsCount; ?></h3>
                     </div>
                 </div>
             </div>
@@ -112,7 +126,7 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
                                 <td><?php echo htmlspecialchars($request['Name']); ?></td>
                                 <td><?php echo htmlspecialchars($request['DocumentType']); ?></td>
                                 <td><?php echo htmlspecialchars($request['Quantity']); ?></td>
-                                <td><?php echo number_format($request['Quantity'] * 50, 2); // Assuming a fixed price of 50 for simplicity ?></td>
+                                <td><?php echo number_format($request['Quantity'] * 50, 2); ?></td>
                                 <td><?php echo htmlspecialchars($request['DateRequested']); ?></td>
                                 <td>
                                     <button class="action-btn btn-primary btn-sm"
@@ -146,7 +160,6 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #61009F;">
-                <!-- Transaction ID as Header -->
                 <h5 class="modal-title text-white" id="userModalLabel" style="font-size: 1.5rem; font-weight: bold;">
                     <span id="modalTransactionIDHeader"></span>
                 </h5>
@@ -178,27 +191,20 @@ $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchA
 <script>
 // Function to open modal and populate with data
 function openModal(transactionID, name, alias, documentType, dateRequested, quantity, price, address, gender, civilStatus, occupation, tin, ctc) {
-    // Set Transaction ID as the header title
-    document.getElementById('modalTransactionIDHeader').textContent = transactionID;
-
-    // Populate modal body details
-    document.getElementById('modalTransactionID').textContent = transactionID;
-    document.getElementById('modalName').textContent = name;
-    document.getElementById('modalAlias').textContent = alias;
-    document.getElementById('modalDocumentType').textContent = documentType;
-    document.getElementById('modalDateRequested').textContent = dateRequested;
-    document.getElementById('modalQuantity').textContent = quantity;
-    document.getElementById('modalPrice').textContent = price;
-    document.getElementById('modalAddress').textContent = address;
-    document.getElementById('modalGender').textContent = gender;
-    document.getElementById('modalCivilStatus').textContent = civilStatus;
-    document.getElementById('modalOccupation').textContent = occupation;
-    document.getElementById('modalTIN').textContent = tin;
-    document.getElementById('modalCTC').textContent = ctc;
-
-    // Show the modal
-    var myModal = new bootstrap.Modal(document.getElementById('userModal'));
-    myModal.show();
+    document.getElementById('modalTransactionID').innerText = transactionID;
+    document.getElementById('modalName').innerText = name;
+    document.getElementById('modalAlias').innerText = alias;
+    document.getElementById('modalDocumentType').innerText = documentType;
+    document.getElementById('modalDateRequested').innerText = dateRequested;
+    document.getElementById('modalQuantity').innerText = quantity;
+    document.getElementById('modalPrice').innerText = price;
+    document.getElementById('modalAddress').innerText = address;
+    document.getElementById('modalGender').innerText = gender;
+    document.getElementById('modalCivilStatus').innerText = civilStatus;
+    document.getElementById('modalOccupation').innerText = occupation;
+    document.getElementById('modalTIN').innerText = tin;
+    document.getElementById('modalCTC').innerText = ctc;
+    new bootstrap.Modal(document.getElementById('userModal')).show();
 }
 </script>
 </body>

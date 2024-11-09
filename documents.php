@@ -10,11 +10,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 $price = 100.00; // Default price for document requests
 include 'db.php'; // Include the database connection
 
-// Query to get document requests from the database
-$query = "SELECT Id, Name, DocumentType, Quantity, $price*Quantity AS Price, DateRequested FROM document_requests";
+// Query to get document requests and calculate total requests
+$query = "SELECT Id, Name, DocumentType, Quantity, $price * Quantity AS Price, DateRequested, Status FROM document_requests";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
+
+// Get counts for the summary cards
+$totalRequestQuery = "SELECT COUNT(*) AS total FROM document_requests";
+$pendingCountQuery = "SELECT COUNT(*) AS pending FROM document_requests WHERE LOWER(Status) = 'pending'";
+$approvedCountQuery = "SELECT COUNT(*) AS approved FROM document_requests WHERE LOWER(Status) = 'approved'";
+$rejectedCountQuery = "SELECT COUNT(*) AS rejected FROM document_requests WHERE LOWER(Status) = 'rejected'";
+
+$totalRequest = $conn->query($totalRequestQuery)->fetch(PDO::FETCH_ASSOC)['total'];
+$pendingCount = $conn->query($pendingCountQuery)->fetch(PDO::FETCH_ASSOC)['pending'];
+$approvedCount = $conn->query($approvedCountQuery)->fetch(PDO::FETCH_ASSOC)['approved'];
+$rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rejected'];
 ?>
 
 <!DOCTYPE html>
@@ -24,61 +35,54 @@ $documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Requests</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Documents.css">
-    
 </head>
 <body>
 <?php 
     $pageTitle = "Document Requests";
     include 'header.php';
-?>
-<?php include 'sidebar.php'; ?> 
+    include 'sidebar.php'; 
+?> 
 
 <div class="main-content">
+    <!-- Summary Cards for Document Request Statuses -->
     <div class="statistic-container row text-center mb-4">
-    <div class="col">
-        <div class="card" style="background: linear-gradient(180deg, #3498DB, #5DADE2); width: 250px; height: 150px; color: white;">
-            <h2 class="card-title">Total Request</h2>
-            <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
-                245
+        <div class="col">
+            <div class="card" style="background: linear-gradient(180deg, #3498DB, #5DADE2); width: 250px; height: 150px; color: white;">
+                <h2 class="card-title">Total Request</h2>
+                <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                    <?php echo $totalRequest; ?>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card" style="background: linear-gradient(180deg, #D68910, #F5B041); width: 250px; height: 150px; color: white;">
-            <h2 class="card-title">Pending</h2>
-            <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
-                56
+        <div class="col">
+            <div class="card" style="background: linear-gradient(180deg, #D68910, #F5B041); width: 250px; height: 150px; color: white;">
+                <h2 class="card-title">Pending</h2>
+                <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                    <?php echo $pendingCount; ?>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card" style="background: linear-gradient(180deg, #229954, #27AE60); width: 250px; height: 150px; color: white;">
-            <h2 class="card-title">Approved</h2>
-            <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
-                165
+        <div class="col">
+            <div class="card" style="background: linear-gradient(180deg, #229954, #27AE60); width: 250px; height: 150px; color: white;">
+                <h2 class="card-title">Approved</h2>
+                <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                    <?php echo $approvedCount; ?>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card" style="background: linear-gradient(180deg, #A93226, #E74C3C); width: 250px; height: 150px; color: white;">
-            <h2 class="card-title">Rejected</h2>
-            <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
-                4
+        <div class="col">
+            <div class="card" style="background: linear-gradient(180deg, #A93226, #E74C3C); width: 250px; height: 150px; color: white;">
+                <h2 class="card-title">Rejected</h2>
+                <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                    <?php echo $rejectedCount; ?>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-
-    <div class="row text-center mb-4">
-        <!-- Summary Cards -->
-        <!-- Keep your existing summary card code here -->
     </div>
 
+    <!-- Document Requests Table -->
     <div class="table-container">
         <table class="table table-striped mb-0">
             <thead>
@@ -89,12 +93,12 @@ $documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Date Requested</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Check if there are results
                 if (!empty($documentRequests)) {
                     foreach ($documentRequests as $row) {
                         echo "<tr>";
@@ -104,11 +108,12 @@ $documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
                         echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
                         echo "<td>₱ " . htmlspecialchars($row['Price']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
+                        echo "<td>" . ucfirst(htmlspecialchars(strtolower($row['Status']))) . "</td>";
                         echo '<td><a href="document_verify.php" class="action-button">View</a></td>';
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='7'>No document requests found.</td></tr>";
+                    echo "<tr><td colspan='8'>No document requests found.</td></tr>";
                 }
                 ?>
             </tbody>
