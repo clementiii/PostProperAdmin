@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2024 at 12:14 PM
+-- Generation Time: Nov 09, 2024 at 03:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,18 +66,32 @@ CREATE TABLE `document_requests` (
   `Purpose` text DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL,
-  `DateRequested` date DEFAULT NULL
+  `DateRequested` date DEFAULT NULL,
+  `valid_id` varchar(255) NOT NULL,
+  `request_picture` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `document_requests`
 --
 
-INSERT INTO `document_requests` (`Id`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`) VALUES
-(1, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20'),
-(2, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01'),
-(3, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01'),
-(4, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20');
+INSERT INTO `document_requests` (`Id`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `request_picture`) VALUES
+(1, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Approved', 2, '2024-11-20', '', ''),
+(2, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', ''),
+(3, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', ''),
+(4, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', ''),
+(5, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', ''),
+(6, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', ''),
+(7, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', ''),
+(8, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', ''),
+(9, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', ''),
+(10, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Rejected', 1, '2024-11-01', '', ''),
+(11, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Pending', 1, '2024-11-01', '', ''),
+(12, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', ''),
+(13, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', ''),
+(14, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', ''),
+(15, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', ''),
+(16, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '');
 
 -- --------------------------------------------------------
 
@@ -100,8 +114,10 @@ CREATE TABLE `incident_reports` (
 --
 
 INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `incident_picture`, `date_submitted`, `status`) VALUES
-(1, 'Robert Youngstown', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '', '2024-11-01 22:29:27', 'pending'),
-(2, 'Clement Cabus', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'pending');
+(1, 'Robert Youngstown', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '', '2024-11-01 22:29:27', 'resolved'),
+(2, 'Clement Cabus', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'pending'),
+(3, 'Jed Masterson', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '', '2024-11-01 22:29:27', 'pending'),
+(4, 'Danny Sulaiman', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'pending');
 
 -- --------------------------------------------------------
 
@@ -120,16 +136,18 @@ CREATE TABLE `user_accounts` (
   `adrZone` varchar(20) DEFAULT NULL,
   `adrStreet` varchar(100) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `user_profile_picture` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_accounts`
 --
 
-INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`) VALUES
-(1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', NULL, 'Kalaw Street', '0000-00-00', 'clempassword11'),
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', NULL, 'Kalaw Street', '0000-00-00', 'password');
+INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`) VALUES
+(1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', NULL, 'Kalaw Street', '0000-00-00', 'clempassword11', ''),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', NULL, 'Kalaw Street', '0000-00-00', 'password', ''),
+(5, 'Joshua', 'Fernandez', 'Jferns', 20, 'male', '497- A', NULL, 'Kalaw Street', '0000-00-00', 'clempassword11', '');
 
 --
 -- Indexes for dumped tables
@@ -169,25 +187,25 @@ ALTER TABLE `user_accounts`
 -- AUTO_INCREMENT for table `admin_accounts`
 --
 ALTER TABLE `admin_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `document_requests`
 --
 ALTER TABLE `document_requests`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `incident_reports`
 --
 ALTER TABLE `incident_reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
