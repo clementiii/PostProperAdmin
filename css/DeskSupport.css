@@ -1,3 +1,102 @@
-.main-content {
-    margin-left: 20vh;
+.bg-sidebar {
+   background-color: #fafafa; /* Sidebar background color */
+}
+
+.chat-container {
+   background-color: #f0f0fa; /* Chat window background color */
+}
+
+/* List group item styling */
+.list-group-item {
+   margin-bottom: 1rem; /* Space between each user item */
+   padding: 0.5rem 1rem;
+   border-radius: 0.5rem;
+   height: 5rem; /* Set height of list group item */
+   display: flex;
+   align-items: center;
+}
+
+/* Profile image styling inside list group item */
+.list-group-item img {
+   width: 40px;
+   height: 40px;
+   object-fit: cover;
+   margin-right: 0.75rem;
+}
+
+/* Sidebar styles */
+.bg-purple {
+   background-color: #61009f;
+}
+
+.btn-purple {
+   background-color: #61009f;
+   color: #fff;
+}
+
+.btn-purple:hover {
+   background-color: #8a43c5;
+}
+
+/* Chat window */
+.chat-window {
+   height: calc(100vh - 120px); /* Adjust height for header/footer if needed */
+   overflow-y: auto;
+   padding: 20px;
+}
+
+/* Chat message styling */
+.chat-message {
+   max-width: 55%; /* Set width of chat message */
+   margin-bottom: 1.5rem; /* Space between each message */
+   position: relative;
+}
+
+.chat-message.user {
+   text-align: left;
+}
+
+.chat-message.admin {
+   text-align: right;
+   margin-left: auto; /* Move admin messages to the far right */
+}
+
+.chat-message .message-content {
+   display: inline-block;
+   padding: 15px;
+   border-radius: 10px;
+}
+
+.chat-message.user .message-content {
+   background-color: #ffffff;
+   color: #333;
+}
+
+.chat-message.admin .message-content {
+   background-color: #61009f;
+   color: #fff;
+}
+
+/* Time styling in chat messages */
+.chat-message .message-time {
+   display: block;
+   font-size: 0.8rem;
+   color: #999;
+   margin-top: 0.25rem;
+   text-align: right;
+}
+
+/* Chat input */
+.chat-input {
+   padding: 15px;
+   border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+   border-radius: 20px;
+   padding: 10px;
+}
+
+.chat-input button {
+   border-radius: 50%;
 }
