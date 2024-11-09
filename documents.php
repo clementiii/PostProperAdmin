@@ -109,7 +109,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
                         echo "<td>₱ " . htmlspecialchars($row['Price']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
                         echo "<td>" . ucfirst(htmlspecialchars(strtolower($row['Status']))) . "</td>";
-                        echo '<td><a href="document_verify.php" class="action-button">View</a></td>';
+                        echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button">View</a></td>';
                         echo "</tr>";
                     }
                 } else {
