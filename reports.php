@@ -9,11 +9,29 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 try {
-    // Query to fetch incident reports
-    $sql = "SELECT id, name, title, description, date_submitted, status FROM incident_reports";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Query to fetch the total number of incident reports
+    $sqlTotal = "SELECT COUNT(*) AS count FROM incident_reports";
+    $stmtTotal = $conn->prepare($sqlTotal);
+    $stmtTotal->execute();
+    $totalReports = $stmtTotal->fetch(PDO::FETCH_ASSOC)['count'];
+
+    // Query to fetch the number of reports with status 'Pending'
+    $sqlPending = "SELECT COUNT(*) AS count FROM incident_reports WHERE LOWER(status) = 'pending'";
+    $stmtPending = $conn->prepare($sqlPending);
+    $stmtPending->execute();
+    $pendingReports = $stmtPending->fetch(PDO::FETCH_ASSOC)['count'];
+
+    // Query to fetch the number of reports with status 'Resolved'
+    $sqlResolved = "SELECT COUNT(*) AS count FROM incident_reports WHERE LOWER(status) = 'resolved'";
+    $stmtResolved = $conn->prepare($sqlResolved);
+    $stmtResolved->execute();
+    $resolvedReports = $stmtResolved->fetch(PDO::FETCH_ASSOC)['count'];
+
+    // Query to fetch all incident reports for the table
+    $sqlReports = "SELECT id, name, title, description, date_submitted, status FROM incident_reports";
+    $stmtReports = $conn->prepare($sqlReports);
+    $stmtReports->execute();
+    $reports = $stmtReports->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -81,28 +99,29 @@ try {
 
 <div class="main-content p-4">
     <div class="container">
-    <div class="row justify-content-center" style="margin-bottom: 2.813rem;">
+        <!-- Dynamic summary boxes -->
+        <div class="row justify-content-center" style="margin-bottom: 2.813rem;">
             <div class="col-md-4">
                 <div class="stat-box total-reports bg-primary text-center py-3">
                     <h4>Total Reports</h4>
-                    <div class="stat-number">200</div>
+                    <div class="stat-number"><?php echo $totalReports; ?></div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stat-box pending bg-success text-center py-3">
                     <h4>Pending</h4>
-                    <div class="stat-number">130</div>
+                    <div class="stat-number"><?php echo $pendingReports; ?></div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stat-box resolved bg-secondary text-center py-3">
                     <h4>Resolved</h4>
-                    <div class="stat-number">70</div>
+                    <div class="stat-number"><?php echo $resolvedReports; ?></div>
                 </div>
             </div>
         </div>
 
-    <div class="container">
+        <!-- Incident Reports Table -->
         <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
@@ -127,7 +146,6 @@ try {
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
     </div>
 </div>
 
