@@ -35,7 +35,15 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
     <title>Users</title>
     <link rel="stylesheet" href="css/users.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-    
+    <script>
+        // Function to show confirmation before deleting
+        function confirmDelete(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                // Redirect to deleteUser.php with the user ID
+                window.location.href = 'deleteUser.php?id=' + userId;
+            }
+        }
+    </script>
 </head>
 <body>
 <?php 
@@ -98,7 +106,9 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
                         <td><?php echo htmlspecialchars($user['age']); ?></td>
                         <td><?php echo htmlspecialchars($user['gender']); ?></td>
                         <td><?php echo date('m/d/Y', strtotime($user['birthday'])); ?></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
+                        <td>
+                            <button class="btn btn-danger" onclick="confirmDelete(<?php echo $user['id']; ?>)">Delete</button>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
