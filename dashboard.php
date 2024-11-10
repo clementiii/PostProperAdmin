@@ -156,9 +156,9 @@ $incidentReportsCount = $incidentReportsResult['count'];
                                                                 '<?php echo htmlspecialchars($request['Address']); ?>',
                                                                 '<?php echo htmlspecialchars($request['Gender']); ?>',
                                                                 '<?php echo htmlspecialchars($request['CivilStatus']); ?>',
-                                                                'Occupation',
-                                                                'TIN',
-                                                                'CTC')">
+                                                                '<?php echo htmlspecialchars($request['TIN_No']); ?>',
+                                                                '<?php echo htmlspecialchars($request['CTC_No']); ?>',
+                                                                )">
                                         View
                                     </button>
                                 </td>
@@ -192,7 +192,6 @@ $incidentReportsCount = $incidentReportsResult['count'];
                 <p><strong>Address:</strong> <span id="modalAddress"></span></p>
                 <p><strong>Gender:</strong> <span id="modalGender"></span></p>
                 <p><strong>Civil Status:</strong> <span id="modalCivilStatus"></span></p>
-                <p><strong>Occupation:</strong> <span id="modalOccupation"></span></p>
                 <p><strong>TIN #:</strong> <span id="modalTIN"></span></p>
                 <p><strong>CTC #:</strong> <span id="modalCTC"></span></p>
             </div>
@@ -206,7 +205,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
 // Function to open modal and populate with data
-function openModal(transactionID, name, alias, documentType, dateRequested, quantity, price, address, gender, civilStatus, occupation, tin, ctc) {
+function openModal(transactionID, name, alias, documentType, dateRequested, quantity, price, address, gender, civilStatus, tin, ctc) {
     document.getElementById('modalTransactionID').innerText = transactionID;
     document.getElementById('modalName').innerText = name;
     document.getElementById('modalAlias').innerText = alias;
@@ -217,7 +216,6 @@ function openModal(transactionID, name, alias, documentType, dateRequested, quan
     document.getElementById('modalAddress').innerText = address;
     document.getElementById('modalGender').innerText = gender;
     document.getElementById('modalCivilStatus').innerText = civilStatus;
-    document.getElementById('modalOccupation').innerText = occupation;
     document.getElementById('modalTIN').innerText = tin;
     document.getElementById('modalCTC').innerText = ctc;
     new bootstrap.Modal(document.getElementById('userModal')).show();
