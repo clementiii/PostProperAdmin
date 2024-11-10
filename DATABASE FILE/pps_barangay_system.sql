@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2024 at 03:47 PM
+-- Generation Time: Nov 10, 2024 at 07:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,6 +47,21 @@ INSERT INTO `admin_accounts` (`id`, `name`, `username`, `password`, `profile_pic
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `barangay_announcements`
+--
+
+CREATE TABLE `barangay_announcements` (
+  `id` int(11) NOT NULL,
+  `announcement_title` varchar(255) NOT NULL,
+  `description_text` text NOT NULL,
+  `announcement_images` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `posted_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `document_requests`
 --
 
@@ -76,7 +91,7 @@ CREATE TABLE `document_requests` (
 --
 
 INSERT INTO `document_requests` (`Id`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `request_picture`) VALUES
-(1, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Approved', 2, '2024-11-20', '', ''),
+(1, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '123123123414514', '124124124124124', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Approved', 2, '2024-11-20', '', ''),
 (2, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', ''),
 (3, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', ''),
 (4, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', ''),
@@ -161,6 +176,12 @@ ALTER TABLE `admin_accounts`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `barangay_announcements`
+--
+ALTER TABLE `barangay_announcements`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `document_requests`
 --
 ALTER TABLE `document_requests`
@@ -188,6 +209,12 @@ ALTER TABLE `user_accounts`
 --
 ALTER TABLE `admin_accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `barangay_announcements`
+--
+ALTER TABLE `barangay_announcements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `document_requests`
