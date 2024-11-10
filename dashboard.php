@@ -10,6 +10,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 // Database connection
 require 'db.php';
 
+// Fetch the admin's profile picture from the database
+$adminId = $_SESSION['admin_id']; // Ensure 'admin_id' is stored in session
+try {
+    $sql = "SELECT profile_picture FROM admin_accounts WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$adminId]);
+    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Set profile picture path or default fallback image
+    $profilePicture = !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg';
+} catch (PDOException $e) {
+    $profilePicture = 'assets/profile.jpg'; // Set fallback if error occurs
+}
+
+
+
 // Fetch recent document requests for the table
 $documentRequestsTableQuery = "SELECT * FROM document_requests ORDER BY DateRequested DESC LIMIT 5";
 $documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchAll(PDO::FETCH_ASSOC);
@@ -63,15 +79,15 @@ $incidentReportsCount = $incidentReportsResult['count'];
 <body>
 
   <?php include 'sidebar.php'; ?> 
-
-<div class="main-content">
-    <div class="header-section">
-        <img src="assets/mckinley.jpg" alt="city">
-        <h1 class="text-center mb-4">Welcome, Admin <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
+  
+  <div class="main-content">
+        <div class="header-section">
+            <img src="assets/mckinley.jpg" alt="city">
+            <h1 class="text-center mb-4">Welcome, Admin <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
             <a href="admin_profile.php">
-        <img src="assets/profile.jpg" alt="Profile" class="profile-icon">
+                <img src="<?php echo $profilePicture; ?>" alt="Profile" class="profile-icon rounded-circle">
             </a>
-    </div>
+        </div>
     <div class="container mt-5">
         <!-- Summary Cards -->
         <div class="row text-center mb-4">
