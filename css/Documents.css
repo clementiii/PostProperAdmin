@@ -101,22 +101,28 @@ td {
    vertical-align: middle;
 }
 .action-button {
-   width: 7vw;
-   height: 4vh;
+   width: 6.25rem;
+   height: 2.5rem;
    background-color: #61009f !important;
-   color: white;
+   color: #f0f0fa;
    display: flex;
    align-items: center;
    justify-content: center;
    border: none;
    border-radius: 8px;
    text-decoration: none;
+   cursor: pointer;
+}
+.action-button:hover {
+   color: #f0f0fa;
+   background-color: #b52aff !important; /* Keep the original color */
+   text-decoration: none; /* No underline */
 }
 
 /* Header Section styling */
 .header-section {
    width: 100%;
-   height: 300px;
+   height: 18.75rem;
    margin: 0;
    overflow: hidden;
    display: flex;
@@ -141,7 +147,7 @@ td {
 .card-title {
    font-size: 18px;
    font-weight: bold;
-   color: #ffffff;
+   color: #f0f0fa;
    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Added shadow */
 }
 
@@ -149,7 +155,7 @@ td {
    font-size: 2rem;
    font-weight: bold;
    border-radius: 0.5rem;
-   color: #ffffff;
+   color: #f0f0fa;
    margin-top: 10px;
    background: rgba(255, 255, 255, 0.1);
 }

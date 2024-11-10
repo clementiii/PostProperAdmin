@@ -1,27 +1,66 @@
+/* Ensure the main container respects the sidebar width */
+.main-container {
+   margin-left: 28.75rem; /* Shift main content to the right by 18.75rem */
+   max-width: 900px; /* Adjust width as needed */
+   padding: 20px;
+   margin-top: 2rem; /* Adds top margin */
+}
+
+.main-content {
+   margin-left: 18.75rem; /* Aligns main content to start after sidebar */
+   padding: 2rem;
+}
+
+.action-btn {
+   background-color: #4a148c !important;
+   color: #ffffff;
+   width: 7.813rem;
+   height: 2.5rem;
+   border: none;
+   border-radius: 0.5rem;
+   text-decoration: none;
+   cursor: pointer;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.action-btn:hover {
+   background-color: #b52aff !important;
+}
+
+.img-thumbnail {
+   cursor: pointer;
+}
+
 .profile-img {
-   width: 10em; /* Approximately 150px */
-   height: 10em; /* Approximately 150px */
+   width: 10em;
+   height: 10em;
    border-radius: 50%;
    object-fit: cover;
 }
+
 .details-section {
    display: flex;
    flex-wrap: wrap;
    gap: 2rem;
 }
+
 .details-section .detail-item {
    flex: 1;
    min-width: 250px;
 }
+
 .id-img {
    max-width: 100%;
-            height: auto;
+   height: auto;
    border: 1px solid #ddd;
 }
+
 .status-select {
    max-width: 200px;
 }
-.main-content {
-   margin-left: 250px; /* Adjust based on sidebar width */
-   padding: 2rem;
+.modal-dialog-top {
+   top: 10%;
+   position: absolute;
+   left: 50%;
+   transform: translate(-50%, 0);
 }

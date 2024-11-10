@@ -87,13 +87,13 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
         <table class="table table-striped mb-0">
             <thead>
                 <tr>
-                    <th>Transaction ID</th>
-                    <th>Name</th>
-                    <th>Document Type</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Date Requested</th>
-                    <th>Status</th>
+                    <th data-sort="number">Transaction ID</th>
+                    <th data-sort="string">Name</th>
+                    <th data-sort="string">Document Type</th>
+                    <th data-sort="number">Quantity</th>
+                    <th data-sort="number">Price</th>
+                    <th data-sort="date">Date Requested</th>
+                    <th data-sort="status">Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -124,22 +124,45 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".table");
-    const headers = table.querySelectorAll("th");
+    const headers = table.querySelectorAll("th[data-sort]");
     const rows = Array.from(table.querySelectorAll("tbody tr"));
+    let sortDirection = {};
 
     headers.forEach((header, index) => {
+        const type = header.getAttribute("data-sort");
+        sortDirection[type] = 1; // Initialize sorting direction (1 for ascending, -1 for descending)
+
         header.addEventListener("click", () => {
-            const sortedRows = rows.sort((a, b) => {
-                const cellA = a.cells[index].innerText.toLowerCase();
-                const cellB = b.cells[index].innerText.toLowerCase();
+            let sortedRows;
+
+            // Three-way sorting for "status" column
+            if (type === "status") {
+                const statusOrderAsc = { "pending": 1, "approved": 2, "rejected": 3 };
+                const statusOrderDesc = { "rejected": 1, "approved": 2, "pending": 3 };
+
+                const currentOrder = sortDirection[type] === 1 ? statusOrderAsc : statusOrderDesc;
+                sortedRows = rows.sort((a, b) => currentOrder[a.cells[index].innerText.toLowerCase()] - currentOrder[b.cells[index].innerText.toLowerCase()]);
                 
-                if (cellA < cellB) return -1;
-                if (cellA > cellB) return 1;
-                return 0;
-            });
-            
+                // Toggle sort direction for "status" on each click
+                sortDirection[type] *= -1; 
+            } else if (type === "number") {
+                // Numeric sorting (e.g., Quantity, Price)
+                sortedRows = rows.sort((a, b) => (parseFloat(a.cells[index].innerText.replace(/[^0-9.-]+/g,"")) - parseFloat(b.cells[index].innerText.replace(/[^0-9.-]+/g,""))) * sortDirection[type]);
+            } else if (type === "string") {
+                // Alphabetical sorting (e.g., Name, Document Type)
+                sortedRows = rows.sort((a, b) => a.cells[index].innerText.localeCompare(b.cells[index].innerText) * sortDirection[type]);
+            } else if (type === "date") {
+                // Date sorting (e.g., Date Requested)
+                sortedRows = rows.sort((a, b) => (new Date(b.cells[index].innerText) - new Date(a.cells[index].innerText)) * sortDirection[type]);
+            }
+
+            // Update table with sorted rows
             const tbody = table.querySelector("tbody");
+            tbody.innerHTML = ""; // Clear current rows
             sortedRows.forEach(row => tbody.appendChild(row));
+
+            // Reset other columns' sort direction if not "status"
+            if (type !== "status") sortDirection[type] *= -1; 
         });
     });
 });

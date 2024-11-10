@@ -46,27 +46,7 @@ $conn = null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Verification</title>
     <link rel="stylesheet" href="css/document_verify.css">
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Custom styling for centering and layout */
-        .main-container {
-            max-width: 900px; /* Adjust width as needed */
-            margin: 0 auto; /* Center the container */
-            padding: 20px;
-        }
-        .img-thumbnail {
-            cursor: pointer;
-        }
-        .action-btn{
-            background-color: #4A148C !important;
-            color: #ffffff;
-            width: 7vw;
-            height: 4vh;
-            border-radius: 8px; /* Rounded corners */
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
     <?php 
@@ -76,6 +56,9 @@ $conn = null;
     ?>
 
     <div class="main-container mt-5">
+         <button onclick="history.back()" class="btn btn-secondary mb-3" style="font-size: 1.25rem;">
+            <i class="fas fa-arrow-left"></i>
+        </button>
         <h2 class="text-center mb-4">Document Verification</h2>
         <div class="row">
             <div class="col-md-4 text-center">
@@ -98,7 +81,6 @@ $conn = null;
                         <p><strong>Civil Status:</strong> <?php echo htmlspecialchars($documentRequest['CivilStatus']); ?></p>
                         <p><strong>Purpose:</strong> <?php echo htmlspecialchars($documentRequest['Purpose']); ?></p>
                         <p><strong>Status:</strong> 
-                            <!-- The form will only be submitted on Save button click -->
                             <form method="POST" id="statusForm">
                                 <select id="statusSelect" name="status" class="form-select">
                                     <option value="Pending" <?php echo ($documentRequest['Status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
@@ -122,7 +104,7 @@ $conn = null;
         </div>
         
         <div class="text-center mt-4">
-            <button id="saveBtn" class="action-btn">Save</button>
+            <button id="saveBtn" class="action-btn" data-bs-toggle="modal" data-bs-target="#confirmModal">Save</button>
         </div>
     </div>
 
@@ -130,8 +112,27 @@ $conn = null;
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
+                <div class="modal-body d-flex justify-content-center">
+                    <img id="modalImage" src="" class="img-fluid modal-image" alt="Zoomed Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirm Save</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
-                    <img src="path_to_id_image.jpg" class="img-fluid" alt="Zoomed ID">
+                    Are you sure you want to save the changes?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmSaveBtn">Confirm</button>
                 </div>
             </div>
         </div>
@@ -139,10 +140,21 @@ $conn = null;
 
     <!-- Bootstrap 5 and JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        // When Save button is clicked, submit the form
-        document.getElementById('saveBtn').addEventListener('click', function() {
-            document.getElementById('statusForm').submit(); // Submit the form to update the status
+        // Set clicked image in the modal
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+
+        document.querySelectorAll('.zoomable').forEach(image => {
+            image.addEventListener('click', function() {
+                modalImage.src = this.src;
+            });
+        });
+
+        // Handle confirmation modal actions
+        document.getElementById('confirmSaveBtn').addEventListener('click', function() {
+            document.getElementById('statusForm').submit(); // Submit the form if confirmed
         });
     </script>
 </body>
