@@ -23,25 +23,72 @@ if ($adminId > 0) {
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST['new_password'], $_POST['confirm_new_password'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST['new_password'], $_POST['confirm_new_password'], $_POST['username'])) {
     $oldPassword = $_POST['old_password'];
     $newPassword = $_POST['new_password'];
     $confirmNewPassword = $_POST['confirm_new_password'];
+    $newUsername = $_POST['username'];
 
-    if ($newPassword !== $confirmNewPassword) {
-        echo "<script>alert('New Password and Confirm New Password do not match.');</script>";
-    } else {
-        try {
-            $updateSql = "UPDATE admin_accounts SET password = ? WHERE id = ?";
-            $stmt = $conn->prepare($updateSql);
-            $stmt->execute([password_hash($newPassword, PASSWORD_DEFAULT), $adminId]);
+    // Flags to track what changes were made
+    $passwordChanged = false;
+    $usernameChanged = false;
 
-            echo "<script>alert('Profile updated successfully.');</script>";
-        } catch (PDOException $e) {
-            echo "<script>alert('Error updating profile: " . $e->getMessage() . "');</script>";
+    try {
+        // Fetch current admin data
+        $checkSql = "SELECT username, password FROM admin_accounts WHERE id = ?";
+        $stmt = $conn->prepare($checkSql);
+        $stmt->execute([$adminId]);
+        $currentAdmin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if the username has changed
+        if ($currentAdmin['username'] !== $newUsername) {
+            $updateUsernameSql = "UPDATE admin_accounts SET username = ? WHERE id = ?";
+            $stmt = $conn->prepare($updateUsernameSql);
+            $stmt->execute([$newUsername, $adminId]);
+            $usernameChanged = true;
         }
+
+        // Check if a password change is requested
+        if (!empty($newPassword) && !empty($oldPassword)) {
+            // Verify old password before updating
+            if ($currentAdmin && $currentAdmin['password'] === $oldPassword) {
+                // Check if the new password matches confirmation
+                if ($newPassword === $confirmNewPassword) {
+                    $updatePasswordSql = "UPDATE admin_accounts SET password = ? WHERE id = ?";
+                    $stmt = $conn->prepare($updatePasswordSql);
+                    $stmt->execute([$newPassword, $adminId]);
+                    $passwordChanged = true;
+                } else {
+                    echo "<script>alert('New Password and Confirm New Password do not match.');</script>";
+                }
+            } else {
+                echo "<script>alert('Incorrect old password. Please try again.');</script>";
+            }
+        }
+
+        // Display appropriate success message and redirect
+        if ($usernameChanged && $passwordChanged) {
+            echo "<script>
+                    alert('Username and password changed successfully.');
+                    window.location.href = 'admin_staff.php';
+                  </script>";
+        } elseif ($usernameChanged) {
+            echo "<script>
+                    alert('Username changed successfully.');
+                    window.location.href = 'admin_staff.php';
+                  </script>";
+        } elseif ($passwordChanged) {
+            echo "<script>
+                    alert('Password changed successfully.');
+                    window.location.href = 'admin_staff.php';
+                  </script>";
+        }
+
+    } catch (PDOException $e) {
+        echo "<script>alert('Error updating profile: " . $e->getMessage() . "');</script>";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
