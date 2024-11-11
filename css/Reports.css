@@ -1,5 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body {
+   background-color: #f0f0fa !important;
+}
 .main-content {
    margin-left: 20vh;
+}
+.container {
+   font-family: "Poppins", sans-serif;
+}
+.stat-box {
+   color: #ffffff;
+   flex: 1;
+   max-width: 20rem; /* Approximately 300px equivalent */
+   height: 9.375rem; /* Approximately 150px equivalent */
+   border-radius: 0.5rem;
+   opacity: 0.9;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow to match the reference */
+   transition: transform 0.2s ease;
+}
+
+.stat-box h4 {
+   font-size: 1.5rem;
+   font-weight: 500;
+   margin-bottom: 0.5rem;
+}
+
+.stat-number {
+   font-size: 2rem;
+   font-weight: bold;
+   width: 15.625rem; /* Approximately 250px equivalent */
+   height: 3.125rem; /* Approximately 50px equivalent */
+   background: rgba(255, 255, 255, 0.1);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 5px;
+   margin-top: 0.5rem;
+   background-color: rgba(255, 255, 255, 0.15); /* Light overlay background */
+}
+.total-reports {
+   background: linear-gradient(to bottom, #4a9ed9, #73c2fb);
+}
+.pending {
+   background: linear-gradient(to bottom, #d68910, #f5b041);
+}
+.resolved {
+   background: linear-gradient(to bottom, #229954, #27ae60);
 }
 .action-button {
    width: 7vw;
@@ -13,6 +64,10 @@
    border-radius: 8px; /* Rounded corners */
    text-decoration: none; /* Removes underline from link */
 }
+.table {
+   margin-top: 2.813rem;
+}
+
 .table td,
 .table th {
    text-align: center;
@@ -25,10 +80,10 @@
 }
 
 /* Set alternating column colors */
-.table tbody td:nth-child(odd) {
-   background-color: #ffffff; /* White for odd columns */
+.table tbody tr:nth-child(odd) {
+   background-color: #ffffff;
 }
 
-.table tbody td:nth-child(even) {
-   background-color: #f5f5fb; /* Light gray for even columns */
+.table tbody tr:nth-child(even) {
+   background-color: #f5f5fb;
 }

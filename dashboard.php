@@ -59,21 +59,6 @@ $incidentReportsCount = $incidentReportsResult['count'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/DashboardStyle.css">  
-    <style>
-    .card-title {
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: #ffffff;
-    }
-    .card-text {
-        color: #ffffff;
-        margin-top: 0.625rem;
-        font-weight: 700;
-        font-size: 2rem;
-        border-radius: 0.5rem;
-        background-color: rgba(255, 255, 255, 0.15);
-    }
-    </style>
     
 </head>
 <body>
@@ -92,7 +77,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
         <!-- Summary Cards -->
         <div class="row text-center mb-4">
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card text-white bg-primary mb-3">
+                <div class="card card-resident text-white mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Registered Residents</h5>
                         <h3 class="card-text"><?php echo $registeredResidentsCount; ?></h3>
@@ -100,7 +85,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card text-white bg-warning mb-3">
+                <div class="card card-request text-white  mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Document Requests</h5>
                         <h3 class="card-text"><?php echo $documentRequestsCount; ?></h3>
@@ -108,7 +93,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card text-white bg-danger mb-3">
+                <div class="card card-reports text-white mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Incident Reports</h5>
                         <h3 class="card-text"><?php echo $incidentReportsCount; ?></h3>

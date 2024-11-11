@@ -1,8 +1,21 @@
-/* Base styling */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
 body {
    font-family: "Poppins", sans-serif;
    font-size: 1.25rem;
    background-color: #f0f0f0;
+}
+
+.card-resident {
+   background: linear-gradient(180deg, #3498db, #5dade2);
+}
+
+.card-request {
+   background: linear-gradient(180deg, #d68910, #f5b041);
+}
+
+.card-reports {
+   background: linear-gradient(180deg, #a93226, #e74c3c);
 }
 
 .header-section {
@@ -120,14 +133,16 @@ td {
 .card {
    border-radius: 0.625rem;
    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
-   background-color: #fff;
+   background-color: whitesmoke;
    padding: 1.25rem;
    border: 1px solid #e0e0e0;
 }
 .card-title {
+   font-family: "Poppins", sans-serif;
    font-size: 1.5rem;
    font-weight: 500;
    color: #ffffff;
+   padding-bottom: 0.5rem;
 }
 .card-text {
    color: #ffffff;

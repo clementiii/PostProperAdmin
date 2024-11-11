@@ -45,50 +45,6 @@ try {
     <title>Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/Reports.css">
-    <style>
-        .stat-box {
-            color: #ffffff;
-            flex: 1;
-            max-width: 20rem; /* Approximately 300px equivalent */
-            height: 9.375rem; /* Approximately 150px equivalent */
-            border-radius: 0.5rem;
-            opacity: 0.9;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow to match the reference */
-            transition: transform 0.2s ease; 
-        }
-        .stat-box h4 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            width: 15.625rem; /* Approximately 250px equivalent */
-            height: 3.125rem; /* Approximately 50px equivalent */
-            background: rgba(255, 255, 255, 0.1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            margin-top: 0.5rem;
-            background-color: rgba(255, 255, 255, 0.15); /* Light overlay background */
-        }
-        .total-reports {
-            background: linear-gradient(to bottom, #4A9ED9, #73C2FB);
-        }
-        .pending {
-            background: linear-gradient(to bottom, #D68910, #F5B041);
-        }
-        .resolved {
-            background: linear-gradient(to bottom, #229954, #27AE60);
-        }
-    </style>
 </head>
 <body>
 <?php 
@@ -97,24 +53,24 @@ try {
 ?>
 <?php include 'sidebar.php'; ?>
 
-<div class="main-content p-4">
+<div class="main-content">
     <div class="container">
         <!-- Dynamic summary boxes -->
-        <div class="row justify-content-center" style="margin-bottom: 2.813rem;">
+        <div class="row justify-content-center">
             <div class="col-md-4">
-                <div class="stat-box total-reports bg-primary text-center py-3">
+                <div class="stat-box total-reports text-center py-3">
                     <h4>Total Reports</h4>
                     <div class="stat-number"><?php echo $totalReports; ?></div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="stat-box pending bg-success text-center py-3">
+                <div class="stat-box pending  text-center py-3">
                     <h4>Pending</h4>
                     <div class="stat-number"><?php echo $pendingReports; ?></div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="stat-box resolved bg-secondary text-center py-3">
+                <div class="stat-box resolved  text-center py-3">
                     <h4>Resolved</h4>
                     <div class="stat-number"><?php echo $resolvedReports; ?></div>
                 </div>

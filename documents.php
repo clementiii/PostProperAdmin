@@ -47,9 +47,9 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
 
 <div class="main-content">
     <!-- Summary Cards for Document Request Statuses -->
-    <div class="statistic-container row text-center mb-4">
+    <div class="statistic-container row text-center ">
         <div class="col">
-            <div class="card" style="background: linear-gradient(180deg, #3498DB, #5DADE2); width: 250px; height: 150px; color: white;">
+            <div class="card" style="background: linear-gradient(180deg, #3498DB, #5DADE2); ">
                 <h2 class="card-title">Total Request</h2>
                 <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
                     <?php echo $totalRequest; ?>
@@ -57,7 +57,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
             </div>
         </div>
         <div class="col">
-            <div class="card" style="background: linear-gradient(180deg, #D68910, #F5B041); width: 250px; height: 150px; color: white;">
+            <div class="card" style="background: linear-gradient(180deg, #D68910, #F5B041);">
                 <h2 class="card-title">Pending</h2>
                 <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
                     <?php echo $pendingCount; ?>
@@ -65,7 +65,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
             </div>
         </div>
         <div class="col">
-            <div class="card" style="background: linear-gradient(180deg, #229954, #27AE60); width: 250px; height: 150px; color: white;">
+            <div class="card" style="background: linear-gradient(180deg, #229954, #27AE60);">
                 <h2 class="card-title">Approved</h2>
                 <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
                     <?php echo $approvedCount; ?>
@@ -73,7 +73,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
             </div>
         </div>
         <div class="col">
-            <div class="card" style="background: linear-gradient(180deg, #A93226, #E74C3C); width: 250px; height: 150px; color: white;">
+            <div class="card" style="background: linear-gradient(180deg, #A93226, #E74C3C);">
                 <h2 class="card-title">Rejected</h2>
                 <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
                     <?php echo $rejectedCount; ?>
@@ -84,7 +84,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
 
     <!-- Document Requests Table -->
     <div class="table-container">
-        <table class="table table-striped mb-0">
+        <table class="table table-bordered mb-0">
             <thead>
                 <tr>
                     <th data-sort="number">Transaction ID</th>
@@ -109,7 +109,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
                         echo "<td>₱ " . htmlspecialchars($row['Price']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
                         echo "<td>" . ucfirst(htmlspecialchars(strtolower($row['Status']))) . "</td>";
-                        echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button">View</a></td>';
+                        echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button" >View</a></td>';
                         echo "</tr>";
                     }
                 } else {

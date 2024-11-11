@@ -60,19 +60,19 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
         <!-- User Statistics Boxes -->
         <div class="row justify-content-center" style="margin-bottom: 45px;">
             <div class="col-md-4">
-                <div class="stat-box total-reports bg-primary text-center py-3">
+                <div class="stat-box total-resident text-center py-3">
                     <h4>Registered Residents</h4>
                     <div class="stat-number"><?php echo $registeredResidentsCount; ?></div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="stat-box pending bg-success text-center py-3">
+                <div class="stat-box active-user text-center py-3">
                     <h4>Active Users</h4>
                     <div class="stat-number">130</div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="stat-box resolved bg-secondary text-center py-3">
+                <div class="stat-box inactive-user text-center py-3">
                     <h4>Inactive Users</h4>
                     <div class="stat-number">70</div>
                 </div>
@@ -82,7 +82,7 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
         <!-- User Table -->
         <div class="table-responsive">
             <table class="table table-bordered text-center align-middle">
-                <thead style="background-color: #D9D9E6;">
+                <thead>
                     <tr>
                         <th>Last Name</th>
                         <th>First Name</th>
@@ -95,7 +95,7 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user): ?>
-                    <tr style="background-color: <?php echo ($user['id'] % 2 == 0) ? '#FFFFFF' : '#F5F5FB'; ?>;">
+                    <tr style="background-color: <?php echo ($user['id'] % 2 == 0) ? '#F5F5FB' : '#FFFFFF'; ?>;">
                         <td><?php echo htmlspecialchars($user['lastName']); ?></td>
                         <td><?php echo htmlspecialchars($user['firstName']); ?></td>
                         <td>
@@ -140,5 +140,40 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Add event listeners to header cells to trigger sorting
+        document.querySelectorAll('th').forEach((header, index) => {
+            header.style.cursor = 'pointer';
+            header.addEventListener('click', () => {
+                sortTable(index);
+            });
+        });
+    });
+
+    function sortTable(columnIndex) {
+        const table = document.querySelector('table tbody');
+        const rows = Array.from(table.rows);
+
+        const isAscending = table.getAttribute('data-sort-asc') === 'true' ? false : true;
+        table.setAttribute('data-sort-asc', isAscending);
+
+        rows.sort((a, b) => {
+            const cellA = a.cells[columnIndex].textContent.trim();
+            const cellB = b.cells[columnIndex].textContent.trim();
+
+            if (columnIndex === 3) { // Age column (numeric sort)
+                return isAscending ? cellA - cellB : cellB - cellA;
+            } else {
+                return isAscending 
+                    ? cellA.localeCompare(cellB) 
+                    : cellB.localeCompare(cellA);
+            }
+        });
+
+        // Append sorted rows to the table
+        rows.forEach(row => table.appendChild(row));
+    }
+</script>
 </body>
 </html>

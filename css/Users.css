@@ -1,24 +1,28 @@
-/* Main content styling to account for sidebar */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body {
+   font-family: "Poppins", sans-serif;
+}
+
 .main-content {
    padding: 2rem;
-   margin-left: 18vw; /* Adjust based on sidebar width */
+   margin-left: 18vw;
    flex: 1;
 }
 
-/* Statistic boxes styling */
 .stat-box {
    color: #ffffff;
    flex: 1;
-   max-width: 20rem; /* Approximately 300px equivalent */
-   height: 9.375rem; /* Approximately 150px equivalent */
+   max-width: 20rem;
+   height: 9.375rem;
    border-radius: 0.5rem;
    opacity: 0.9;
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow to match the reference */
-   transition: transform 0.2s ease; /* Hover effect */
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   transition: transform 0.2s ease;
 }
 
 /* Hover effect */
@@ -27,14 +31,16 @@
 } */
 
 .stat-box h4 {
+   font-family: "Poppins", sans-serif;
    font-size: 1.5rem;
    font-weight: 500;
    margin-bottom: 0.5rem;
 }
 
 .stat-number {
+   font-family: "Poppins", sans-serif;
    font-size: 2rem;
-   font-weight: bold;
+   font-weight: 700;
    width: 15.625rem; /* Approximately 250px equivalent */
    height: 3.125rem; /* Approximately 50px equivalent */
    background: rgba(255, 255, 255, 0.1);
@@ -48,6 +54,7 @@
 
 /* Table styling */
 .table-responsive {
+   font-family: "Poppins", sans-serif;
    display: flex;
    justify-content: center;
    padding-left: 0; /* Ensures no unintended padding */
@@ -64,17 +71,17 @@
 
 /* Column header background color */
 .table thead th {
-   font-weight: bold;
-   color: #555;
+   font-weight: 700;
+   color: #000000;
    background-color: #d9d9e6; /* Updated color */
 }
 
 /* Row colors: odd rows (#F5F5FB), even rows (#FFFFFF) */
 .table tbody tr:nth-child(odd) {
-   background-color: #f5f5fb;
+   background-color: #ffffff;
 }
 .table tbody tr:nth-child(even) {
-   background-color: #ffffff;
+   background-color: #f5f5fb;
 }
 
 /* Button styling for delete button */
@@ -92,14 +99,18 @@
    background-color: #c0392b;
 }
 
-.total-reports {
-   background: linear-gradient(to bottom, #4a9ed9, #73c2fb);
+.total-resident {
+   background: linear-gradient(180deg, #3498db, #5dade2);
 }
-.pending {
-   background: linear-gradient(to bottom, #d68910, #f5b041);
+.active-user {
+   background: linear-gradient(180deg, #d68910, #f5b041);
 }
-.resolved {
-   background: linear-gradient(to bottom, #229954, #27ae60);
+.inactive-user {
+   background: linear-gradient(180deg, #8a8a9e, #b3b3c2);
+}
+
+.modal-dialog {
+   font-family: "Poppins", sans-serif;
 }
 
 /* Responsive adjustments */
