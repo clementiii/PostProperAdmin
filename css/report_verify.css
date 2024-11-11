@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body {
+   background-color: #f0f0fa;
+   font-family: "Poppins", sans-serif;
+}
+.main-container {
+   margin-left: 20rem;
+   padding-top: 2.813rem;
+   padding-bottom: 10px;
+   width: 75%;
+   height: auto !important;
+}
+.back-btn {
+   color: #f0f0fa;
+   border: none;
+   padding: 8px 16px;
+   border-radius: 5px;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   font-size: 1rem;
+   margin-bottom: 1rem;
+}
+.back-btn i {
+   margin-right: 5px;
+}
+.form-label {
+   font-family: "Poppins", sans-serif;
+   font-weight: 700;
+   font-size: 1.25em;
+   margin-bottom: 4px;
+}
+.form-group {
+   margin-bottom: 20px;
+}
+.form-control[readonly] {
+   font-family: "Poppins", sans-serif;
+   background-color: #d3d3d3;
+   color: #333;
+   font-weight: 500;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.form-control {
+   padding: 12px;
+}
+.horizontal-images {
+   display: flex;
+   gap: 15px;
+   margin-top: 10px;
+}
+.horizontal-images img {
+   width: 9.5rem;
+   height: auto;
+   cursor: pointer;
+   border-radius: 5px;
+   border: 1px solid #ccc;
+   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn {
+   width: 7.813rem;
+   height: 2.5rem;
+   background-color: #61009f !important; /* Overrides Bootstrap styles */
+   color: #f0f0fa;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: none;
+   border-radius: 0.5rem;
+}
+.action-btn:hover {
+   color: #f0f0fa;
+   background-color: #b52aff !important;
+}

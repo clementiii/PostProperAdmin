@@ -1,26 +1,22 @@
 <?php
 session_start();
-include 'db.php'; // Include your database connection file
+include 'db.php';
 
-// Check if the user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: splash.php"); // Redirect to the login page if not logged in
+    header("Location: splash.php");
     exit;
 }
 
-// Get the report ID from the URL
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $report_id = $_GET['id'];
 
     try {
-        // Query to fetch the specific report based on the ID
-        $sql = "SELECT id, name, title, description, date_submitted, status FROM incident_reports WHERE id = :id";
+        $sql = "SELECT id, title, description FROM incident_reports WHERE id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $report_id, PDO::PARAM_INT);
         $stmt->execute();
         $report = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Check if the report exists
         if (!$report) {
             echo "Report not found.";
             exit;
@@ -38,46 +34,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Report Verification</title>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   <link rel="stylesheet" href="css/report_verify.css">
-   <style>
-       .bg-purple {
-           background-color: #4A148C !important;
-       }
-       .header-text {
-           font-size: 1.5rem;
-           font-weight: bold;
-       }
-       .form-control {
-           max-width: 600px;
-           margin: auto;
-       }
-       .image-container img {
-           width: 100px;
-           height: 100px;
-           margin: 5px;
-       }
-       .button-group {
-           display: flex;
-           justify-content: center;
-           gap: 10px;
-       }
-       /* Center container vertically and horizontally */
-       .center-container {
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           min-height: 100vh;
-       }
-       /* Add padding to move content away from sidebar */
-       .content-container {
-           margin-left: 250px; /* Adjust this based on sidebar width */
-           padding: 20px;
-       }
-   </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Verification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/report_verify.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="js/report_verify.js" defer></script>
+    
 </head>
 <body>
   <?php 
@@ -86,42 +50,94 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         include 'sidebar.php';
     ?>
 
-  <!-- Centering the container with padding on the left side -->
-<div class="center-container content-container">
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-header bg-purple text-white text-center">
-                <span class="header-text">Incident Report and Monitoring</span>
-            </div>
-            <div class="card-body">
-                <form action="update_report.php" method="post" class="text-center">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title:</label>
-                        <input type="text" class="form-control" id="title" name="title" value="<?php echo htmlspecialchars($report['title']); ?>" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description:</label>
-                        <div class="form-control" style="height: auto; white-space: pre-wrap;"><?php echo htmlspecialchars($report['description']); ?></div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Images:</label>
-                        <div class="image-container d-flex justify-content-center">
-                            <img src="assets/profile.jpg" alt="Incident Image 1" class="img-thumbnail">
-                            <img src="assets/profile.jpg" alt="Incident Image 2" class="img-thumbnail">
-                            <img src="assets/profile.jpg" alt="Incident Image 3" class="img-thumbnail">
-                        </div>
-                    </div>
-                    <div class="button-group mt-4">
-                        <button type="submit" class="btn btn-success" name="status" value="resolved">Resolved</button>
-                        <button type="submit" class="btn btn-warning" name="status" value="pending">Pending</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+  <!-- Main content container -->
+  <div class="main-container" style="padding-top: 20px;">
+    
+    <!-- Back Button with Font Awesome icon -->
+    <button class="back-btn btn-secondary" onclick="goBack()">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
 
+    <div class="form-group">
+      <label for="reportTitle" class="form-label">Title:</label>
+      <input type="text" class="form-control" id="reportTitle" value="<?php echo htmlspecialchars($report['title']); ?>" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="reportDescription" class="form-label">Description:</label>
+      <textarea class="form-control" id="reportDescription" rows="3" readonly><?php echo htmlspecialchars($report['description']); ?></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Images:</label>
+      <div class="horizontal-images">
+        <img src="assets/sample id.jpg" class="img-thumbnail zoomable-image" alt="Incident Image 1">
+        <img src="assets/profile.jpg" class="img-thumbnail zoomable-image" alt="Incident Image 2">
+        <img src="assets/sample id.jpg" class="img-thumbnail zoomable-image" alt="Incident Image 3">
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-start" style="padding-top: 1rem;">
+      <button class="action-btn me-2" id="resolvedBtn">Resolved</button>
+    </div>
+  </div>
+
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img src="" id="modalImage" class="img-fluid" alt="Zoomed Image">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirm Resolution</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to mark this report as resolved?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="confirmResolve">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+   function goBack() {
+      window.history.back();
+    }
+
+    document.getElementById("resolvedBtn").addEventListener("click", function () {
+      new bootstrap.Modal(document.getElementById("confirmModal")).show();
+    });
+
+    document.getElementById("confirmResolve").addEventListener("click", function () {
+      // Perform the action to mark the report as resolved here, e.g., AJAX request to update the database
+      // After successful resolution, close the modal and show success message
+      new bootstrap.Modal(document.getElementById("confirmModal")).hide();
+      alert("The report has been marked as resolved.");
+    });
+
+    document.querySelectorAll('.zoomable-image').forEach(img => {
+      img.addEventListener('click', function() {
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = this.src;
+        new bootstrap.Modal(document.getElementById('imageModal')).show();
+      });
+    });
+  </script>
 </body>
 </html>
