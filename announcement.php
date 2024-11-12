@@ -1,4 +1,15 @@
 <?php
+if (isset($_SESSION['success_message'])) {
+    echo '<div class="alert alert-success">' . $_SESSION['success_message'] . '</div>';
+    unset($_SESSION['success_message']);
+}
+if (isset($_SESSION['error_message'])) {
+    echo '<div class="alert alert-danger">' . $_SESSION['error_message'] . '</div>';
+    unset($_SESSION['error_message']);
+}
+?>
+
+<?php
 session_start();
 
 // Check if the user is logged in
@@ -8,7 +19,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 include 'db.php'; // Make sure this file connects to your `pps_barangay_system` database
+
+// Fetch recent announcements from the database
+$query = "SELECT id, announcement_title, description_text, created_at, announcement_images FROM barangay_announcements ORDER BY created_at DESC LIMIT 10";
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,19 +113,18 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
                 <h2>Recent Posts</h2>
                 <div class="posts-list">
                     <?php
-                    $posts = [
-                        ['id' => 1, 'title' => 'Sample Announcement 1', 'description' => 'Sample description 1', 'date' => 'October 12', 'images' => []],
-                        ['id' => 2, 'title' => 'Sample Announcement 2', 'description' => 'Sample description 2', 'date' => 'October 10', 'images' => []]
-                    ];
-
-                    foreach ($posts as $post) {
+                    foreach ($announcements as $announcement) {
+                        // Format date for display
+                        $formattedDate = date("F d, Y", strtotime($announcement['created_at']));
+                        
+                        // Display each announcement
                         echo '<div class="post-item">
                                 <div class="post-content">
-                                    <h3>' . htmlspecialchars($post['title']) . '</h3>
-                                    <span class="post-date">' . htmlspecialchars($post['date']) . '</span>
+                                    <h3>' . htmlspecialchars($announcement['announcement_title']) . '</h3>
+                                    <span class="post-date">' . htmlspecialchars($formattedDate) . '</span>
                                 </div>
                                 <div class="post-actions">
-                                    <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' . $post['id'] . '" data-title="' . htmlspecialchars($post['title']) . '" data-description="' . htmlspecialchars($post['description']) . '">Edit</button>
+                                    <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' . $announcement['id'] . '" data-title="' . htmlspecialchars($announcement['announcement_title']) . '" data-description="' . htmlspecialchars($announcement['description_text']) . '">Edit</button>
                                     <button class="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                 </div>
                               </div>';
@@ -157,6 +174,12 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
                         <label>Description</label>
                         <textarea name="description" id="editDescription" class="full-width-input" rows="8" required></textarea>
                     </div>
+                    
+                    <!-- Display existing images with remove options -->
+                    <div id="current-images-container" class="d-flex flex-wrap mt-3">
+                        <!-- Existing images will be populated here by JavaScript -->
+                    </div>
+
                     <div class="upload-section">
                         <div class="upload-box">
                             <div class="upload-icon">↑</div>
@@ -164,9 +187,6 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
                             <input type="file" name="images[]" class="edit-file-input" accept="image/*" multiple>
                         </div>
                     </div>
-
-                    <!-- Container to display uploaded images with remove icons -->
-                    <div id="edit-image-preview-container" class="d-flex flex-wrap mt-3"></div>
 
                     <div class="button-group">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -177,6 +197,7 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
         </div>
     </div>
 </div>
+
 
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -198,7 +219,6 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script src="js/announcement.js"></script>
 </body>
 </html>
