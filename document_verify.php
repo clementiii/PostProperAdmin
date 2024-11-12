@@ -20,14 +20,16 @@ if (!$documentRequest) {
 
 // Handle status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the new status from the form
+    // Get the new status and reason (if applicable) from the form
     $newStatus = $_POST['status'];
-    
+    $reason = isset($_POST['reason']) ? $_POST['reason'] : null;
+
     // Update the status in the database
-    $updateQuery = "UPDATE document_requests SET Status = :status WHERE Id = :id";
+    $updateQuery = "UPDATE document_requests SET Status = :status, RejectionReason = :reason WHERE Id = :id";
     $updateStmt = $conn->prepare($updateQuery);
     $updateStmt->bindParam(':status', $newStatus, PDO::PARAM_STR);
     $updateStmt->bindParam(':id', $documentId, PDO::PARAM_INT);
+    $updateStmt->bindParam(':reason', $reason, PDO::PARAM_STR);
     $updateStmt->execute();
     
     // Redirect to documents.php after saving
@@ -87,6 +89,12 @@ $conn = null;
                                     <option value="Approved" <?php echo ($documentRequest['Status'] == 'Approved') ? 'selected' : ''; ?>>Approved</option>
                                     <option value="Rejected" <?php echo ($documentRequest['Status'] == 'Rejected') ? 'selected' : ''; ?>>Rejected</option>
                                 </select>
+                                
+                                <!-- Reason for Rejection Text Field -->
+                                <div id="reasonContainer" class="mt-3" style="display: none;">
+                                    <label for="reason" class="form-label">Reason for Rejection:</label>
+                                    <input type="text" id="reason" name="reason" class="form-control" placeholder="Enter reason for rejection">
+                                </div>
                             </form>
                         </p>
                     </div>
@@ -107,7 +115,7 @@ $conn = null;
             <button id="saveBtn" class="action-btn" data-bs-toggle="modal" data-bs-target="#confirmModal">Save</button>
         </div>
     </div>
-
+    
     <!-- Image Zoom Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -152,7 +160,17 @@ $conn = null;
             });
         });
 
-        // Handle confirmation modal actions
+        // Toggle visibility of Reason for Rejection text field based on selected status
+        document.getElementById('statusSelect').addEventListener('change', function () {
+            const reasonContainer = document.getElementById('reasonContainer');
+            if (this.value === 'Rejected') {
+                reasonContainer.style.display = 'block';
+            } else {
+                reasonContainer.style.display = 'none';
+            }
+        });
+
+        // Confirmation modal actions
         document.getElementById('confirmSaveBtn').addEventListener('click', function() {
             document.getElementById('statusForm').submit(); // Submit the form if confirmed
         });

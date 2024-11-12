@@ -49,7 +49,7 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
                     </div>
                     <div class="button-group">
                         <!-- Publish button triggers the modal -->
-                        <button type="button" class="btn-save" data-bs-toggle="modal" data-bs-target="#publishModal">Publish</button>
+                        <button type="button" class="btn-save" data-bs-toggle="modal" data-bs-target="#publishModal">Post</button>
                         <button type="reset" class="btn-clear">Clear</button>
                     </div>
                 </form>

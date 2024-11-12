@@ -53,16 +53,21 @@ body {
    background: linear-gradient(to bottom, #229954, #27ae60);
 }
 .action-button {
-   width: 7vw;
-   height: 4vh;
+   width: 6.25rem;
+   height: 2.5rem;
    background-color: #61009f !important; /* Overrides Bootstrap styles */
-   color: white;
+   color: #ffffff;
    display: flex;
    align-items: center;
    justify-content: center;
    border: none; /* Removes border for a cleaner look */
    border-radius: 8px; /* Rounded corners */
    text-decoration: none; /* Removes underline from link */
+}
+.action-button:hover {
+   color: #f0f0fa;
+   background-color: #b52aff !important;
+   text-decoration: none;
 }
 .table {
    margin-top: 2.813rem;

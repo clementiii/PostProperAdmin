@@ -24,7 +24,6 @@ body {
 
 th,
 td {
-
    padding: 15px;
    text-align: center;
    border: 1px solid #ddd;
@@ -63,9 +62,8 @@ td {
    border-radius: 0.5rem;
    text-decoration: none;
    cursor: pointer;
+   margin-left: 0.8rem;
 }
-
-
 
 .action-button:hover {
    color: #f0f0fa;
