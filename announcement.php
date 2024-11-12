@@ -17,6 +17,38 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
     <title>Barangay Announcements</title>
     <link rel="stylesheet" href="css/Announcement.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Styling for the preview container */
+        #image-preview-container, #edit-image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .image-preview {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        
+        .image-preview img {
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+        
+        .btn-close {
+            color: #fff;
+            background-color: #dc3545; /* Red color for remove button */
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+    </style>
 </head>
 <body>
 <?php 
@@ -27,7 +59,6 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
 
 <div class="main-content">
     <div class="content-layout">
-        <!-- Left Section -->
         <div class="left-section">
             <div class="white-card">
                 <h2>Add New Announcement</h2>
@@ -44,11 +75,14 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
                         <div class="upload-box">
                             <div class="upload-icon">↑</div>
                             <div class="upload-text">Upload Image Here</div>
-                            <input type="file" name="image" class="file-input" accept="image/*">
+                            <input type="file" name="images[]" class="file-input" accept="image/*" multiple>
                         </div>
                     </div>
+
+                    <!-- Container to display uploaded images with remove icons -->
+                    <div id="image-preview-container" class="d-flex flex-wrap mt-3"></div>
+
                     <div class="button-group">
-                        <!-- Publish button triggers the modal -->
                         <button type="button" class="btn-save" data-bs-toggle="modal" data-bs-target="#publishModal">Post</button>
                         <button type="reset" class="btn-clear">Clear</button>
                     </div>
@@ -56,15 +90,14 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
             </div>
         </div>
 
-        <!-- Right Section -->
         <div class="right-section">
             <div class="white-card">
                 <h2>Recent Posts</h2>
                 <div class="posts-list">
                     <?php
                     $posts = [
-                        ['title' => 'Sample Announcement 1', 'date' => 'October 12'],
-                        ['title' => 'Sample Announcement 2', 'date' => 'October 10']
+                        ['id' => 1, 'title' => 'Sample Announcement 1', 'description' => 'Sample description 1', 'date' => 'October 12', 'images' => []],
+                        ['id' => 2, 'title' => 'Sample Announcement 2', 'description' => 'Sample description 2', 'date' => 'October 10', 'images' => []]
                     ];
 
                     foreach ($posts as $post) {
@@ -74,7 +107,7 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
                                     <span class="post-date">' . htmlspecialchars($post['date']) . '</span>
                                 </div>
                                 <div class="post-actions">
-                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' . $post['id'] . '" data-title="' . htmlspecialchars($post['title']) . '" data-description="' . htmlspecialchars($post['description']) . '">Edit</button>
                                     <button class="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                 </div>
                               </div>';
@@ -105,6 +138,46 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
     </div>
 </div>
 
+<!-- Edit Announcement Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Announcement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="edit_announcement.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="post_id" id="editPostId">
+                    <div class="input-group">
+                        <label>Announcement Title:</label>
+                        <input type="text" name="title" id="editTitle" class="full-width-input" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Description</label>
+                        <textarea name="description" id="editDescription" class="full-width-input" rows="8" required></textarea>
+                    </div>
+                    <div class="upload-section">
+                        <div class="upload-box">
+                            <div class="upload-icon">↑</div>
+                            <div class="upload-text">Upload New Images</div>
+                            <input type="file" name="images[]" class="edit-file-input" accept="image/*" multiple>
+                        </div>
+                    </div>
+
+                    <!-- Container to display uploaded images with remove icons -->
+                    <div id="edit-image-preview-container" class="d-flex flex-wrap mt-3"></div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -125,16 +198,7 @@ include 'db.php'; // Make sure this file connects to your `pps_barangay_system` 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.getElementById('confirmPublish').addEventListener('click', function() {
-        // Handle publish confirmation logic here (submit the form or make an AJAX request)
-        document.querySelector('form').submit(); // Example to submit the form
-    });
 
-    document.getElementById('confirmDelete').addEventListener('click', function() {
-        // Handle delete confirmation logic here (e.g., AJAX request to delete the post)
-        alert('Post deleted'); // Placeholder for delete action
-    });
-</script>
+<script src="js/announcement.js"></script>
 </body>
 </html>

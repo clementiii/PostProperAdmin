@@ -48,15 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-<div class="logo-container">
-    <div class="logo-section">
-        <img src="assets/Southside.png" alt="Logo">
-        <h1>Post Proper Southside</h1>
-    </div>
-</div>
 
 <div class="login-container">
     <div class="login-box">
+        <div class="logo-section">
+            <img src="assets/Southside.png" alt="Logo">
+            <h1>Post Proper Southside</h1>
+        </div>
         <h2>ADMIN</h2>
         <form action="" method="POST">
             <div class="input-group">
