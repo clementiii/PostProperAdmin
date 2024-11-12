@@ -13,8 +13,8 @@
 <body>
 <div class="sidebar">
     <div class="logo-section">
-        <img src="assets/Southside.png" alt="Logo" class="logo">
-            <h3 class="sidebar-title">Post Proper Southside</h3>
+        <img src="assets/Southside.png" alt="Logo" class="logo" onclick="redirectToDashboard()">
+        <h3 class="sidebar-title" onclick="redirectToDashboard()">Post Proper Southside</h3>
     </div>
 
     <?php
@@ -33,7 +33,7 @@
 
     <!-- Users link -->
     <a href="users.php" class="sidebar-link <?= $current_page == 'users.php' ? 'active' : '' ?>">
-    <i class="fa-solid fa-user"></i> Users Account
+        <i class="fa-solid fa-user"></i> Users Account
     </a>
 
     <!-- Announcement link -->
@@ -60,6 +60,13 @@
         <i class="fas fa-sign-out-alt"></i> Log Out
     </a>
 </div>
+
+<script>
+    function redirectToDashboard() {
+        window.location.href = 'dashboard.php';
+    }
+</script>
+
 
 </body>
 </html>

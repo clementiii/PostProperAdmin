@@ -16,13 +16,13 @@ try {
     $totalReports = $stmtTotal->fetch(PDO::FETCH_ASSOC)['count'];
 
     // Query to fetch the number of reports with status 'Pending'
-    $sqlPending = "SELECT COUNT(*) AS count FROM incident_reports WHERE LOWER(status) = 'pending'";
+    $sqlPending = "SELECT COUNT(*) AS count FROM incident_reports WHERE LOWER(status) = 'Pending'";
     $stmtPending = $conn->prepare($sqlPending);
     $stmtPending->execute();
     $pendingReports = $stmtPending->fetch(PDO::FETCH_ASSOC)['count'];
 
     // Query to fetch the number of reports with status 'Resolved'
-    $sqlResolved = "SELECT COUNT(*) AS count FROM incident_reports WHERE LOWER(status) = 'resolved'";
+    $sqlResolved = "SELECT COUNT(*) AS count FROM incident_reports WHERE LOWER(status) = 'Resolved'";
     $stmtResolved = $conn->prepare($sqlResolved);
     $stmtResolved->execute();
     $resolvedReports = $stmtResolved->fetch(PDO::FETCH_ASSOC)['count'];

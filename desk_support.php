@@ -16,6 +16,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <title>Help Desk Chat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/DeskSupport.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome link -->
     <script defer src="js/help-desk.js"></script>
 </head>
 <body>
@@ -70,7 +71,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <div class="chat-input d-flex align-items-center p-3 border-top">
                 <input type="text" class="form-control me-2" placeholder="Type your message here">
                 <button class="btn btn-purple">
-                    <i class="bi bi-send-fill"></i>
+                    <i class="fas fa-paper-plane"></i> <!-- FontAwesome send icon -->
                 </button>
             </div>
         </div>
