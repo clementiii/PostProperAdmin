@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2024 at 07:27 AM
+-- Generation Time: Nov 13, 2024 at 03:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -58,6 +58,15 @@ CREATE TABLE `barangay_announcements` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `posted_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `barangay_announcements`
+--
+
+INSERT INTO `barangay_announcements` (`id`, `announcement_title`, `description_text`, `announcement_images`, `created_at`, `posted_at`) VALUES
+(1, 'test title', 'test description', '[\"uploads\\/announcements\\/1731434289_images.jpg\"]', '2024-11-12 10:58:09', '2024-11-12 18:58:09'),
+(2, 'New Internet', 'Bagong internet sa southside', '[\"uploads\\/announcements\\/1731434683_elden-ring-8k-h4.jpg\"]', '2024-11-12 11:04:43', '2024-11-12 19:04:43'),
+(3, 'clement', 'clement', '[]', '2024-11-12 11:28:36', '2024-11-12 19:28:36');
 
 -- --------------------------------------------------------
 
@@ -214,7 +223,7 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `barangay_announcements`
 --
 ALTER TABLE `barangay_announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `document_requests`
