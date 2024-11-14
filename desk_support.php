@@ -26,13 +26,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     include 'sidebar.php';
 ?> 
 
-<div class="container-fluid" style="margin-left: 18rem; max-width: calc(100% - 18.75rem);">
+<div class="container-fluid" style="margin-left: 18rem; max-width: calc(100% - 18rem);" >
     <div class="row">
         <!-- Sidebar with user messages -->
         <div class="col-lg-3 col-md-4 bg-sidebar p-3">
             <h5 class="text-dark mb-3">Messages</h5>
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action" onclick="loadChat('Pedro Manlangit')">
+               <a href="#" class="list-group-item list-group-item-action" onclick="loadChat('Pedro Manlangit')">
                     <div class="d-flex align-items-center">
                         <img src="assets/profile.jpg" class="rounded-circle me-3" width="40" height="40" alt="User">
                         <div>
@@ -64,16 +64,18 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         </div>
 
         <!-- Chat conversation area -->
-        <div class="col-lg-9 col-md-8 chat-container">
-            <div id="chat-window" class="chat-window p-4">
+        <div class="col-lg-9 col-md-8 chat-container" >
+            <div id="chat-window" class="chat-window p-4" >
                 <!-- Messages will be dynamically loaded here -->
             </div>
             <div class="chat-input d-flex align-items-center p-3 border-top">
-                <input type="text" class="form-control me-2" placeholder="Type your message here">
-                <button class="btn btn-purple">
-                    <i class="fas fa-paper-plane"></i> <!-- FontAwesome send icon -->
-                </button>
-            </div>
+    <input type="text" id="messageInput" class="form-control me-2" placeholder="Type your message here">
+    <button id="sendMessageBtn" class="btn btn-purple">
+        <i class="fas fa-paper-plane"></i>
+    </button>
+</div>
+
+
         </div>
     </div>
 </div>

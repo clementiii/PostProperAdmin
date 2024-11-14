@@ -81,7 +81,7 @@ html {
 }
 
 .input-group input:focus {
-   border: 2px solid #b52aff !important;
+   border: 2px solid #e0e0e0 !important;
    box-shadow: 0 0 5px rgba(181, 42, 255, 0.5);
 }
 
