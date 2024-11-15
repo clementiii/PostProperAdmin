@@ -1,255 +1,296 @@
 /* announcements.css */
 .main-content {
-    padding: 20px 30px;
-    background-color: #fff;
-    min-height: 100vh;
-    margin-left: 250px; /* Add margin to the left equal to the sidebar width */
-    font-family: 'Poppins', sans-serif;
+   padding: 20px 30px;
+   background-color: #fff;
+   min-height: 100vh;
+   margin-left: 250px; /* Add margin to the left equal to the sidebar width */
+   font-family: "Poppins", sans-serif;
 }
 
 .content-layout {
-    display: grid;
-    grid-template-columns: 1fr 400px; /* Responsive layout */
-    gap: 30px;
+   display: grid;
+   grid-template-columns: 1fr 400px; /* Responsive layout */
+   gap: 30px;
 }
 
 .white-card {
-    background: white;
-    border-radius: 8px;
-    padding: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Enhanced shadow for a card effect */
-    transition: transform 0.2s; /* Add a hover effect */
+   background: white;
+   border-radius: 8px;
+   padding: 25px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Enhanced shadow for a card effect */
+   transition: transform 0.2s; /* Add a hover effect */
 }
 
 .white-card:hover {
-    transform: translateY(-2px); /* Lift effect on hover */
+   transform: translateY(-2px); /* Lift effect on hover */
 }
 
 .white-card h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-    color: #4b0082; /* Dark violet for card titles */
+   font-size: 18px;
+   margin-bottom: 20px;
+   color: #4b0082; /* Dark violet for card titles */
 }
 
 .input-group {
-    margin-bottom: 20px;
-    margin-right: 18px;
+   margin-bottom: 20px;
+   margin-right: 18px;
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333; /* Keep label color for readability */
-    font-weight: 500;
+   display: block;
+   margin-bottom: 8px;
+   color: #333; /* Keep label color for readability */
+   font-weight: 500;
 }
 
 .full-width-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   font-size: 14px;
 }
 
 .upload-section {
-    margin: 25px 0;
+   margin: 25px 0;
 }
 
 .upload-box {
-    border: 2px dashed #8e44ad; /* Violet dashed border */
-    border-radius: 4px;
-    padding: 40px 20px;
-    text-align: center;
-    background-color: #fafafa; /* Keep the light background for contrast */
-    cursor: pointer;
-    position: relative;
+   border: 2px dashed #8e44ad; /* Violet dashed border */
+   border-radius: 4px;
+   padding: 40px 20px;
+   text-align: center;
+   background-color: #fafafa; /* Keep the light background for contrast */
+   cursor: pointer;
+   position: relative;
 }
 
 .upload-icon {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #8e44ad; /* Violet icon color */
+   font-size: 24px;
+   margin-bottom: 10px;
+   color: #8e44ad; /* Violet icon color */
 }
 
 .upload-text {
-    color: #666; /* Keep the text color for clarity */
-    margin-bottom: 10px;
+   color: #666; /* Keep the text color for clarity */
+   margin-bottom: 10px;
 }
 
 .file-input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   opacity: 0;
+   cursor: pointer;
 }
 
 .button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+   display: flex;
+   gap: 10px;
+   margin-top: 20px;
 }
 
 .btn-save,
 .btn-clear {
-    padding: 8px 25px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
-    transition: background-color 0.2s; /* Smooth transition for buttons */
+   padding: 8px 25px;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   font-weight: 500;
+   font-size: 14px;
+   transition: background-color 0.2s; /* Smooth transition for buttons */
 }
 
 .btn-save {
-    background-color: #61009F; /* Violet save button */
-    color: white;
+   background-color: #61009f; /* Violet save button */
+   color: white;
 }
 
 .btn-save:hover {
-    background-color: #732d8b; /* Darker violet on hover */
+   background-color: #732d8b; /* Darker violet on hover */
 }
 
 .btn-clear {
-    background-color: #6c757d; /* Neutral color for clear button */
-    color: white;
+   background-color: #6c757d; /* Neutral color for clear button */
+   color: white;
 }
 
 .btn-clear:hover {
-    background-color: #5a6268; /* Darker shade on hover */
+   background-color: #5a6268; /* Darker shade on hover */
 }
 
 /* Recent Posts Styling */
 .posts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
 }
 
 .post-item {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white; /* Keep items white for contrast */
-    border-radius: 4px; /* Rounded corners for post items */
-    transition: background-color 0.2s; /* Smooth transition for post items */
+   padding: 15px;
+   border-bottom: 1px solid #eee;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: white; /* Keep items white for contrast */
+   border-radius: 4px; /* Rounded corners for post items */
+   transition: background-color 0.2s; /* Smooth transition for post items */
 }
 
 .post-item:hover {
-    background-color: #f0e5f5; /* Light violet background on hover */
+   background-color: #f0e5f5; /* Light violet background on hover */
 }
 
 .post-item:last-child {
-    border-bottom: none;
+   border-bottom: none;
 }
 
 .post-content h3 {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #333; /* Text color for post content */
+   font-size: 14px;
+   margin-bottom: 5px;
+   color: #333; /* Text color for post content */
 }
 
 .post-date {
-    font-size: 12px;
-    color: #666; /* Keep date color for readability */
+   font-size: 12px;
+   color: #666; /* Keep date color for readability */
 }
 
 .post-actions {
-    display: flex;
-    gap: 8px;
+   display: flex;
+   gap: 8px;
 }
 
 .btn-edit,
 .btn-delete {
-    padding: 5px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 500;
+   padding: 5px 15px;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   font-size: 12px;
+   font-weight: 500;
 }
 
 .btn-edit {
-    background-color: #61009F; /* Violet edit button */
-    color: white;
+   background-color: #61009f; /* Violet edit button */
+   color: white;
 }
 
 .btn-edit:hover {
-    background-color: #732d8b; /* Darker violet on hover */
+   background-color: #732d8b; /* Darker violet on hover */
 }
 
 .btn-delete {
-    background-color: #dc3545; /* Keep delete button red */
-    color: white;
+   background-color: #dc3545; /* Keep delete button red */
+   color: white;
 }
 
 .btn-delete:hover {
-    background-color: #c82333; /* Darker red on hover */
+   background-color: #c82333; /* Darker red on hover */
 }
 
 textarea {
-    resize: none; /* Prevent resizing */
-    padding: 10px; /* Add padding for textarea */
-    border: 1px solid #ddd; /* Border for textarea */
-    border-radius: 4px; /* Rounded corners for textarea */
-    font-size: 14px; /* Consistent font size */
+   resize: none; /* Prevent resizing */
+   padding: 10px; /* Add padding for textarea */
+   border: 1px solid #ddd; /* Border for textarea */
+   border-radius: 4px; /* Rounded corners for textarea */
+   font-size: 14px; /* Consistent font size */
+}
+
+.btn-save-changes,
+.btn-close-edit {
+   padding: 8px 10px;
+   border-radius: 8px;
+   border: none;
+}
+/* Styling for the preview container */
+#image-preview-container,
+#edit-image-preview-container {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+}
+
+.image-preview {
+   position: relative;
+   width: 100px;
+   height: 100px;
+}
+
+.image-preview img {
+   width: 100px;
+   height: 100px;
+   border-radius: 4px;
+   object-fit: cover;
+}
+
+.btn-close {
+   color: #fff;
+   background-color: #dc3545; /* Red color for remove button */
+   border-radius: 50%;
+   font-size: 12px;
+   cursor: pointer;
+   position: absolute;
+   top: -5px;
+   right: -5px;
 }
 
 /* Responsive Design */
 @media (max-width: 992px) {
-    .main-content {
-        margin-left: 0; /* Remove left margin on smaller screens */
-        padding: 20px; /* Adjust padding */
-    }
-    .content-layout {
-        grid-template-columns: 1fr; /* Single column layout on tablets */
-    }
+   .main-content {
+      margin-left: 0; /* Remove left margin on smaller screens */
+      padding: 20px; /* Adjust padding */
+   }
+   .content-layout {
+      grid-template-columns: 1fr; /* Single column layout on tablets */
+   }
 }
 
 /* Small screen adjustments */
 @media (max-width: 768px) {
-    .white-card h2 {
-        font-size: 16px; /* Smaller font size for headings */
-    }
-    .input-group {
-        margin-bottom: 15px;
-    }
-    .btn-save, .btn-clear, .btn-edit, .btn-delete {
-        font-size: 12px; /* Adjust button font size */
-        padding: 6px 18px; /* Adjust button padding */
-    }
+   .white-card h2 {
+      font-size: 16px; /* Smaller font size for headings */
+   }
+   .input-group {
+      margin-bottom: 15px;
+   }
+   .btn-save,
+   .btn-clear,
+   .btn-edit,
+   .btn-delete {
+      font-size: 12px; /* Adjust button font size */
+      padding: 6px 18px; /* Adjust button padding */
+   }
 }
 
 /* Extra small screens (phones) */
 @media (max-width: 480px) {
-    .content-layout {
-        grid-template-columns: 1fr; /* Single column for phones */
-    }
-    .white-card h2 {
-        font-size: 14px;
-    }
-    .input-group label,
-    .post-content h3 {
-        font-size: 12px; /* Smaller text */
-    }
-    .full-width-input,
-    textarea {
-        font-size: 12px;
-        padding: 8px;
-    }
-    .button-group {
-        flex-direction: column;
-        gap: 5px;
-    }
-    .posts-list .post-item {
-        flex-direction: column; /* Stack post items on small screens */
-        align-items: flex-start;
-    }
-    .post-actions {
-        justify-content: flex-end;
-    }
+   .content-layout {
+      grid-template-columns: 1fr; /* Single column for phones */
+   }
+   .white-card h2 {
+      font-size: 14px;
+   }
+   .input-group label,
+   .post-content h3 {
+      font-size: 12px; /* Smaller text */
+   }
+   .full-width-input,
+   textarea {
+      font-size: 12px;
+      padding: 8px;
+   }
+   .button-group {
+      flex-direction: column;
+      gap: 5px;
+   }
+   .posts-list .post-item {
+      flex-direction: column; /* Stack post items on small screens */
+      align-items: flex-start;
+   }
+   .post-actions {
+      justify-content: flex-end;
+   }
 }

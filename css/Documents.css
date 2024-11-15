@@ -1,8 +1,45 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-/* Base styling */
+:root {
+   /* Text Colors */
+   --text-dark: #06070f;
+   --text-light: #f0f0fa;
+
+   /* Main Colors */
+   --main-color: #61009f;
+   --header-color: #3f0070;
+
+   /* Button Colors */
+   --button-default: #8a43c5;
+   --button-hover: #b52aff;
+
+   --focus-textfield: #9b4dff;
+
+   /* Shadows */
+   --box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
+
+   /* Container Backgrounds */
+   --container-blue: linear-gradient(180deg, #3498db, #5dade2);
+   --container-yellow: linear-gradient(180deg, #d68910, #f5b041);
+   --container-red: linear-gradient(180deg, #a93226, #e74c3c);
+   --container-green: linear-gradient(180deg, #229954, #27ae60);
+}
+
 body {
    font-family: "Poppins", sans-serif;
    background-color: #f0f0fa !important;
+}
+
+.card-request {
+   background: var(--container-blue);
+}
+.card-pending {
+   background: var(--container-yellow);
+}
+.card-approved {
+   background: var(--container-green);
+}
+.card-rejected {
+   background: var(--container-red);
 }
 
 /* Table styling */
@@ -22,20 +59,11 @@ body {
    background-color: #f5f5fb; /* Even row background color */
 }
 
-th,
-td {
-   padding: 15px;
-   text-align: center;
-   border: 1px solid #ddd;
-   font-size: 16px;
-}
-
 /* Center text for table headers */
 .table th {
    text-align: center; /* This ensures the header text is centered */
    background-color: #d9d9e6 !important;
-   color: #06070f; /* Violet header color */
-   font-weight: 700;
+   color: var(--text-dark);
 }
 
 td {
@@ -47,7 +75,6 @@ td {
 .table th {
    text-align: center;
    vertical-align: middle;
-   border: 1px solid #ddd;
 }
 
 .action-button {
@@ -66,43 +93,56 @@ td {
 }
 
 .action-button:hover {
-   color: #f0f0fa;
-   background-color: #b52aff !important;
+   color: var(--text-light);
+   background-color: var(--button-hover) !important;
    text-decoration: none;
 }
 
 .card {
+   display: flex;
+   justify-content: center;
+   font-family: "Poppins", sans-serif;
    height: 9.375rem;
    width: 15.625rem;
-   font-family: "Poppins", sans-serif;
    border-radius: 0.5rem !important;
-   background-color: #fff;
    padding: 1.25rem;
-   border: none;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   border: none !important;
+   box-shadow: var(--box-shadow);
 }
 
 .card-title {
    font-size: 1.5rem;
    color: #f0f0fa;
-   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Added shadow */
 }
 
 .card-text {
    font-size: 2rem;
-   display: flex;
-   justify-content: center;
-   align-items: center;
    font-weight: 700;
    border-radius: 0.5rem;
    color: #f0f0fa;
    margin-top: 0.5rem;
-   background: rgba(255, 255, 255, 0.1);
+   background: rgba(255, 255, 255, 0.15);
 }
 
-.statistic-container {
+/* Centering the table in the remaining space */
+.table-container {
+   margin-left: 1rem;
+   margin-right: 1rem;
+   max-width: 100%;
+   display: flex;
    justify-content: center;
-   gap: 1.25rem;
+}
+
+/* Adding padding to the statistics container */
+.statistic-container {
+   padding-top: 2.813rem;
+   padding-left: 1.5rem;
+}
+
+/* Ensuring the main content aligns with the sidebar */
+.main-content {
+   width: auto;
+   overflow-x: hidden;
 }
 
 @media (max-width: 1200px) {

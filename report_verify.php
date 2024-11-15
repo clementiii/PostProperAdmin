@@ -125,37 +125,36 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         }
 
         document.getElementById("resolvedBtn").addEventListener("click", function () {
-    // Show the confirmation modal
-    new bootstrap.Modal(document.getElementById("confirmModal")).show();
-});
+            // Show the confirmation modal
+            new bootstrap.Modal(document.getElementById("confirmModal")).show();
+        });
 
-document.getElementById("confirmResolve").addEventListener("click", function () {
-    const reportId = <?php echo $report_id; ?>;  // Get the report ID dynamically
+        document.getElementById("confirmResolve").addEventListener("click", function () {
+            const reportId = <?php echo $report_id; ?>;  // Get the report ID dynamically
 
-    // Perform AJAX request to update the status to "resolved"
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "resolve_report.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Close the confirmation modal
-            new bootstrap.Modal(document.getElementById("confirmModal")).hide();
+            // Perform AJAX request to update the status to "resolved"
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "resolve_report.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             
-            // Show success alert after status is updated
-            alert("The report has been marked as resolved.");
-            
-            // Optionally, you can reload the page to reflect the updated status
-            window.location.reload();
-        } else {
-            alert("Error: " + xhr.responseText);
-        }
-    };
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Close the confirmation modal
+                    new bootstrap.Modal(document.getElementById("confirmModal")).hide();
+                    
+                    // Show success alert after status is updated
+                    alert("The report has been marked as resolved.");
+                    
+                    // Navigate back to the previous page
+                    window.history.back();
+                } else {
+                    alert("Error: " + xhr.responseText);
+                }
+            };
 
-    // Send the AJAX request with the report_id to resolve the report
-    xhr.send("report_id=" + reportId);
-});
+            // Send the AJAX request with the report_id to resolve the report
+            xhr.send("report_id=" + reportId);
+        });
     </script>
 </body>
 </html>
-

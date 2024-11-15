@@ -3,17 +3,41 @@
 body {
    background-color: #f0f0fa !important;
 }
-.main-content {
-   margin-left: 20vh;
+:root {
+   /* Text Colors */
+   --text-dark: #06070f;
+   --text-light: #f0f0fa;
+
+   /* Main Colors */
+   --main-color: #61009f;
+   --header-color: #3f0070;
+
+   /* Button Colors */
+   --button-default: #8a43c5;
+   --button-hover: #b52aff;
+
+   --focus-textfield: #9b4dff;
+
+   /* Shadows */
+   --box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
+
+   /* Container Backgrounds */
+   --container-blue: linear-gradient(180deg, #3498db, #5dade2);
+   --container-yellow: linear-gradient(180deg, #d68910, #f5b041);
+   --container-red: linear-gradient(180deg, #a93226, #e74c3c);
+   --container-green: linear-gradient(180deg, #229954, #27ae60);
 }
-.container {
-   font-family: "Poppins", sans-serif;
+
+/* Styling for statistic container */
+.statistic-container {
+   padding-top: 2.813rem;
+   padding-left: 3rem;
+   width: 100%;
 }
 .stat-box {
-   color: #ffffff;
-   flex: 1;
-   max-width: 20rem; /* Approximately 300px equivalent */
-   height: 9.375rem; /* Approximately 150px equivalent */
+   color: var(--text-light);
+   width: 20rem;
+   height: 9.375rem;
    border-radius: 0.5rem;
    opacity: 0.9;
    display: flex;
@@ -21,55 +45,55 @@ body {
    align-items: center;
    justify-content: center;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow to match the reference */
-   transition: transform 0.2s ease;
 }
 
 .stat-box h4 {
    font-size: 1.5rem;
-   font-weight: 500;
    margin-bottom: 0.5rem;
 }
 
 .stat-number {
    font-size: 2rem;
-   font-weight: bold;
-   width: 15.625rem; /* Approximately 250px equivalent */
-   height: 3.125rem; /* Approximately 50px equivalent */
+   font-weight: 700;
+   width: 15.625rem;
+   height: 3.125rem;
    background: rgba(255, 255, 255, 0.1);
    display: flex;
    align-items: center;
    justify-content: center;
    border-radius: 5px;
    margin-top: 0.5rem;
-   background-color: rgba(255, 255, 255, 0.15); /* Light overlay background */
+   background-color: rgba(255, 255, 255, 0.1); /* Light overlay background */
 }
 .total-reports {
-   background: linear-gradient(to bottom, #4a9ed9, #73c2fb);
+   background: var(--container-blue);
 }
 .pending {
-   background: linear-gradient(to bottom, #d68910, #f5b041);
+   background: var(--container-yellow);
 }
 .resolved {
-   background: linear-gradient(to bottom, #229954, #27ae60);
+   background: var(--container-green);
 }
+
 .action-button {
    width: 6.25rem;
    height: 2.5rem;
-   background-color: #61009f !important; /* Overrides Bootstrap styles */
-   color: #ffffff;
+   background-color: var(--main-color) !important; 
+   color: var(--text-light);
    display: flex;
    align-items: center;
    justify-content: center;
-   border: none; /* Removes border for a cleaner look */
-   border-radius: 8px; /* Rounded corners */
-   text-decoration: none; /* Removes underline from link */
+   border: none;
+   border-radius: 8px;
+   text-decoration: none;
 }
 .action-button:hover {
-   color: #f0f0fa;
-   background-color: #b52aff !important;
+   color: var(--text-light);
+   background-color: var(--button-hover) !important;
    text-decoration: none;
 }
 .table {
+   font-family: "Poppins", sans-serif;
    margin-top: 2.813rem;
 }
 

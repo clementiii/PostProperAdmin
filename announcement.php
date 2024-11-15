@@ -35,38 +35,8 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Barangay Announcements</title>
     <link rel="stylesheet" href="css/Announcement.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Styling for the preview container */
-        #image-preview-container, #edit-image-preview-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .image-preview {
-            position: relative;
-            width: 100px;
-            height: 100px;
-        }
-        
-        .image-preview img {
-            width: 100px;
-            height: 100px;
-            border-radius: 4px;
-            object-fit: cover;
-        }
-        
-        .btn-close {
-            color: #fff;
-            background-color: #dc3545; /* Red color for remove button */
-            border-radius: 50%;
-            font-size: 12px;
-            cursor: pointer;
-            position: absolute;
-            top: -5px;
-            right: -5px;
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
 <?php 
@@ -124,8 +94,8 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <span class="post-date">' . htmlspecialchars($formattedDate) . '</span>
                                 </div>
                                 <div class="post-actions">
-                                    <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' . $announcement['id'] . '" data-title="' . htmlspecialchars($announcement['announcement_title']) . '" data-description="' . htmlspecialchars($announcement['description_text']) . '">Edit</button>
-                                    <button class="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                    <a href="post_edit.php?id=' . $announcement['id'] . '" class="btn-edit">Edit</a>
+                            <button class="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                 </div>
                               </div>';
                     }
@@ -142,7 +112,9 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="publishModalLabel">Publish Announcement Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="border: none; background: none;">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div class="modal-body">
                 Are you sure you want to publish this announcement?
@@ -155,49 +127,6 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- Edit Announcement Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Announcement</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="edit_announcement.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="post_id" id="editPostId">
-                    <div class="input-group">
-                        <label>Announcement Title:</label>
-                        <input type="text" name="title" id="editTitle" class="full-width-input" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Description</label>
-                        <textarea name="description" id="editDescription" class="full-width-input" rows="8" required></textarea>
-                    </div>
-                    
-                    <!-- Display existing images with remove options -->
-                    <div id="current-images-container" class="d-flex flex-wrap mt-3">
-                        <!-- Existing images will be populated here by JavaScript -->
-                    </div>
-
-                    <div class="upload-section">
-                        <div class="upload-box">
-                            <div class="upload-icon">↑</div>
-                            <div class="upload-text">Upload New Images</div>
-                            <input type="file" name="images[]" class="edit-file-input" accept="image/*" multiple>
-                        </div>
-                    </div>
-
-                    <div class="button-group">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -205,7 +134,9 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Delete Post Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="border: none; background: none;">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div class="modal-body">
                 Are you sure you want to delete this post? This action cannot be undone.
@@ -217,6 +148,7 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/announcement.js"></script>

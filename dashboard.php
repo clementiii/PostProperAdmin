@@ -66,7 +66,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
   <?php include 'sidebar.php'; ?> 
   
   <div class="main-content">
-        <div class="header-section">
+        <div class="header-section ">
             <img src="assets/mckinley.jpg" alt="city">
             <h1 class="text-center mb-4">Welcome, Admin <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
             <a href="admin_profile.php">
@@ -77,7 +77,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
         <!-- Summary Cards -->
         <div class="row text-center mb-4">
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card card-resident text-white mb-3">
+                <div class="cards card-resident text-white mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Registered Residents</h5>
                         <h3 class="card-text"><?php echo $registeredResidentsCount; ?></h3>
@@ -85,7 +85,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card card-request text-white  mb-3">
+                <div class="cards card-request text-white  mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Document Requests</h5>
                         <h3 class="card-text"><?php echo $documentRequestsCount; ?></h3>
@@ -93,7 +93,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card card-reports text-white mb-3">
+                <div class="cards card-reports text-white mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Incident Reports</h5>
                         <h3 class="card-text"><?php echo $incidentReportsCount; ?></h3>

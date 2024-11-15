@@ -49,33 +49,33 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
     <!-- Summary Cards for Document Request Statuses -->
     <div class="statistic-container row text-center ">
         <div class="col">
-            <div class="card" style="background: linear-gradient(180deg, #3498DB, #5DADE2); ">
+            <div class="card card-request">
                 <h2 class="card-title">Total Request</h2>
-                <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                <div class="card-text" >
                     <?php echo $totalRequest; ?>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card" style="background: linear-gradient(180deg, #D68910, #F5B041);">
+            <div class="card card-pending">
                 <h2 class="card-title">Pending</h2>
-                <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                <div class="card-text" >
                     <?php echo $pendingCount; ?>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card" style="background: linear-gradient(180deg, #229954, #27AE60);">
+            <div class="card card-approved">
                 <h2 class="card-title">Approved</h2>
-                <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                <div class="card-text" >
                     <?php echo $approvedCount; ?>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card" style="background: linear-gradient(180deg, #A93226, #E74C3C);">
+            <div class="card card-rejected">
                 <h2 class="card-title">Rejected</h2>
-                <div class="card-text" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 50%;">
+                <div class="card-text">
                     <?php echo $rejectedCount; ?>
                 </div>
             </div>

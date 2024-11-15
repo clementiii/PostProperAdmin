@@ -2,38 +2,48 @@
 session_start();
 include 'db.php'; // Include your database connection file
 
-// Check if the user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: splash.php"); // Redirect to the login page if not logged in
+    header("Location: splash.php");
     exit;
 }
 
 try {
-    // Query to fetch the total number of incident reports
+    // Query for summary statistics
     $sqlTotal = "SELECT COUNT(*) AS count FROM incident_reports";
     $stmtTotal = $conn->prepare($sqlTotal);
     $stmtTotal->execute();
     $totalReports = $stmtTotal->fetch(PDO::FETCH_ASSOC)['count'];
 
-    // Query to fetch the number of reports with status 'Pending'
-    $sqlPending = "SELECT COUNT(*) AS count FROM incident_reports WHERE LOWER(status) = 'Pending'";
+    $sqlPending = "SELECT COUNT(*) AS count FROM incident_reports WHERE UPPER(status) = 'PENDING'";
     $stmtPending = $conn->prepare($sqlPending);
     $stmtPending->execute();
     $pendingReports = $stmtPending->fetch(PDO::FETCH_ASSOC)['count'];
 
-    // Query to fetch the number of reports with status 'Resolved'
-    $sqlResolved = "SELECT COUNT(*) AS count FROM incident_reports WHERE LOWER(status) = 'Resolved'";
+    $sqlResolved = "SELECT COUNT(*) AS count FROM incident_reports WHERE UPPER(status) = 'RESOLVED'";
     $stmtResolved = $conn->prepare($sqlResolved);
     $stmtResolved->execute();
     $resolvedReports = $stmtResolved->fetch(PDO::FETCH_ASSOC)['count'];
 
-    // Query to fetch all incident reports for the table
+    // Fetch reports for the table
     $sqlReports = "SELECT id, name, title, description, date_submitted, status FROM incident_reports";
     $stmtReports = $conn->prepare($sqlReports);
     $stmtReports->execute();
     $reports = $stmtReports->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($reports as &$report) {
+        $report['status'] = ucfirst(strtolower($report['status'])); // Format status
+    }
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
+}
+
+// Helper function to truncate a description to a maximum number of words
+function truncateDescription($description, $maxWords = 12) {
+    $words = explode(' ', $description);
+    if (count($words) > $maxWords) {
+        return implode(' ', array_slice($words, 0, $maxWords)) . '...';
+    }
+    return $description;
 }
 ?>
 
@@ -55,31 +65,29 @@ try {
 
 <div class="main-content">
     <div class="container">
-        <!-- Dynamic summary boxes -->
-        <div class="row justify-content-center">
+        <div class="statistic-container row text-center">
             <div class="col-md-4">
-                <div class="stat-box total-reports text-center py-3">
+                <div class="stat-box total-reports">
                     <h4>Total Reports</h4>
                     <div class="stat-number"><?php echo $totalReports; ?></div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="stat-box pending  text-center py-3">
+                <div class="stat-box pending">
                     <h4>Pending</h4>
                     <div class="stat-number"><?php echo $pendingReports; ?></div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="stat-box resolved  text-center py-3">
+                <div class="stat-box resolved">
                     <h4>Resolved</h4>
                     <div class="stat-number"><?php echo $resolvedReports; ?></div>
                 </div>
             </div>
         </div>
 
-        <!-- Incident Reports Table -->
         <table class="table table-bordered">
-            <thead class="table-light">
+            <thead>
                 <tr>
                     <th>Name</th>
                     <th>Title</th>
@@ -94,7 +102,7 @@ try {
                     <tr>
                         <td><?php echo htmlspecialchars($report['name']); ?></td>
                         <td><?php echo htmlspecialchars($report['title']); ?></td>
-                        <td><?php echo htmlspecialchars($report['description']); ?></td>
+                        <td><?php echo htmlspecialchars(truncateDescription($report['description'])); ?></td>
                         <td><?php echo date('m/d/Y', strtotime($report['date_submitted'])); ?></td>
                         <td><?php echo htmlspecialchars($report['status']); ?></td>
                         <td><a href="report_verify.php?id=<?php echo $report['id']; ?>" class="action-button">View</a></td>
@@ -104,6 +112,5 @@ try {
         </table>
     </div>
 </div>
-
 </body>
 </html>

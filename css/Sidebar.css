@@ -111,9 +111,7 @@ h3 {
 
 /* Main content styling */
 .main-content {
-   padding: 2rem;
-   margin-left: 21vw; /* Leave space for the sidebar */
-   flex: 1;
+   margin-left: 18.75rem; /* Leave space for the sidebar */
 }
 
 .main-title {
