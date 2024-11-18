@@ -73,7 +73,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
                 <img src="<?php echo $profilePicture; ?>" alt="Profile" class="profile-icon rounded-circle">
             </a>
         </div>
-    <div class="container mt-5">
+    <div class="container mt-5 px-5">
         <!-- Summary Cards -->
         <div class="row text-center mb-4">
             <div class="col-md-4 col-sm-6 mb-4">

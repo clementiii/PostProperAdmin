@@ -56,22 +56,22 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
 ?>
 
 <div class="main-content">
-    <div class="container" style="margin-top: 5px;">
+    <div class="container mt-4 px-4">
         <!-- User Statistics Boxes -->
-        <div class="row justify-content-center" style="margin-bottom: 45px;">
-            <div class="col-md-4">
+        <div class="row justify-content-center mb-5" style="max-width: 100vw; margin: 0 auto;">
+            <div class="col-md-4 px-4">
                 <div class="stat-box total-resident text-center py-3">
                     <h4>Registered Residents</h4>
                     <div class="stat-number"><?php echo $registeredResidentsCount; ?></div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 px-4">
                 <div class="stat-box active-user text-center py-3">
                     <h4>Active Users</h4>
                     <div class="stat-number">130</div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 px-4">
                 <div class="stat-box inactive-user text-center py-3">
                     <h4>Inactive Users</h4>
                     <div class="stat-number">70</div>
@@ -80,7 +80,7 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
         </div>
 
         <!-- User Table -->
-        <div class="table-responsive">
+        <div class="table-responsive" style="max-width: 100vw; margin-left: -1rem;">
             <table class="table table-bordered text-center align-middle">
                 <thead>
                     <tr>

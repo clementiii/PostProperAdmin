@@ -78,7 +78,7 @@ body {
 .action-button {
    width: 6.25rem;
    height: 2.5rem;
-   background-color: var(--main-color) !important; 
+   background-color: var(--main-color) !important;
    color: var(--text-light);
    display: flex;
    align-items: center;
@@ -95,6 +95,8 @@ body {
 .table {
    font-family: "Poppins", sans-serif;
    margin-top: 2.813rem;
+   max-width: 100vw;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .table td,
@@ -115,4 +117,7 @@ body {
 
 .table tbody tr:nth-child(even) {
    background-color: #f5f5fb;
+}
+.table tbody td:last-child {
+   padding: 1rem; /* Adds spacing inside the cell */
 }

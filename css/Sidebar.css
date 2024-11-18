@@ -89,24 +89,28 @@ h3 {
 .btn-logout {
    display: inline-flex;
    margin-top: 8vh;
-   align-items: left;
-   background-color: #8a2be2; /* Purple color */
+   align-items: center;
+   background-color: #8a2be2;
    color: #fff;
    font-size: 1.25rem;
    padding: 0.5rem 1.5rem;
-   border-radius: 10px; /* Rounded corners */
+   border-radius: 10px;
    text-decoration: none;
    transition: background-color 0.3s ease;
-   white-space: nowrap; /* Prevents wrapping */
+   white-space: nowrap;
+}
+
+.btn-logout i {
+   margin-right: 0.8rem;
 }
 
 .btn-log-out {
-   background-color: #8a43c5; /* Bootstrap primary color */
-   border-color: black;
+   background-color: #8a43c5;
 }
 
 .btn-logout:hover {
-   background-color: #61009f; /* Darker shade on hover */
+   background-color: #b52aff !important;
+   color: #f0faf0;
 }
 
 /* Main content styling */

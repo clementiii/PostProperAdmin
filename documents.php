@@ -45,7 +45,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
     include 'sidebar.php'; 
 ?> 
 
-<div class="main-content">
+<div class="main-content px-4">
     <!-- Summary Cards for Document Request Statuses -->
     <div class="statistic-container row text-center ">
         <div class="col">
@@ -83,7 +83,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
     </div>
 
     <!-- Document Requests Table -->
-    <div class="table-container">
+    <div class="table-responsive" >
         <table class="table table-bordered mb-0">
             <thead>
                 <tr>

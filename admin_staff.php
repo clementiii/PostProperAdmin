@@ -37,13 +37,13 @@ try {
 <body>
     
 <?php 
-    $pageTitle = "Admin Staff";
+    $pageTitle = "Admin Staffs";
     include 'header.php';
     include 'sidebar.php'; 
 ?>
 
 <div class="main-content">
-    <div class="container">
+    <div class="container px-5">
         <table class="table table-bordered mt-4 custom-table">
             <thead>
                 <tr>

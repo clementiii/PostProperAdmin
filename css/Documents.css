@@ -47,7 +47,7 @@ body {
    font-family: "Poppins", sans-serif;
    width: 100%;
    border-collapse: collapse;
-   margin-top: 2.813rem;
+
    table-layout: fixed;
    border: 1px solid #ccc;
 }
@@ -125,12 +125,14 @@ td {
 }
 
 /* Centering the table in the remaining space */
-.table-container {
-   margin-left: 1rem;
-   margin-right: 1rem;
+.table-responsive {
+   margin-left: 1.5rem;
+   margin-right: 1.5rem;
+   margin-top: 2.813rem;
    max-width: 100%;
    display: flex;
    justify-content: center;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Adding padding to the statistics container */
@@ -141,8 +143,7 @@ td {
 
 /* Ensuring the main content aligns with the sidebar */
 .main-content {
-   width: auto;
-   overflow-x: hidden;
+   padding-bottom: 2rem;
 }
 
 @media (max-width: 1200px) {

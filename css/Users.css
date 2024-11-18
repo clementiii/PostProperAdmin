@@ -1,7 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+:root {
+   /* Text Colors */
+   --text-dark: #06070f;
+   --text-light: #f0f0fa;
 
+   /* Main Colors */
+   --main-color: #61009f;
+   --header-color: #3f0070;
+
+   /* Button Colors */
+   --button-default: #8a43c5;
+   --button-hover: #b52aff;
+
+   --focus-textfield: #9b4dff;
+
+   /* Shadows */
+   --box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+
+   /* Container Backgrounds */
+   --container-blue: linear-gradient(180deg, #3498db, #5dade2);
+   --container-yellow: linear-gradient(180deg, #d68910, #f5b041);
+   --container-red: linear-gradient(180deg, #a93226, #e74c3c);
+   --container-green: linear-gradient(180deg, #229954, #27ae60);
+}
 body {
    font-family: "Poppins", sans-serif;
+   background-color: var(--text-light);
 }
 
 .main-content {
@@ -64,7 +88,6 @@ body {
 .table {
    width: 100%;
    border: 1px solid #dcdcdc;
-   border-radius: 10px;
    overflow: hidden;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for table */
 }
@@ -72,7 +95,7 @@ body {
 /* Column header background color */
 .table thead th {
    font-weight: 700;
-   color: #000000;
+   color: var(--text-dark);
    background-color: #d9d9e6; /* Updated color */
 }
 
@@ -100,10 +123,10 @@ body {
 }
 
 .total-resident {
-   background: linear-gradient(180deg, #3498db, #5dade2);
+   background: var(--container-blue);
 }
 .active-user {
-   background: linear-gradient(180deg, #d68910, #f5b041);
+   background: var(--container-green);
 }
 .inactive-user {
    background: linear-gradient(180deg, #8a8a9e, #b3b3c2);

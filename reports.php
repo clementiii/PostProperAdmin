@@ -64,7 +64,7 @@ function truncateDescription($description, $maxWords = 12) {
 <?php include 'sidebar.php'; ?>
 
 <div class="main-content">
-    <div class="container">
+    <div class="container px-5">
         <div class="statistic-container row text-center">
             <div class="col-md-4">
                 <div class="stat-box total-reports">
