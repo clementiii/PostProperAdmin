@@ -23,73 +23,77 @@ if ($adminId > 0) {
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST['new_password'], $_POST['confirm_new_password'], $_POST['username'])) {
-    $oldPassword = $_POST['old_password'];
-    $newPassword = $_POST['new_password'];
-    $confirmNewPassword = $_POST['confirm_new_password'];
-    $newUsername = $_POST['username'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $newUsername = $_POST['username'] ?? null;
+    $oldPassword = $_POST['old_password'] ?? null;
+    $newPassword = $_POST['new_password'] ?? null;
+    $confirmNewPassword = $_POST['confirm_new_password'] ?? null;
 
-    // Flags to track what changes were made
     $passwordChanged = false;
     $usernameChanged = false;
+    $profilePictureChanged = false;
+
+    // Handle file upload for profile picture
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+        $targetDir = "uploads/profile_pictures/";
+        $fileName = time() . '_' . basename($_FILES['profile_picture']['name']);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+        $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+        if (in_array(strtolower($fileType), $allowedTypes)) {
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true); // Create directory if not exists
+            }
+            if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetFilePath)) {
+                $updatePictureSql = "UPDATE admin_accounts SET profile_picture = ? WHERE id = ?";
+                $stmt = $conn->prepare($updatePictureSql);
+                $stmt->execute([$targetFilePath, $adminId]);
+                $profilePictureChanged = true;
+            } else {
+                echo "<script>alert('Failed to upload profile picture.');</script>";
+            }
+        } else {
+            echo "<script>alert('Invalid file type. Please upload an image.');</script>";
+        }
+    }
 
     try {
-        // Fetch current admin data
-        $checkSql = "SELECT username, password FROM admin_accounts WHERE id = ?";
-        $stmt = $conn->prepare($checkSql);
-        $stmt->execute([$adminId]);
-        $currentAdmin = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Check if the username has changed
-        if ($currentAdmin['username'] !== $newUsername) {
+        if ($newUsername && $newUsername !== $admin['username']) {
             $updateUsernameSql = "UPDATE admin_accounts SET username = ? WHERE id = ?";
             $stmt = $conn->prepare($updateUsernameSql);
             $stmt->execute([$newUsername, $adminId]);
             $usernameChanged = true;
         }
 
-        // Check if a password change is requested
-        if (!empty($newPassword) && !empty($oldPassword)) {
-            // Verify old password before updating
-            if ($currentAdmin && $currentAdmin['password'] === $oldPassword) {
-                // Check if the new password matches confirmation
+        if ($oldPassword && $newPassword && $confirmNewPassword) {
+            if ($admin['password'] === $oldPassword) {
                 if ($newPassword === $confirmNewPassword) {
                     $updatePasswordSql = "UPDATE admin_accounts SET password = ? WHERE id = ?";
                     $stmt = $conn->prepare($updatePasswordSql);
                     $stmt->execute([$newPassword, $adminId]);
                     $passwordChanged = true;
                 } else {
-                    echo "<script>alert('New Password and Confirm New Password do not match.');</script>";
+                    echo "<script>alert('New Password and Confirm Password do not match.');</script>";
                 }
             } else {
-                echo "<script>alert('Incorrect old password. Please try again.');</script>";
+                echo "<script>alert('Incorrect old password.');</script>";
             }
         }
 
-        // Display appropriate success message and redirect
-        if ($usernameChanged && $passwordChanged) {
+        if ($usernameChanged || $passwordChanged || $profilePictureChanged) {
             echo "<script>
-                    alert('Username and password changed successfully.');
-                    window.location.href = 'admin_staff.php';
-                  </script>";
-        } elseif ($usernameChanged) {
-            echo "<script>
-                    alert('Username changed successfully.');
-                    window.location.href = 'admin_staff.php';
-                  </script>";
-        } elseif ($passwordChanged) {
-            echo "<script>
-                    alert('Password changed successfully.');
-                    window.location.href = 'admin_staff.php';
+                    alert('Profile updated successfully.');
+                    window.location.href = 'admin_profile.php';
                   </script>";
         }
-
     } catch (PDOException $e) {
         echo "<script>alert('Error updating profile: " . $e->getMessage() . "');</script>";
     }
 }
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -112,27 +116,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST
             </button>
 
             <div class="text-center mb-3">
-                <img src="<?php echo !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg'; ?>" alt="Admin Profile" class="profile-image rounded-circle">
-                <p class="admin-title">ADMIN</p>
+                    <!-- Clickable Profile Image -->
+                    <img src="<?php echo !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg'; ?>" 
+                        alt="Admin Profile" 
+                        class="profile-image rounded-circle" 
+                        id="profilePicturePreview" 
+                        style="cursor: not-allowed;"
+                        onclick="changeProfileImage()">
+                    <p class="admin-title">ADMIN</p>
+                    <!-- Hidden File Input -->
+                    <input type="file" name="profile_picture" id="profilePictureInput" class="d-none" accept="image/*" onchange="previewProfilePicture(event)">
             </div>
-            <h2 class="section-title">Admin Information</h2>
             <form id="profileForm" method="POST" action="">
-                <div class="mb-3 text-start">
+                <div class="mb-2 text-start">
                     <label class="form-label">Name</label>
                     <input type="text" name="name" class="form-control input-field" value="<?php echo htmlspecialchars($admin['name']); ?>" disabled>
                 </div>
-                <div class="mb-3 text-start">
+                <div class="mb-2 text-start">
                     <label class="form-label">Username</label>
                     <input type="text" name="username" class="form-control input-field" value="<?php echo htmlspecialchars($admin['username']); ?>" disabled>
                 </div>
-                <div class="mb-3 text-start">
+                <div class="mb-2 text-start">
                     <label class="form-label">Password</label>
                     <input type="password" name="old_password" class="form-control input-field" disabled>
                 </div>
-                <div class="mb-3 text-start d-none" id="newPasswordFields">
-                    <label class="form-label mt-2">New Password</label>
+                <div class="mb-2 text-start d-none" id="newPasswordFields">
+                    <label class="form-label">New Password</label>
                     <input type="password" name="new_password" class="form-control input-field">
-                    <label class="form-label mt-2">Confirm New Password</label>
+                    <label class="form-label">Confirm New Password</label>
                     <input type="password" name="confirm_new_password" class="form-control input-field">
                 </div>
                 <button type="button" class="action-btn edit-btn" onclick="enableEditing()">Edit Profile</button>
@@ -142,17 +153,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST
     </div>
 
     <script>
-        function goBack() {
-            window.history.back(); // Navigates to the previous page
-        }
+        let isEditing = false;
 
-        function enableEditing() {
-            document.querySelectorAll('.input-field').forEach(field => field.disabled = false);
-            document.getElementById('newPasswordFields').classList.remove('d-none');
-            document.querySelector('.edit-btn').classList.add('d-none');
-            document.querySelector('.save-btn').classList.remove('d-none');
-            document.querySelector('.profile-card').style.maxHeight = '90vh';
-        }
+function goBack() {
+    if (isEditing) {
+        // Return to the view-only state
+        resetToViewMode();
+    } else {
+        window.history.back(); // Navigate to the previous page
+    }
+}
+
+function changeProfileImage() {
+    if (!isEditing) {
+        alert('Click "Edit Profile" to change your profile picture.');
+        return;
+    }
+    document.getElementById('profilePictureInput').click(); // Triggers the file input only in editing mode
+}
+
+function triggerFileInput() {
+    document.getElementById('profilePictureInput').click();
+}
+
+function previewProfilePicture(event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+        const preview = document.getElementById('profilePicturePreview');
+        preview.src = reader.result; // Updates the profile image with the selected file
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function enableEditing() {
+    isEditing = true; // Enable editing mode
+    document.querySelectorAll('.input-field').forEach(field => field.disabled = false);
+    document.getElementById('newPasswordFields').classList.remove('d-none');
+    document.querySelector('.edit-btn').classList.add('d-none');
+    document.querySelector('.save-btn').classList.remove('d-none');
+    document.querySelector('.profile-card').style.maxHeight = '90vh';
+    document.getElementById('profilePicturePreview').style.cursor = 'pointer'; // Allow profile picture editing
+}
+
+function resetToViewMode() {
+    isEditing = false; // Disable editing mode
+    document.querySelectorAll('.input-field').forEach(field => field.disabled = true);
+    document.getElementById('newPasswordFields').classList.add('d-none');
+    document.querySelector('.edit-btn').classList.remove('d-none');
+    document.querySelector('.save-btn').classList.add('d-none');
+    document.querySelector('.profile-card').style.maxHeight = '';
+    document.getElementById('profilePicturePreview').style.cursor = 'not-allowed'; // Disable profile picture editing
+}
+
     </script>
 </body>
 </html>
