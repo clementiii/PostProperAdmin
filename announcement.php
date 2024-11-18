@@ -1,15 +1,4 @@
 <?php
-if (isset($_SESSION['success_message'])) {
-    echo '<div class="alert alert-success">' . $_SESSION['success_message'] . '</div>';
-    unset($_SESSION['success_message']);
-}
-if (isset($_SESSION['error_message'])) {
-    echo '<div class="alert alert-danger">' . $_SESSION['error_message'] . '</div>';
-    unset($_SESSION['error_message']);
-}
-?>
-
-<?php
 session_start();
 
 // Check if the user is logged in
@@ -21,7 +10,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 include 'db.php'; // Make sure this file connects to your `pps_barangay_system` database
 
 // Fetch recent announcements from the database
-$query = "SELECT id, announcement_title, description_text, created_at, announcement_images FROM barangay_announcements ORDER BY created_at DESC LIMIT 10";
+$query = "SELECT id, announcement_title, description_text, announcement_images, created_at FROM barangay_announcements ORDER BY created_at DESC LIMIT 10";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -44,7 +33,6 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
     include 'header.php';
 ?>
 <?php include 'sidebar.php'; ?> 
-
 <div class="main-content">
     <div class="content-layout">
         <div class="left-section">
@@ -52,18 +40,18 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <h2>Add New Announcement</h2>
                 <form action="process_announcement.php" method="POST" enctype="multipart/form-data">
                     <div class="input-group">
-                        <label>Announcement Title:</label>
-                        <input type="text" name="title" class="full-width-input" required>
+                        <label for="title">Announcement Title:</label>
+                        <input type="text" name="title" id="title" class="full-width-input" required>
                     </div>
                     <div class="input-group">
-                        <label>Description</label>
-                        <textarea name="description" class="full-width-input" rows="8" required></textarea>
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" class="full-width-input" rows="8" required></textarea>
                     </div>
                     <div class="upload-section">
                         <div class="upload-box">
                             <div class="upload-icon">↑</div>
                             <div class="upload-text">Upload Image Here</div>
-                            <input type="file" name="images[]" class="file-input" accept="image/*" multiple>
+                            <input type="file" name="images[]" id="images" class="file-input" accept="image/*" multiple>
                         </div>
                     </div>
 
@@ -82,11 +70,11 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="white-card">
                 <h2>Recent Posts</h2>
                 <div class="posts-list">
-                    <?php
+                <?php
                     foreach ($announcements as $announcement) {
                         // Format date for display
                         $formattedDate = date("F d, Y", strtotime($announcement['created_at']));
-                        
+
                         // Display each announcement
                         echo '<div class="post-item">
                                 <div class="post-content">
@@ -95,9 +83,9 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="post-actions">
                                     <a href="post_edit.php?id=' . $announcement['id'] . '" class="btn-edit">Edit</a>
-                            <button class="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                    <a href="process_announcement.php?action=delete&id=' . $announcement['id'] . '" class="btn-delete" onclick="return confirm(\'Are you sure you want to delete this announcement?\')">Delete</a>
                                 </div>
-                              </div>';
+                            </div>';
                     }
                     ?>
                 </div>
