@@ -46,9 +46,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="css/LoginStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<style>
+    body,
+html {
+   height: 100%;
+   font-family: "Poppins", sans-serif;
+   background-image: url("assets/mckinley.jpg") !important;
+   background-size: cover;
+   background-position: center;
+   margin: 0;
+   padding: 0;
+   position: relative;
+}
+
+
+.overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.3); 
+   z-index: 1; 
+}
+</style>
 <body>
 
-
+ <div class="overlay"></div>
 <div class="login-container">
     <div class="login-box">
         <div class="logo-section">
