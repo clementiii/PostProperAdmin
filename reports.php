@@ -98,7 +98,7 @@ function truncateDescription($description, $maxWords = 12) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($reports as $report): ?>
+                <?php foreach ($reports as &$report): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($report['name']); ?></td>
                         <td><?php echo htmlspecialchars($report['title']); ?></td>
