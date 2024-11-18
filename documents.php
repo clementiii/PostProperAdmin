@@ -109,7 +109,15 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
                         echo "<td>₱ " . htmlspecialchars($row['Price']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
                         echo "<td>" . ucfirst(htmlspecialchars(strtolower($row['Status']))) . "</td>";
-                        echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button" >View</a></td>';
+
+                        if (strtolower($row['Status']) === 'rejected') {
+                            echo '<td><button class="action-button button-rejected" disabled>Rejected</button></td>';
+                        } elseif (strtolower($row['Status']) === 'approved') {
+                            echo '<td><button class="action-button button-approved" disabled>Approved</button></td>';
+                        } else {
+                            echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button">View</a></td>';
+                        }
+                        
                         echo "</tr>";
                     }
                 } else {

@@ -24,14 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newStatus = $_POST['status'];
     $reason = isset($_POST['reason']) ? $_POST['reason'] : null;
 
-    // Update the status in the database
-    $updateQuery = "UPDATE document_requests SET Status = :status, RejectionReason = :reason WHERE Id = :id";
+    // Validate reason for rejection if the status is "Rejected"
+    if ($newStatus === 'Rejected' && empty($reason)) {
+        echo "<p style='color: red;'>Please provide a reason for rejection.</p>";
+        exit;
+    }
+
+    // Update the status and rejection reason in the database
+    $updateQuery = "UPDATE document_requests SET Status = :status, rejection_reason = :reason WHERE Id = :id";
     $updateStmt = $conn->prepare($updateQuery);
     $updateStmt->bindParam(':status', $newStatus, PDO::PARAM_STR);
     $updateStmt->bindParam(':id', $documentId, PDO::PARAM_INT);
     $updateStmt->bindParam(':reason', $reason, PDO::PARAM_STR);
     $updateStmt->execute();
-    
+
     // Redirect to documents.php after saving
     header('Location: documents.php');
     exit;
@@ -58,7 +64,7 @@ $conn = null;
     ?>
 
     <div class="main-container mt-5">
-         <button onclick="history.back()" class="btn btn-secondary mb-3" style="font-size: 1.25rem;">
+        <button onclick="history.back()" class="btn btn-secondary mb-3" style="font-size: 1.25rem;">
             <i class="fas fa-arrow-left"></i>
         </button>
         <h2 class="text-center mb-4">Document Verification</h2>

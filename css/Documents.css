@@ -80,7 +80,7 @@ td {
 .action-button {
    width: 6.25rem;
    height: 2.5rem;
-   background-color: #61009f !important;
+   background-color: #61009f;
    color: #f0f0fa;
    display: flex;
    align-items: center;
@@ -94,7 +94,7 @@ td {
 
 .action-button:hover {
    color: var(--text-light);
-   background-color: var(--button-hover) !important;
+   background-color: var(--button-hover);
    text-decoration: none;
 }
 
@@ -145,6 +145,41 @@ td {
 .main-content {
    padding-bottom: 2rem;
 }
+
+/* Button Colors for Approved and Rejected Actions */
+.button-rejected {
+   background-color: #fa0000; /* Bright Red for Rejected */
+   color: white; /* White text */
+   border: none;
+   border-radius: 0.5rem;
+   padding: 0.5rem 1rem;
+   cursor: not-allowed; /* Disabled cursor */
+   font-weight: 500;
+}
+
+.button-approved {
+   background-color: #28a745; /* Green for Approved */
+   color: white; /* White text */
+   border: none;
+   border-radius: 0.5rem;
+   padding: 0.5rem 1rem;
+   cursor: not-allowed; /* Disabled cursor */
+   font-weight: 500;
+}
+
+/* Rejected button hover */
+.button-rejected:hover {
+   background-color: #701111; /* Darker red on hover for rejected */
+   cursor: not-allowed; /* Maintain the not-allowed behavior */
+}
+
+/* Approved button hover */
+.button-approved:hover {
+   background-color: #218838; /* Darker green on hover for approved */
+   cursor: not-allowed; /* Maintain the not-allowed behavior */
+}
+
+
 
 @media (max-width: 1200px) {
    .main-content {
