@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2024 at 06:31 PM
+-- Generation Time: Nov 19, 2024 at 06:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -64,11 +64,8 @@ CREATE TABLE `barangay_announcements` (
 --
 
 INSERT INTO `barangay_announcements` (`id`, `announcement_title`, `description_text`, `announcement_images`, `created_at`, `posted_at`) VALUES
-(2, 'New Internet', 'Bagong internet sa southside makati bruh', '[\"uploads\\/announcements\\/1731434683_elden-ring-8k-h4.jpg\"]', '2024-11-12 11:04:43', '2024-11-12 19:04:43'),
-(6, 'no image announcement', 'THIS POST HAS NO IMAGE YES OMG', '[]', '2024-11-18 09:59:39', '2024-11-18 17:59:39'),
-(11, 'asdas', 'asdasdasdasdas', '[]', '2024-11-18 10:21:31', '2024-11-18 18:21:31'),
-(12, 'asda', 'asdasdasdasd', '[]', '2024-11-18 10:21:36', '2024-11-18 18:21:36'),
-(13, 'TEST', 'asd', '[\"uploads\\/announcements\\/1731950582_Screenshot 2022-09-10 080821.png\",\"uploads\\/announcements\\/1731950582_Screenshot 2022-09-10 075140.png\",\"uploads\\/announcements\\/1731950582_Screenshot 2022-09-10 080557.png\"]', '2024-11-18 10:23:02', '2024-11-18 18:23:02');
+(16, 'test no image', 'this is a test announcement', '[]', '2024-11-18 22:03:31', '2024-11-19 06:03:31'),
+(17, 'test with image', 'this is a test announcement', '[\"uploads\\/announcements\\/1731992621_78298148_573841626722339_2171899188458029056_n.png\"]', '2024-11-18 22:03:41', '2024-11-19 06:03:41');
 
 -- --------------------------------------------------------
 
@@ -227,7 +224,7 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `barangay_announcements`
 --
 ALTER TABLE `barangay_announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `document_requests`
