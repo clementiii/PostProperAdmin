@@ -41,6 +41,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <link rel="stylesheet" href="css/report_verify.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/report_verify.js" defer></script>
+    <link rel="icon" type="image/png" href="assets/Southside.png">
+    
 </head>
 <body>
     <?php 
@@ -63,7 +65,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
         <div class="form-group">
             <label for="reportDescription" class="form-label">Description:</label>
-            <textarea class="form-control" id="reportDescription" rows="3" readonly><?php echo htmlspecialchars($report['description']); ?></textarea>
+            <textarea class="form-control" id="reportDescription" readonly><?php echo htmlspecialchars($report['description']); ?></textarea>
         </div>
 
         <div class="form-group">
@@ -155,6 +157,21 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             // Send the AJAX request with the report_id to resolve the report
             xhr.send("report_id=" + reportId);
         });
+
+        // Automatically adjust the height of the textarea
+const reportDescription = document.getElementById('reportDescription');
+
+function adjustHeight(element) {
+    element.style.height = 'auto'; // Reset height
+    element.style.height = element.scrollHeight + 'px'; // Set to scroll height
+}
+
+// Call adjustHeight on page load
+adjustHeight(reportDescription);
+
+// If you want it to adjust dynamically when users type (if editable in the future)
+reportDescription.addEventListener('input', () => adjustHeight(reportDescription));
+
     </script>
 </body>
 </html>

@@ -34,6 +34,7 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
     <title>Users</title>
     <link rel="stylesheet" href="css/users.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="assets/Southside.png">
     <script>
         let userIdToDelete;
 
