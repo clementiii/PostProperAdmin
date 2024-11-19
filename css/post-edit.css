@@ -1,18 +1,24 @@
-/* Import Poppins font from Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+.btn-clear {
+   text-decoration: none;
+}
+
+.btn-clear:hover {
+   color: #f0faf0;
+}
 
 .main-content {
    padding: 1.25rem 1.875rem;
    background-color: #fff;
    min-height: 100vh;
-   margin-left: 15.625rem; /* Sidebar width */
+
    font-family: "Poppins", sans-serif;
 }
 
 .content-layout {
-   display: grid;
-   grid-template-columns: 1fr 25rem;
-   gap: 1.875rem;
+   padding: 3rem 0.2rem;
+   width: 75vw;
 }
 
 /* Card Component */
@@ -34,6 +40,25 @@
    font-size: 1.125rem;
    margin-bottom: 1.25rem;
    color: #4b0082;
+}
+
+.back-button {
+   font-family: "Poppins", sans-serif;
+   font-size: 1.25rem;
+   display: flex;
+   align-items: center;
+   padding: 0.3rem 0.5rem;
+   border-radius: 4px;
+   position: absolute;
+   top: 16%;
+   left: 22%;
+   color: #333;
+   text-decoration: none;
+   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-button i {
+   margin-right: 8px;
 }
 
 /* Form Styling */
@@ -211,7 +236,8 @@ textarea {
 #image-preview-container {
    display: flex;
    flex-wrap: wrap;
-   gap: 0.625rem;
+   gap: 1rem;
+   margin-bottom: 2rem;
 }
 
 .image-preview {
@@ -257,6 +283,16 @@ textarea {
       font-size: 0.75rem;
       padding: 0.375rem 1.125rem;
    }
+   .back-button {
+      top: 15%;
+      left: 35%;
+      font-size: 16px; /* Slightly smaller font */
+      padding: 6px 10px; /* Adjust padding for smaller viewports */
+   }
+
+   .back-button i {
+      margin-right: 6px; /* Reduce spacing for smaller screens */
+   }
 }
 
 @media (max-width: 30rem) {
@@ -266,5 +302,11 @@ textarea {
    }
    .post-actions {
       justify-content: flex-end;
+   }
+   .back-button {
+      top: 8px;
+      left: 8px;
+      font-size: 14px; /* Smaller font size for compact view */
+      padding: 4px 8px; /* Reduce padding */
    }
 }

@@ -36,13 +36,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Announcement</title>
-    <link rel="stylesheet" href="css/Announcement.css">
+    <link rel="stylesheet" href="css/post-edit.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/Southside.png">
 </head>
 <body>
 <?php include 'header.php'; ?>
 <?php include 'sidebar.php'; ?>
-
+<a href="announcement.php" class="back-button btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
 <div class="main-content">
     <div class="content-layout">
         <div class="left-section">
