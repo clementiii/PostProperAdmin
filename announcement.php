@@ -133,6 +133,15 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, cancel</button>
                 <button type="button" class="btn btn-danger" id="confirmDelete">Yes, confirm</button>
             </div>
+            <?php
+                if (isset($_GET['status'])) {
+                    if ($_GET['status'] === 'deleted') {
+                        echo '<div class="alert alert-success">Announcement deleted successfully!</div>';
+                    } elseif ($_GET['status'] === 'error') {
+                        echo '<div class="alert alert-danger">An error occurred while deleting the announcement.</div>';
+                    }
+                }
+                ?>
         </div>
     </div>
 </div>

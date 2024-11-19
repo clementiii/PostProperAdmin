@@ -68,12 +68,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
                     <div id="image-preview-container" class="d-flex flex-wrap mt-3">
                         <?php
-                        // Check if there are images in the 'announcement_images' field
-                        $images = explode(",", $announcement['announcement_images']);
-                        
+                        // Decode JSON formatted images
+                        $images = json_decode($announcement['announcement_images'], true);
+
                         if (!empty($images)) {
                             foreach ($images as $image) {
-                                $imagePath = "uploads/" . trim($image);  // Ensure no extra spaces in the path
+                                $imagePath = trim($image);  // Remove extra spaces
                                 if (file_exists($imagePath)) {
                                     // Display the image only if it exists
                                     echo '<div class="image-preview position-relative me-2 mb-2">

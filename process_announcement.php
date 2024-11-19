@@ -73,4 +73,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: announcement.php");
     exit;
 }
+
+// Handle delete action
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+
+    // Fetch the announcement details to retrieve image paths
+    $query = "SELECT announcement_images FROM barangay_announcements WHERE id = :id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($result) {
+        // Decode the JSON formatted image paths
+        $image_paths = json_decode($result['announcement_images'], true);
+
+        // Delete each image file if it exists
+        if (!empty($image_paths)) {
+            foreach ($image_paths as $image_path) {
+                if (file_exists($image_path)) {
+                    unlink($image_path); // Delete the file
+                }
+            }
+        }
+
+        // Delete the announcement from the database
+        $sql = "DELETE FROM barangay_announcements WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = "Announcement and associated images deleted successfully!";
+        } else {
+            $_SESSION['error_message'] = "Error deleting the announcement. Please try again.";
+        }
+    } else {
+        $_SESSION['error_message'] = "Announcement not found.";
+    }
+
+    // Close the statement and connection
+    $stmt = null;
+    $conn = null;
+
+    // Redirect back to the announcements page
+    header("Location: announcement.php");
+    exit;
+}
 ?>
