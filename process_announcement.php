@@ -34,6 +34,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         // Update existing announcement
         $announcement_id = $_POST['id'];
+
+        // Fetch existing images from the database
+        $query = "SELECT announcement_images FROM barangay_announcements WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':id', $announcement_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $existing_images = json_decode($stmt->fetchColumn(), true);
+
+        // Handle image removals
+        $remove_images = isset($_POST['remove_images']) ? $_POST['remove_images'] : [];
+        if (!empty($remove_images)) {
+            foreach ($remove_images as $remove_image) {
+                if (file_exists($remove_image)) {
+                    unlink($remove_image); // Delete the file
+                }
+                // Remove the image from the existing list
+                if (($key = array_search($remove_image, $existing_images)) !== false) {
+                    unset($existing_images[$key]);
+                }
+            }
+        }
+
+        // Combine remaining existing images with new uploads
+        $final_images = array_merge($existing_images, $image_paths);
+        $image_paths_json = json_encode($final_images);
+
+        // Update the announcement
         $sql = "UPDATE barangay_announcements 
                 SET announcement_title = :title, description_text = :description, 
                     announcement_images = :images, created_at = :created_at, posted_at = :posted_at 

@@ -65,7 +65,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                             <input type="file" name="images[]" class="file-input" accept="image/*" multiple>
                         </div>
                     </div>
-
                     <div id="image-preview-container" class="d-flex flex-wrap mt-3">
                         <?php
                         // Decode JSON formatted images
@@ -75,19 +74,19 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                             foreach ($images as $image) {
                                 $imagePath = trim($image);  // Remove extra spaces
                                 if (file_exists($imagePath)) {
-                                    // Display the image only if it exists
                                     echo '<div class="image-preview position-relative me-2 mb-2">
                                             <img src="' . htmlspecialchars($imagePath) . '" class="img-fluid" alt="Announcement Image">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" name="remove_images[]" value="' . htmlspecialchars($imagePath) . '" class="form-check-input"> Remove
+                                            </label>
                                         </div>';
                                 } else {
-                                    // Fallback to a 'no image' icon if the image file doesn't exist
                                     echo '<div class="image-preview position-relative me-2 mb-2">
                                             <img src="path/to/default/no-image-icon.png" class="img-fluid" alt="No Image Available">
                                         </div>';
                                 }
                             }
                         } else {
-                            // Display a default icon if no images are available
                             echo '<div class="image-preview position-relative me-2 mb-2">
                                     <img src="path/to/default/no-image-icon.png" class="img-fluid" alt="No Image Available">
                                 </div>';
