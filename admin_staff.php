@@ -18,6 +18,8 @@ try {
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+
+$currentAdminId = $_SESSION['admin_id']; // The ID of the currently logged-in admin
 ?>
 
 <!DOCTYPE html>
@@ -58,8 +60,16 @@ try {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($admin['name']) . "</td>";
                         echo "<td class='text-center'>";
-                        echo "<a href='admin_profile.php?id=" . $admin['id'] . "' class='btn btn-primary'>Edit</a>";
-                        echo "<a href='delete_admin.php?id=" . $admin['id'] . "' class='btn btn-danger ms-2' onclick='return confirm(\"Are you sure you want to delete this admin?\");'>Delete</a>";
+
+                        // If the admin is the currently logged-in admin, make the buttons clickable
+                        if ($admin['id'] == $currentAdminId) {
+                            echo "<a href='admin_profile.php?id=" . $admin['id'] . "' class='btn btn-primary'>Edit</a>";
+                            echo "<a href='delete_admin.php?id=" . $admin['id'] . "' class='btn btn-danger ms-2' onclick='return confirm(\"Are you sure you want to delete this admin?\");'>Delete</a>";
+                        } else {
+                            // Otherwise, disable the buttons and style them as non-clickable
+                            echo "<button class='btn btn-primary' disabled>Edit</button>";
+                            echo "<button class='btn btn-danger ms-2' disabled>Delete</button>";
+                        }
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -71,7 +81,6 @@ try {
         </table>
     </div>
 </div>
-
 
 </body>
 </html>
