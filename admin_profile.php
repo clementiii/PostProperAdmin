@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usernameChanged = false;
     $profilePictureChanged = false;
 
-    // Handle file upload for profile picture
+    // Handle profile picture upload
     if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
         $targetDir = "uploads/profile_pictures/";
         $fileName = time() . '_' . basename($_FILES['profile_picture']['name']);
@@ -93,8 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,18 +114,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
 
             <div class="text-center mb-3">
-                    <!-- Clickable Profile Image -->
-                    <img src="<?php echo !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg'; ?>" 
-                        alt="Admin Profile" 
-                        class="profile-image rounded-circle" 
-                        id="profilePicturePreview" 
-                        style="cursor: not-allowed;"
-                        onclick="changeProfileImage()">
-                    <p class="admin-title">ADMIN</p>
-                    <!-- Hidden File Input -->
-                    <input type="file" name="profile_picture" id="profilePictureInput" class="d-none" accept="image/*" onchange="previewProfilePicture(event)">
+                <!-- Clickable Profile Image -->
+                <img src="<?php echo !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg'; ?>" 
+                    alt="Admin Profile" 
+                    class="profile-image rounded-circle" 
+                    id="profilePicturePreview">
             </div>
-            <form id="profileForm" method="POST" action="">
+
+            <form id="profileForm" method="POST" action="" enctype="multipart/form-data">
                 <div class="mb-2 text-start">
                     <label class="form-label">Name</label>
                     <input type="text" name="name" class="form-control input-field" value="<?php echo htmlspecialchars($admin['name']); ?>" disabled>
@@ -145,6 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="password" name="new_password" class="form-control input-field">
                     <label class="form-label">Confirm New Password</label>
                     <input type="password" name="confirm_new_password" class="form-control input-field">
+                    <label class="form-label">Profile Picture</label>
+                    <input type="file" name="profile_picture" class="form-control">
                 </div>
                 <button type="button" class="action-btn edit-btn" onclick="enableEditing()">Edit Profile</button>
                 <button type="submit" class="action-btn save-btn d-none mt-2">Save Changes</button>
@@ -155,59 +151,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
         let isEditing = false;
 
-function goBack() {
-    if (isEditing) {
-        // Return to the view-only state
-        resetToViewMode();
-    } else {
-        window.history.back(); // Navigate to the previous page
-    }
-}
+        function goBack() {
+            if (isEditing) {
+                resetToViewMode();
+            } else {
+                window.history.back();
+            }
+        }
 
-function changeProfileImage() {
-    if (!isEditing) {
-        alert('Click "Edit Profile" to change your profile picture.');
-        return;
-    }
-    document.getElementById('profilePictureInput').click(); // Triggers the file input only in editing mode
-}
+        function enableEditing() {
+            isEditing = true;
+            document.querySelectorAll('.input-field').forEach(field => field.disabled = false);
+            document.getElementById('newPasswordFields').classList.remove('d-none');
+            document.querySelector('.edit-btn').classList.add('d-none');
+            document.querySelector('.save-btn').classList.remove('d-none');
+        }
 
-function triggerFileInput() {
-    document.getElementById('profilePictureInput').click();
-}
-
-function previewProfilePicture(event) {
-    const reader = new FileReader();
-    reader.onload = function () {
-        const preview = document.getElementById('profilePicturePreview');
-        preview.src = reader.result; // Updates the profile image with the selected file
-    };
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-function enableEditing() {
-    isEditing = true; // Enable editing mode
-    document.querySelectorAll('.input-field').forEach(field => field.disabled = false);
-    document.getElementById('newPasswordFields').classList.remove('d-none');
-    document.querySelector('.edit-btn').classList.add('d-none');
-    document.querySelector('.save-btn').classList.remove('d-none');
-    document.querySelector('.profile-card').style.maxHeight = '90vh';
-    document.getElementById('profilePicturePreview').style.cursor = 'pointer'; // Allow profile picture editing
-}
-
-function resetToViewMode() {
-    isEditing = false; // Disable editing mode
-    document.querySelectorAll('.input-field').forEach(field => field.disabled = true);
-    document.getElementById('newPasswordFields').classList.add('d-none');
-    document.querySelector('.edit-btn').classList.remove('d-none');
-    document.querySelector('.save-btn').classList.add('d-none');
-    document.querySelector('.profile-card').style.maxHeight = '';
-    document.getElementById('profilePicturePreview').style.cursor = 'not-allowed'; // Disable profile picture editing
-}
-
+        function resetToViewMode() {
+            isEditing = false;
+            document.querySelectorAll('.input-field').forEach(field => field.disabled = true);
+            document.getElementById('newPasswordFields').classList.add('d-none');
+            document.querySelector('.edit-btn').classList.remove('d-none');
+            document.querySelector('.save-btn').classList.add('d-none');
+        }
     </script>
 </body>
 </html>
-
-
-        
