@@ -123,7 +123,7 @@ $incidentReportsCount = $incidentReportsResult['count'];
                     <tbody>
                         <?php foreach ($documentRequestsTableResult as $request): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($request['Id']); ?></td>
+                                <td><?php echo 'TXN-'?><?php echo htmlspecialchars($request['Id']); ?></td>
                                 <td><?php echo htmlspecialchars($request['Name']); ?></td>
                                 <td><?php echo htmlspecialchars($request['DocumentType']); ?></td>
                                 <td><?php echo htmlspecialchars($request['Quantity']); ?></td>
