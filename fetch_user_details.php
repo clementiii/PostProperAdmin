@@ -27,8 +27,27 @@ if (isset($_GET['id'])) {
     if ($result->num_rows > 0) {
         // Fetch user details
         $row = $result->fetch_assoc();
-        // Respond with user details in JSON format
-        echo json_encode(array_merge(['status' => 'success'], $row));
+        
+        // Combine address fields
+        $address = trim($row['adrHouseNo'] . ' ' . $row['adrZone'] . ' ' . $row['adrStreet']);
+        
+        // Create response array with correct field names
+        $response = array(
+            'status' => 'success',
+            'user' => array(
+                'firstName' => $row['firstName'],
+                'lastName' => $row['lastName'],
+                'username' => $row['username'],
+                'address' => $address,
+                'age' => intval($row['age']),
+                'gender' => $row['gender'],
+                'dateOfBirth' => $row['birthday'],
+                'password' => $row['password'],
+                'profilePicture' => $row['user_profile_picture']
+            )
+        );
+        
+        echo json_encode($response);
     } else {
         echo json_encode(['status' => 'failure', 'message' => 'User not found']);
     }
