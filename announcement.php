@@ -51,10 +51,40 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="upload-section">
                         <div class="upload-box">
                             <div class="upload-icon">↑</div>
-                            <div class="upload-text">Upload Image Here</div>
-                            <input type="file" name="images[]" id="images" class="file-input" accept="image/*" multiple>
+                            <div class="upload-text">Upload Image Here (Maximum 5 images)</div>
+                            <input type="file" name="images[]" id="images" class="file-input" accept="image/*" multiple onchange="validateImageCount(this)">
+                        </div>
+                        <div id="imageCountWarning" style="color: red; margin-top: 10px; display: none;">
+                            Maximum 5 images allowed. Please remove some images before adding more.
                         </div>
                     </div>
+                    
+                    <script>
+                    function validateImageCount(input) {
+                        const maxImages = 5;
+                        const warningDiv = document.getElementById('imageCountWarning');
+                        
+                        if (input.files.length > maxImages) {
+                            warningDiv.style.display = 'block';
+                            input.value = ''; // Clear the selection
+                            return false;
+                        }
+                        
+                        warningDiv.style.display = 'none';
+                        return true;
+                    }
+
+                    // Add validation to the publish confirmation
+                    document.getElementById('confirmPublish').addEventListener('click', function(e) {
+                        const input = document.getElementById('images');
+                        if (input.files.length > 5) {
+                            e.preventDefault();
+                            alert('You can only upload a maximum of 5 images. Please remove some images before publishing.');
+                            return false;
+                        }
+                        document.querySelector('form').submit();
+                    });
+                    </script>
 
                     <!-- Container to display uploaded images with remove icons -->
                     <div id="image-preview-container" class="d-flex flex-wrap mt-3"></div>
