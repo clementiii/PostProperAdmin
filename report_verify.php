@@ -43,6 +43,27 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <script src="js/report_verify.js" defer></script>
     <link rel="icon" type="image/png" href="assets/Southside.png">
     
+    <style>
+        .horizontal-images {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px 0;
+        }
+        .horizontal-images img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .zoomable-image {
+            transition: transform 0.3s ease;
+        }
+        .zoomable-image:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
     <?php 
@@ -72,11 +93,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <label class="form-label">Images:</label>
             <div class="horizontal-images">
                 <?php
-                    // Assuming incident_picture is a comma-separated list of image paths
-                    $images = explode(',', $report['incident_picture']);
-                    foreach ($images as $image) {
-                        echo '<img src="assets/' . trim($image) . '" class="img-thumbnail zoomable-image" alt="Incident Image">';
+                if (!empty($report['incident_picture'])) {
+                    // Decode the JSON string to an array
+                    $images = json_decode($report['incident_picture'], true);
+                    if ($images && is_array($images)) {
+                        foreach ($images as $image) {
+                            // Remove any unwanted whitespace
+                            $image = trim($image);
+                            echo '<img src="' . htmlspecialchars($image) . '" class="img-thumbnail zoomable-image" alt="Incident Image" onclick="showImageModal(this.src)">';
+                        }
                     }
+                }
                 ?>
             </div>
         </div>
@@ -88,7 +115,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
     <!-- Image Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
@@ -126,52 +153,47 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             window.history.back();
         }
 
+        function showImageModal(src) {
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = src;
+            new bootstrap.Modal(document.getElementById('imageModal')).show();
+        }
+
         document.getElementById("resolvedBtn").addEventListener("click", function () {
             // Show the confirmation modal
             new bootstrap.Modal(document.getElementById("confirmModal")).show();
         });
 
         document.getElementById("confirmResolve").addEventListener("click", function () {
-            const reportId = <?php echo $report_id; ?>;  // Get the report ID dynamically
+            const reportId = <?php echo $report_id; ?>;
 
-            // Perform AJAX request to update the status to "resolved"
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "resolve_report.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    // Close the confirmation modal
                     new bootstrap.Modal(document.getElementById("confirmModal")).hide();
-                    
-                    // Show success alert after status is updated
                     alert("The report has been marked as resolved.");
-                    
-                    // Navigate back to the previous page
                     window.history.back();
                 } else {
                     alert("Error: " + xhr.responseText);
                 }
             };
 
-            // Send the AJAX request with the report_id to resolve the report
             xhr.send("report_id=" + reportId);
         });
 
-        // Automatically adjust the height of the textarea
-const reportDescription = document.getElementById('reportDescription');
+        // Automatically adjust textarea height
+        const reportDescription = document.getElementById('reportDescription');
 
-function adjustHeight(element) {
-    element.style.height = 'auto'; // Reset height
-    element.style.height = element.scrollHeight + 'px'; // Set to scroll height
-}
+        function adjustHeight(element) {
+            element.style.height = 'auto';
+            element.style.height = element.scrollHeight + 'px';
+        }
 
-// Call adjustHeight on page load
-adjustHeight(reportDescription);
-
-// If you want it to adjust dynamically when users type (if editable in the future)
-reportDescription.addEventListener('input', () => adjustHeight(reportDescription));
-
+        adjustHeight(reportDescription);
+        reportDescription.addEventListener('input', () => adjustHeight(reportDescription));
     </script>
 </body>
 </html>
