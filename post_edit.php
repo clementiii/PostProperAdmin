@@ -73,8 +73,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     </style>
 </head>
 <body>
-<?php include 'header.php'; ?>
-<?php include 'sidebar.php'; ?>
+<?php 
+$pageTitle = "Edit Announcement";
+include 'header.php'; ?>
+<?php include 'sidebar.php';
+?>
+
 
 <div class="main-content">
     <a href="announcement.php" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
