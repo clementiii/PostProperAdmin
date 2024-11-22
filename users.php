@@ -8,22 +8,37 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-// Fetch data from the user_accounts table
+// Set the inactive threshold (e.g., 30 days)
+$inactiveThreshold = date('Y-m-d H:i:s', strtotime('-30 days'));
+
 try {
+    // Fetch basic user data
     $sql = "SELECT id, firstName, lastName, age, gender, adrHouseNo, adrZone, adrStreet, birthday FROM user_accounts";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Count total registered users
+    $registeredResidentsQuery = "SELECT COUNT(*) AS count FROM user_accounts";
+    $registeredResidentsResult = $conn->query($registeredResidentsQuery)->fetch(PDO::FETCH_ASSOC);
+    $registeredResidentsCount = $registeredResidentsResult['count'];
+
+    // Count active users (users who have been active within the last 30 days)
+    $activeUsersQuery = "SELECT COUNT(*) AS count FROM user_accounts 
+                        WHERE last_active >= :threshold";
+    $stmt = $conn->prepare($activeUsersQuery);
+    $stmt->bindParam(':threshold', $inactiveThreshold);
+    $stmt->execute();
+    $activeUsersResult = $stmt->fetch(PDO::FETCH_ASSOC);
+    $activeUsersCount = $activeUsersResult['count'];
+
+    // Calculate inactive users
+    $inactiveUsersCount = $registeredResidentsCount - $activeUsersCount;
+
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
     exit;
 }
-
-// Fetch count of registered residents
-$registeredResidentsQuery = "SELECT COUNT(*) AS count FROM user_accounts";
-$registeredResidentsResult = $conn->query($registeredResidentsQuery)->fetch(PDO::FETCH_ASSOC);
-$registeredResidentsCount = $registeredResidentsResult['count'];
-
 ?>
 
 <!DOCTYPE html>
@@ -69,13 +84,13 @@ $registeredResidentsCount = $registeredResidentsResult['count'];
             <div class="col-md-4 px-4">
                 <div class="stat-box active-user text-center py-3">
                     <h4>Active Users</h4>
-                    <div class="stat-number">130</div>
+                    <div class="stat-number"><?php echo $activeUsersCount; ?></div>
                 </div>
             </div>
             <div class="col-md-4 px-4">
                 <div class="stat-box inactive-user text-center py-3">
                     <h4>Inactive Users</h4>
-                    <div class="stat-number">70</div>
+                    <div class="stat-number"><?php echo $inactiveUsersCount; ?></div>
                 </div>
             </div>
         </div>
