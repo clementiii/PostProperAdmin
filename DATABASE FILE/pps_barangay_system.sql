@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2024 at 03:19 PM
+-- Generation Time: Nov 22, 2024 at 07:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -141,10 +141,9 @@ CREATE TABLE `incident_reports` (
 
 INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `incident_picture`, `date_submitted`, `status`) VALUES
 (1, 'Robert Youngstown', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '', '2024-11-01 22:29:27', 'resolved'),
-(2, 'Clement Cabus', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'resolved'),
-(3, 'Jed Masterson', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '', '2024-11-01 22:29:27', 'resolved'),
 (4, 'Danny Sulaiman', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'pending'),
-(5, 'Alvin Gabaldo', 'Tumatagas na tubig', 'Malakas ang tagas ng tubig dito sa blk 12', '', '2024-11-18 16:43:39', 'pending');
+(6, 'Diosdado Tempra', 'test', 'test', '[\"uploads\\/incident_reports\\/1732255234_75af0316a0f27f7d.jpg\"]', '2024-11-22 07:00:34', 'pending'),
+(7, 'Diosdado Tempra', 'TEST TECNO 5G', 'physical device test', '[\"uploads\\/incident_reports\\/1732255765_13dc8a2b529c12f1.jpg\"]', '2024-11-22 07:09:25', 'pending');
 
 -- --------------------------------------------------------
 
@@ -164,21 +163,22 @@ CREATE TABLE `user_accounts` (
   `adrStreet` varchar(100) DEFAULT NULL,
   `birthday` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `user_profile_picture` longtext NOT NULL
+  `user_profile_picture` longtext NOT NULL,
+  `last_active` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_accounts`
 --
 
-INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`) VALUES
-(1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', 'zone 3', 'Kalaw Street', '2003-12-22', 'clempassword11', ''),
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', 'zone 4', 'Kalaw Street', '1990-02-12', 'password', ''),
-(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', ''),
-(10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', ''),
-(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', ''),
-(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', ''),
-(13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'December22@', '');
+INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`) VALUES
+(1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', 'zone 3', 'Kalaw Street', '2003-12-22', 'clempassword11', '', NULL),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', 'zone 4', 'Kalaw Street', '1990-02-12', 'password', '', '2024-11-21 23:47:43'),
+(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', NULL),
+(10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL),
+(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', NULL),
+(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', '', NULL),
+(13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'December22@', '', NULL);
 
 --
 -- Indexes for dumped tables
@@ -242,7 +242,7 @@ ALTER TABLE `document_requests`
 -- AUTO_INCREMENT for table `incident_reports`
 --
 ALTER TABLE `incident_reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`
