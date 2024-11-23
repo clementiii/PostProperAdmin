@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2024 at 01:55 PM
+-- Generation Time: Nov 23, 2024 at 02:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -106,9 +106,7 @@ INSERT INTO `document_requests` (`Id`, `DocumentType`, `Name`, `Address`, `TIN_N
 (13, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, NULL, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
 (15, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, NULL, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
 (16, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, NULL, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Rejected', 2, '2024-11-20', '', '', 'Not enough images'),
-(17, 'Barangay Clearance', 'Diosdado Tempra', '497-A Kalaw Street Zone 4', '000123456001', '000123456001', 'deejay', 20, NULL, 8, 'Filipino', 'Male', 'Single', 'For my job', 'Pending', 2, '2024-11-23', 'uploads/valid_ids/1732363662_temp_upload_file', '', ''),
-(18, 'Barangay Clearance', 'Daren Espanto', '340-G Lawin Street Zone 5', '354675892312', '345234565432', 'dick', 20, NULL, 9, 'Filipino', 'Male', 'Single', 'For My Audition to the voice philippines', 'Pending', 3, '2024-11-23', 'uploads/valid_ids/1732364905_temp_upload_file', '', ''),
-(19, 'Barangay Clearance', 'Diosdado Tempra', '888-A Kalaw Street Zone 4', '999222333112', '222345123234', 'deejay', 20, '02-12-99', 6, 'Filipino', 'Male', 'Single', 'For my business', 'Pending', 3, '2024-11-23', 'uploads/valid_ids/1732366360_temp_upload_file', '', '');
+(23, 'Barangay Clearance', 'Michael Josh Bargabino', '762-D Kalaw Street Zone 2', '000123456001', '000123456001', 'MJ', 20, '01-04-03', 6, 'Filipino', 'Male', 'Single', 'For my job', 'Pending', 2, '2024-11-23', 'uploads/valid_ids/1732367913_6741d629ee818.jpg', '', '');
 
 -- --------------------------------------------------------
 
@@ -164,10 +162,10 @@ CREATE TABLE `user_accounts` (
 
 INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`) VALUES
 (1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', 'zone 3', 'Kalaw Street', '2003-12-22', 'clempassword11', '', NULL),
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', 'zone 4', 'Kalaw Street', '1990-02-12', 'password', '', '2024-11-23 05:52:44'),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', 'zone 4', 'Kalaw Street', '1990-02-12', 'password', '', '2024-11-23 06:02:09'),
 (9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', NULL),
 (10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL),
-(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', NULL),
+(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', '2024-11-23 06:18:36'),
 (12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', '', '2024-11-23 05:28:28'),
 (13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'December22@', '', NULL);
 
@@ -227,7 +225,7 @@ ALTER TABLE `barangay_announcements`
 -- AUTO_INCREMENT for table `document_requests`
 --
 ALTER TABLE `document_requests`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `incident_reports`
