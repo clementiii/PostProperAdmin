@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2024 at 02:20 PM
+-- Generation Time: Nov 23, 2024 at 06:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -106,7 +106,9 @@ INSERT INTO `document_requests` (`Id`, `DocumentType`, `Name`, `Address`, `TIN_N
 (13, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, NULL, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
 (15, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, NULL, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
 (16, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, NULL, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Rejected', 2, '2024-11-20', '', '', 'Not enough images'),
-(23, 'Barangay Clearance', 'Michael Josh Bargabino', '762-D Kalaw Street Zone 2', '000123456001', '000123456001', 'MJ', 20, '01-04-03', 6, 'Filipino', 'Male', 'Single', 'For my job', 'Pending', 2, '2024-11-23', 'uploads/valid_ids/1732367913_6741d629ee818.jpg', '', '');
+(23, 'Barangay Clearance', 'Michael Josh Bargabino', '762-D Kalaw Street Zone 2', '000123456001', '000123456001', 'MJ', 20, '01-04-03', 6, 'Filipino', 'Male', 'Single', 'For my job', 'Approved', 2, '2024-11-23', 'uploads/valid_ids/1732367913_6741d629ee818.jpg', '', ''),
+(24, 'Barangay Clearance', 'Diosdado Tempra', '465-B Lawin street Zone 6', '922346374564', '873456374857', 'deejay', 20, '02-04-99', 9, 'Filipino', 'Male', 'Single', 'for my business', 'Pending', 1, '2024-11-23', 'uploads/valid_ids/1732368638_6741d8fe8b636.jpg', '', ''),
+(25, 'Barangay Clearance', 'test', 'test', '123456789012', '123456789012', 'test', 23, '11-18-93', 4, 'test', 'Male', 'Single', 'test', 'Pending', 3, '2024-11-23', 'uploads/valid_ids/1732371229_6741e31dbe302.jpg', '', '');
 
 -- --------------------------------------------------------
 
@@ -162,10 +164,10 @@ CREATE TABLE `user_accounts` (
 
 INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`) VALUES
 (1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', 'zone 3', 'Kalaw Street', '2003-12-22', 'clempassword11', '', NULL),
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', 'zone 4', 'Kalaw Street', '1990-02-12', 'password', '', '2024-11-23 06:02:09'),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732384105_6742156951ff7.jpg', '2024-11-23 10:48:49'),
 (9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', NULL),
 (10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL),
-(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', '2024-11-23 06:18:36'),
+(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', '2024-11-23 06:23:25'),
 (12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', '', '2024-11-23 05:28:28'),
 (13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'December22@', '', NULL);
 
@@ -225,7 +227,7 @@ ALTER TABLE `barangay_announcements`
 -- AUTO_INCREMENT for table `document_requests`
 --
 ALTER TABLE `document_requests`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `incident_reports`
