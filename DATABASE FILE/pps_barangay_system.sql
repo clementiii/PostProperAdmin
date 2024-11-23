@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2024 at 07:49 AM
+-- Generation Time: Nov 23, 2024 at 01:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -67,7 +67,7 @@ INSERT INTO `barangay_announcements` (`id`, `announcement_title`, `description_t
 (22, '3rd Quarter BNAO Meeting', '3rd Quarter BNAO Meeting held @Multipurpose Building, Upper Bicutan, Taguig attended by our very own Barangay Nutrition Action Officer himself Kagawad on Health Jobert Quiambao and eventually Voted as one of Taguig BNAO Officers spearheaded by City Nutrition Action Officer Ms Julic Bornabc.', '[\"uploads\\/announcements\\/1732108477_IMG_20201130_145352.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20201130_145406.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20210501_075448.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20211221_140927.jpg\",\"uploads\\/', '2024-11-20 06:14:37', '2024-11-20 14:14:37'),
 (23, 'Test Announcement', 'LOREM IPSUM TAE NA CHOCO NIGGA', '[]', '2024-11-20 07:15:16', '2024-11-20 15:15:16'),
 (24, 'I love niggers', 'man heliotech niggas is some bullshit bruh', '[\"uploads\\/announcements\\/1732115394_419303608_332291319834527_7910766879232352090_n.jpg\"]', '2024-11-20 08:09:54', '2024-11-20 16:09:54'),
-(25, 'Barangay Wins World Cup', 'TEST', '[\"uploads\\/announcements\\/1732191375_cropped_image 1.png\",\"uploads\\/announcements\\/1732191375_b1131726-e89e-47e0-9f90-9c9ca4507f9a.png\",\"uploads\\/announcements\\/1732191375_76754470-13bb-454c-b199-ebcee9ec5821.png\",\"uploads\\/announcements\\/1732191375_07fd3ab8-0331-43db-83dd-cbe4c6abad5f-modified 1.png\",\"uploads\\/announcements\\/1732191375_151aa3d6-f625-48be-84f4-efde232d4a7a.png\",\"uploads\\/announcements\\/1732191375_e24663d4-dbf0-4326-a32d-7e77750043c8.png\",\"uploads\\/announcements\\/1732191375_9cc8e3d9-7854-4ef3-a60d-8cc64fc49291.png\",\"uploads\\/announcements\\/1732191375_39cd52de-1f09-401d-9208-83cd5b68aa70.png\",\"uploads\\/announcements\\/1732191375_7e5bfd83-2f2d-4575-b134-f1037cf0fcc3.png\",\"uploads\\/announcements\\/1732191375_652b5e1e-1e9e-45b2-8f02-251a57d7de0c.png\"]', '2024-11-21 05:16:15', '2024-11-21 13:16:15');
+(25, 'Barangay Wins World Cup', 'TEST', '[\"uploads\\/announcements\\/1732191375_b1131726-e89e-47e0-9f90-9c9ca4507f9a.png\",\"uploads\\/announcements\\/1732191375_76754470-13bb-454c-b199-ebcee9ec5821.png\",\"uploads\\/announcements\\/1732191375_07fd3ab8-0331-43db-83dd-cbe4c6abad5f-modified 1.png\",\"uploads\\/announcements\\/1732191375_e24663d4-dbf0-4326-a32d-7e77750043c8.png\",\"uploads\\/announcements\\/1732191375_9cc8e3d9-7854-4ef3-a60d-8cc64fc49291.png\"]', '2024-11-21 23:59:31', '2024-11-22 07:59:31');
 
 -- --------------------------------------------------------
 
@@ -77,13 +77,14 @@ INSERT INTO `barangay_announcements` (`id`, `announcement_title`, `description_t
 
 CREATE TABLE `document_requests` (
   `Id` int(11) NOT NULL,
-  `DocumentType` varchar(100) NOT NULL,
+  `DocumentType` varchar(100) NOT NULL DEFAULT 'Barangay Clearance',
   `Name` varchar(255) NOT NULL,
   `Address` varchar(255) DEFAULT NULL,
   `TIN_No` varchar(50) DEFAULT NULL,
   `CTC_No` varchar(50) DEFAULT NULL,
   `Alias` varchar(100) DEFAULT NULL,
   `Age` int(11) DEFAULT NULL,
+  `birthday` varchar(10) DEFAULT NULL,
   `LengthOfStay` int(11) DEFAULT NULL,
   `Citizenship` varchar(100) DEFAULT NULL,
   `Gender` varchar(10) DEFAULT NULL,
@@ -101,23 +102,13 @@ CREATE TABLE `document_requests` (
 -- Dumping data for table `document_requests`
 --
 
-INSERT INTO `document_requests` (`Id`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `request_picture`, `rejection_reason`) VALUES
-(1, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '123123123414514', '124124124124124', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Approved', 2, '2024-11-20', '', '', ''),
-(2, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
-(3, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
-(4, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
-(5, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
-(6, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
-(7, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
-(8, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
-(9, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
-(10, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Rejected', 1, '2024-11-01', '', '', ''),
-(11, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Pending', 1, '2024-11-01', '', '', ''),
-(12, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
-(13, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
-(14, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
-(15, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
-(16, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Rejected', 2, '2024-11-20', '', '', 'Not enough images');
+INSERT INTO `document_requests` (`Id`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `birthday`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `request_picture`, `rejection_reason`) VALUES
+(13, 'Cedula', 'Ronald Gumalo', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Ron-ron', 30, NULL, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Pending', 2, '2024-11-20', '', '', ''),
+(15, 'Barangay Clearance', 'Dante Gomez', 'Southside, Taguig City', '000-123-456-001', '000-123-456-001', 'Donet', 43, NULL, 13, 'Filipino', 'Male', 'Single', 'Barangay Clearance', 'Approved', 1, '2024-11-01', '', '', ''),
+(16, 'Cedula', 'Arnel Lasino', 'Southside Taguig City', '000-123-456-001', '000-123-456-001', 'Renel', 30, NULL, 9, 'Filipino', 'Male', 'Married', 'Cedula', 'Rejected', 2, '2024-11-20', '', '', 'Not enough images'),
+(17, 'Barangay Clearance', 'Diosdado Tempra', '497-A Kalaw Street Zone 4', '000123456001', '000123456001', 'deejay', 20, NULL, 8, 'Filipino', 'Male', 'Single', 'For my job', 'Pending', 2, '2024-11-23', 'uploads/valid_ids/1732363662_temp_upload_file', '', ''),
+(18, 'Barangay Clearance', 'Daren Espanto', '340-G Lawin Street Zone 5', '354675892312', '345234565432', 'dick', 20, NULL, 9, 'Filipino', 'Male', 'Single', 'For My Audition to the voice philippines', 'Pending', 3, '2024-11-23', 'uploads/valid_ids/1732364905_temp_upload_file', '', ''),
+(19, 'Barangay Clearance', 'Diosdado Tempra', '888-A Kalaw Street Zone 4', '999222333112', '222345123234', 'deejay', 20, '02-12-99', 6, 'Filipino', 'Male', 'Single', 'For my business', 'Pending', 3, '2024-11-23', 'uploads/valid_ids/1732366360_temp_upload_file', '', '');
 
 -- --------------------------------------------------------
 
@@ -173,11 +164,11 @@ CREATE TABLE `user_accounts` (
 
 INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`) VALUES
 (1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', 'zone 3', 'Kalaw Street', '2003-12-22', 'clempassword11', '', NULL),
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', 'zone 4', 'Kalaw Street', '1990-02-12', 'password', '', '2024-11-21 23:47:43'),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497- A', 'zone 4', 'Kalaw Street', '1990-02-12', 'password', '', '2024-11-23 05:52:44'),
 (9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', NULL),
 (10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL),
 (11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', NULL),
-(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', '', NULL),
+(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', '', '2024-11-23 05:28:28'),
 (13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'December22@', '', NULL);
 
 --
@@ -230,13 +221,13 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `barangay_announcements`
 --
 ALTER TABLE `barangay_announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `document_requests`
 --
 ALTER TABLE `document_requests`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `incident_reports`
