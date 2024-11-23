@@ -6,17 +6,29 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: splash.php"); // Redirect to the login page if not logged in
     exit;
 }
+include 'db.php';
 
-$price = 100.00; // Default price for document requests
-include 'db.php'; // Include the database connection
+// Function to calculate price based on document type
+function calculatePrice($documentType, $quantity) {
+    switch($documentType) {
+        case 'Barangay Clearance':
+        case 'Barangay Certification':
+        case 'Certificate of Indigency':
+            return "₱" . number_format(50.00 * $quantity, 2);
+        case 'Cedula':
+            return 'Depends on the income';
+        default:
+            return 'Price not set';
+    }
+}
 
-// Query to get document requests and calculate total requests
-$query = "SELECT Id, Name, DocumentType, Quantity, $price * Quantity AS Price, DateRequested, Status FROM document_requests";
+// Query to get document requests with only existing columns
+$query = "SELECT Id, Name, DocumentType, Quantity, birthday, DateRequested, Status FROM document_requests";
 $stmt = $conn->prepare($query);
 $stmt->execute();
-$documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
+$documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get counts for the summary cards
+// Get counts for summary cards
 $totalRequestQuery = "SELECT COUNT(*) AS total FROM document_requests";
 $pendingCountQuery = "SELECT COUNT(*) AS pending FROM document_requests WHERE LOWER(Status) = 'pending'";
 $approvedCountQuery = "SELECT COUNT(*) AS approved FROM document_requests WHERE LOWER(Status) = 'approved'";
@@ -84,50 +96,65 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
     </div>
 
     <!-- Document Requests Table -->
-    <div class="table-responsive" >
-        <table class="table table-bordered mb-0">
-            <thead>
-                <tr>
-                    <th data-sort="number">Transaction ID</th>
-                    <th data-sort="string">Name</th>
-                    <th data-sort="string">Document Type</th>
-                    <th data-sort="number">Quantity</th>
-                    <th data-sort="number">Price</th>
-                    <th data-sort="date">Date Requested</th>
-                    <th data-sort="status">Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if (!empty($documentRequests)) {
-                    foreach ($documentRequests as $row) {
-                        echo "<tr>";
-                        echo "<td>TXN-" . htmlspecialchars($row['Id']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['Name']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['DocumentType']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
-                        echo "<td>₱ " . htmlspecialchars($row['Price']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
-                        echo "<td>" . ucfirst(htmlspecialchars(strtolower($row['Status']))) . "</td>";
-
-                        if (strtolower($row['Status']) === 'rejected') {
-                            echo '<td><button class="action-button button-rejected" disabled>Rejected</button></td>';
-                        } elseif (strtolower($row['Status']) === 'approved') {
-                            echo '<td><button class="action-button button-approved" disabled>Approved</button></td>';
-                        } else {
-                            echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button">View</a></td>';
-                        }
-                        
-                        echo "</tr>";
+    <div class="table-responsive">
+    <table class="table table-bordered mb-0">
+        <thead>
+            <tr>
+                <th data-sort="number">Transaction ID</th>
+                <th data-sort="string">Name</th>
+                <th data-sort="string">Document Type</th>
+                <th data-sort="string">Birthday</th>
+                <th data-sort="number">Quantity</th>
+                <th data-sort="string">Price</th>
+                <th data-sort="date">Date Requested</th>
+                <th data-sort="status">Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if (!empty($documentRequests)) {
+                foreach ($documentRequests as $row) {
+                    echo "<tr>";
+                    echo "<td>TXN-" . htmlspecialchars($row['Id']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['Name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['DocumentType']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['birthday']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
+                    echo "<td>" . calculatePrice($row['DocumentType'], $row['Quantity']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
+                    
+                    // Status with color coding
+                    $statusClass = '';
+                    switch(strtolower($row['Status'])) {
+                        case 'pending':
+                            $statusClass = 'text-warning';
+                            break;
+                        case 'approved':
+                            $statusClass = 'text-success';
+                            break;
+                        case 'rejected':
+                            $statusClass = 'text-danger';
+                            break;
                     }
-                } else {
-                    echo "<tr><td colspan='8'>No document requests found.</td></tr>";
+                    echo "<td class='{$statusClass}'>" . ucfirst(htmlspecialchars(strtolower($row['Status']))) . "</td>";
+
+                    if (strtolower($row['Status']) === 'rejected') {
+                        echo '<td><button class="action-button button-rejected" disabled>Rejected</button></td>';
+                    } elseif (strtolower($row['Status']) === 'approved') {
+                        echo '<td><button class="action-button button-approved" disabled>Approved</button></td>';
+                    } else {
+                        echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button">View</a></td>';
+                    }
+                    echo "</tr>";
                 }
-                ?>
-            </tbody>
-        </table>
-    </div>
+            } else {
+                echo "<tr><td colspan='9'>No document requests found.</td></tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
 </div>         
 
 <script>

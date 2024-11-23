@@ -1,18 +1,29 @@
 <?php
-// Include database connection
 include 'db.php';
 
-// Get the transaction ID from the URL
-$documentId = isset($_GET['id']) ? $_GET['id'] : 0; // Default to 0 if 'id' is not set
+$documentId = isset($_GET['id']) ? $_GET['id'] : 0;
 
-// Fetch the document request details from the database based on the ID
+// Function to calculate price based on document type
+function calculatePrice($documentType, $quantity) {
+    switch($documentType) {
+        case 'Barangay Clearance':
+        case 'Barangay Certification':
+        case 'Certificate of Indigency':
+            return "₱" . number_format(50.00 * $quantity, 2);
+        case 'Cedula':
+            return 'Depends on the income';
+        default:
+            return 'Price not set';
+    }
+}
+
+// Query to get document details
 $query = "SELECT * FROM document_requests WHERE Id = :id";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':id', $documentId, PDO::PARAM_INT);
 $stmt->execute();
 $documentRequest = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Check if the document request exists
 if (!$documentRequest) {
     echo "<p>Document request not found.</p>";
     exit;
@@ -20,17 +31,14 @@ if (!$documentRequest) {
 
 // Handle status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the new status and reason (if applicable) from the form
     $newStatus = $_POST['status'];
     $reason = isset($_POST['reason']) ? $_POST['reason'] : null;
 
-    // Validate reason for rejection if the status is "Rejected"
     if ($newStatus === 'Rejected' && empty($reason)) {
         echo "<p style='color: red;'>Please provide a reason for rejection.</p>";
         exit;
     }
 
-    // Update the status and rejection reason in the database
     $updateQuery = "UPDATE document_requests SET Status = :status, rejection_reason = :reason WHERE Id = :id";
     $updateStmt = $conn->prepare($updateQuery);
     $updateStmt->bindParam(':status', $newStatus, PDO::PARAM_STR);
@@ -38,13 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateStmt->bindParam(':reason', $reason, PDO::PARAM_STR);
     $updateStmt->execute();
 
-    // Redirect to documents.php after saving
     header('Location: documents.php');
     exit;
 }
-
-// Close the database connection
-$conn = null;
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +60,29 @@ $conn = null;
     <link rel="stylesheet" href="css/document_verify.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/Southside.png">
+    <style>
+        .img-thumbnail.zoomable {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            max-height: 400px;
+            width: 100%;
+            object-fit: contain;
+        }
+        .img-thumbnail.zoomable:hover {
+            transform: scale(1.05);
+        }
+        .modal-body img {
+            max-height: 80vh;
+            width: auto;
+        }
+        .alert-info {
+            background-color: #f8f9fa;
+            border-color: #ddd;
+            color: #6c757d;
+            text-align: center;
+            padding: 2rem;
+        }
+    </style>
 </head>
 <body>
     <?php 
@@ -71,7 +98,7 @@ $conn = null;
         <h2 class="text-center mb-4">Document Verification</h2>
         <div class="row">
             <div class="col-md-4 text-center">
-                <img src="assets/profile.jpg" class="rounded-circle img-thumbnail" alt="User Profile" width="150">
+                
             </div>
             <div class="col-md-8">
                 <div class="row">
@@ -82,6 +109,7 @@ $conn = null;
                         <p><strong>CTC No:</strong> <?php echo htmlspecialchars($documentRequest['CTC_No']); ?></p>
                         <p><strong>Alias:</strong> <?php echo htmlspecialchars($documentRequest['Alias']); ?></p>
                         <p><strong>Age:</strong> <?php echo htmlspecialchars($documentRequest['Age']); ?> years old</p>
+                        <p><strong>Birthday:</strong> <?php echo htmlspecialchars($documentRequest['birthday']); ?></p>
                     </div>
                     <div class="col-md-6">
                         <p><strong>Length of Stay:</strong> <?php echo htmlspecialchars($documentRequest['LengthOfStay']); ?> years</p>
@@ -89,6 +117,9 @@ $conn = null;
                         <p><strong>Gender:</strong> <?php echo htmlspecialchars($documentRequest['Gender']); ?></p>
                         <p><strong>Civil Status:</strong> <?php echo htmlspecialchars($documentRequest['CivilStatus']); ?></p>
                         <p><strong>Purpose:</strong> <?php echo htmlspecialchars($documentRequest['Purpose']); ?></p>
+                        <p><strong>Document Type:</strong> <?php echo htmlspecialchars($documentRequest['DocumentType']); ?></p>
+                        <p><strong>Quantity:</strong> <?php echo htmlspecialchars($documentRequest['Quantity']); ?></p>
+                        <p><strong>Price:</strong> <?php echo calculatePrice($documentRequest['DocumentType'], $documentRequest['Quantity']); ?></p>
                         <p><strong>Status:</strong> 
                             <form method="POST" id="statusForm">
                                 <select id="statusSelect" name="status" class="form-select">
@@ -97,10 +128,11 @@ $conn = null;
                                     <option value="Rejected" <?php echo ($documentRequest['Status'] == 'Rejected') ? 'selected' : ''; ?>>Rejected</option>
                                 </select>
                                 
-                                <!-- Reason for Rejection Text Field -->
                                 <div id="reasonContainer" class="mt-3" style="display: none;">
                                     <label for="reason" class="form-label">Reason for Rejection:</label>
-                                    <input type="text" id="reason" name="reason" class="form-control" placeholder="Enter reason for rejection">
+                                    <input type="text" id="reason" name="reason" class="form-control" 
+                                           placeholder="Enter reason for rejection"
+                                           value="<?php echo htmlspecialchars($documentRequest['rejection_reason'] ?? ''); ?>">
                                 </div>
                             </form>
                         </p>
@@ -109,12 +141,19 @@ $conn = null;
             </div>
         </div>
         
+        <!-- Display Valid ID -->
         <div class="row mt-4">
-            <div class="col-md-6">
-                <img src="assets/sample id.jpg" class="img-thumbnail zoomable" alt="User ID" data-bs-toggle="modal" data-bs-target="#imageModal">
-            </div>
-            <div class="col-md-6">
-                <img src="assets/sample id.jpg" class="img-thumbnail zoomable" alt="User ID" data-bs-toggle="modal" data-bs-target="#imageModal">
+            <h4 class="mb-3">Uploaded Valid ID</h4>
+            <div class="col-12">
+                <?php if (!empty($documentRequest['valid_id'])): ?>
+                    <img src="<?php echo htmlspecialchars($documentRequest['valid_id']); ?>" 
+                         class="img-thumbnail zoomable" 
+                         alt="Valid ID" 
+                         data-bs-toggle="modal" 
+                         data-bs-target="#imageModal">
+                <?php else: ?>
+                    <div class="alert alert-info">No valid ID uploaded</div>
+                <?php endif; ?>
             </div>
         </div>
         
@@ -123,12 +162,16 @@ $conn = null;
         </div>
     </div>
     
-    <!-- Image Zoom Modal -->
+    <!-- Image Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-body d-flex justify-content-center">
-                    <img id="modalImage" src="" class="img-fluid modal-image" alt="Zoomed Image">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Document Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-0">
+                    <img id="modalImage" src="" class="img-fluid" alt="Document Preview">
                 </div>
             </div>
         </div>
@@ -136,7 +179,7 @@ $conn = null;
 
     <!-- Confirmation Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmModalLabel">Confirm Save</h5>
@@ -153,21 +196,17 @@ $conn = null;
         </div>
     </div>
 
-    <!-- Bootstrap 5 and JavaScript -->
+    <!-- Bootstrap and JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
         // Set clicked image in the modal
-        const imageModal = document.getElementById('imageModal');
-        const modalImage = document.getElementById('modalImage');
-
         document.querySelectorAll('.zoomable').forEach(image => {
             image.addEventListener('click', function() {
-                modalImage.src = this.src;
+                document.getElementById('modalImage').src = this.src;
             });
         });
 
-        // Toggle visibility of Reason for Rejection text field based on selected status
+        // Toggle visibility of Reason for Rejection text field
         document.getElementById('statusSelect').addEventListener('change', function () {
             const reasonContainer = document.getElementById('reasonContainer');
             if (this.value === 'Rejected') {
@@ -177,9 +216,22 @@ $conn = null;
             }
         });
 
+        // Show reason container if status is Rejected on page load
+        if (document.getElementById('statusSelect').value === 'Rejected') {
+            document.getElementById('reasonContainer').style.display = 'block';
+        }
+
         // Confirmation modal actions
         document.getElementById('confirmSaveBtn').addEventListener('click', function() {
-            document.getElementById('statusForm').submit(); // Submit the form if confirmed
+            const status = document.getElementById('statusSelect').value;
+            const reasonInput = document.getElementById('reason');
+            
+            if (status === 'Rejected' && !reasonInput.value.trim()) {
+                alert('Please provide a reason for rejection.');
+                return;
+            }
+            
+            document.getElementById('statusForm').submit();
         });
     </script>
 </body>
