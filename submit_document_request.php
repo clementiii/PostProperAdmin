@@ -5,14 +5,14 @@ require_once 'db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Get POST data and set defaults
-        $documentType = "Barangay Clearance";
+        $documentType = $_POST['documentType'] ?? 'Barangay Clearance'; // Get documentType from POST
         $name = $_POST['name'] ?? '';
         $address = $_POST['address'] ?? '';
         $tin = $_POST['tin'] ?? '';
         $ctc = $_POST['ctc'] ?? '';
         $alias = $_POST['alias'] ?? '';
         $age = isset($_POST['age']) ? intval($_POST['age']) : 0;
-        $birthday = $_POST['birthday'] ?? ''; // New birthday field
+        $birthday = $_POST['birthday'] ?? '';
         $lengthOfStay = isset($_POST['lengthOfStay']) ? intval($_POST['lengthOfStay']) : 0;
         $citizenship = $_POST['citizenship'] ?? '';
         $gender = $_POST['gender'] ?? '';
@@ -21,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $status = 'Pending';
         $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
         $dateRequested = date('Y-m-d');
+        
+        // Log received data for debugging
+        error_log("Received document type: " . $documentType);
         
         $sql = "INSERT INTO document_requests (
             DocumentType, Name, Address, TIN_No, CTC_No, 
@@ -65,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Database error: " . implode(", ", $stmt->errorInfo()));
         }
     } catch (Exception $e) {
+        error_log("Error in document request: " . $e->getMessage());
         echo json_encode([
             'success' => false,
             'message' => 'Error submitting request: ' . $e->getMessage()
