@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2024 at 12:53 PM
+-- Generation Time: Nov 24, 2024 at 05:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -104,7 +104,11 @@ CREATE TABLE `document_requests` (
 --
 
 INSERT INTO `document_requests` (`Id`, `userId`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `birthday`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `request_picture`, `rejection_reason`) VALUES
-(29, 2, 'Barangay Clearance', 'Diosdado Tempra', '497-A Kalaw Street Zone 4', '123456789012', '123456789012', 'deejay', 20, '12-12-03', 7, 'Filipino', 'Male', 'Single', 'For my job', 'Pending', 2, '2024-11-24', 'uploads/valid_ids/1732449000_674312e8f305b.jpg', '', '');
+(29, 2, 'Barangay Clearance', 'Diosdado Tempra', '497-A Kalaw Street Zone 4', '123456789012', '123456789012', 'deejay', 20, '12-12-03', 7, 'Filipino', 'Male', 'Single', 'For my job', 'Approved', 2, '2024-11-24', 'uploads/valid_ids/1732449000_674312e8f305b.jpg', '', ''),
+(30, 12, 'Cedula', 'Darren Espanto', '492-C Lawin Street Zone 2', '123456789012', '123456789012', 'dar', 20, '10-22-04', 7, 'Filipino', 'Male', 'Single', 'for my audition', 'Rejected', 1, '2024-11-24', 'uploads/valid_ids/1732462962_674349722bfc2.jpg', '', 'Cancelled'),
+(31, 2, 'Barangay Clearance', 'test', 'test', '123456789012', '123456789012', 'test', 34, '11-24-99', 2, 'test', 'Male', 'Single', 'test', 'Rejected', 1, '2024-11-24', 'uploads/valid_ids/1732464035_67434da3dfd98.jpg', '', 'Invalid Entry'),
+(32, 11, 'Barangay Certification', 'Test', 'test', '123456789012', '123456789012', 'test', 20, '12-12-03', 3, 'test', 'Male', 'Married', 'test', 'Approved', 3, '2024-11-24', 'uploads/valid_ids/1732466165_674355f574b1f.jpg', '', ''),
+(33, 9, 'Certificate of Indigency', 'test', 'test', '123456789012', '123456789012', 'test', 34, '12-12-33', 3, 'test', 'Male', 'Single', 'test', 'Rejected', 2, '2024-11-24', 'uploads/valid_ids/1732466412_674356ec559ae.jpg', '', 'Invalid entries');
 
 -- --------------------------------------------------------
 
@@ -160,11 +164,11 @@ CREATE TABLE `user_accounts` (
 
 INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`) VALUES
 (1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', 'zone 3', 'Kalaw Street', '2003-12-22', 'clempassword11', '', NULL),
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732384105_6742156951ff7.jpg', '2024-11-24 04:50:04'),
-(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', NULL),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732384105_6742156951ff7.jpg', '2024-11-24 09:25:48'),
+(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', '2024-11-24 09:40:57'),
 (10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL),
-(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', '2024-11-23 06:23:25'),
-(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', '', '2024-11-23 05:28:28'),
+(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', '2024-11-24 09:36:58'),
+(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', '', '2024-11-24 08:51:05'),
 (13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'December22@', '', NULL);
 
 --
@@ -223,7 +227,7 @@ ALTER TABLE `barangay_announcements`
 -- AUTO_INCREMENT for table `document_requests`
 --
 ALTER TABLE `document_requests`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `incident_reports`
