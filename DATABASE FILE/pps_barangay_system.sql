@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2024 at 05:42 PM
+-- Generation Time: Nov 25, 2024 at 04:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -139,6 +139,56 @@ INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `incident_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_admin` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_id`, `message`, `timestamp`, `is_admin`) VALUES
+(1, 2, 'test', '2024-11-25 13:38:13', 0),
+(2, 2, 'test', '2024-11-25 13:55:19', 1),
+(3, 2, 'yessir', '2024-11-25 14:00:26', 1),
+(4, 2, 'test', '2024-11-25 14:13:27', 0),
+(5, 2, 'hello!', '2024-11-25 14:13:34', 1),
+(6, 2, 'NIGAG TEST MESSAGE MY BOY', '2024-11-25 14:14:27', 0),
+(7, 2, 'HELL NAH!!!', '2024-11-25 14:14:33', 1),
+(9, 12, 'despanto test', '2024-11-25 14:19:42', 0),
+(10, 12, 'test', '2024-11-25 14:19:49', 1),
+(11, 9, 'Dave chappele test', '2024-11-25 14:22:33', 0),
+(12, 9, 'hello dave chappelle', '2024-11-25 14:22:43', 1),
+(21, 11, 'Michael me', '2024-11-25 14:24:09', 0),
+(22, 11, 'test', '2024-11-25 14:29:06', 0),
+(23, 12, 'test', '2024-11-25 14:30:18', 0),
+(24, 12, 'te', '2024-11-25 14:30:20', 0),
+(25, 12, 's', '2024-11-25 14:30:22', 0),
+(26, 12, 'test', '2024-11-25 14:30:24', 0),
+(27, 12, 'yes', '2024-11-25 14:30:27', 0),
+(28, 12, 'hello', '2024-11-25 14:30:31', 0),
+(29, 12, 'what', '2024-11-25 14:30:35', 0),
+(30, 12, 'are you ok?', '2024-11-25 14:30:47', 1),
+(31, 12, 'probably bro', '2024-11-25 14:30:53', 0),
+(32, 12, 'do I not look fine?', '2024-11-25 14:31:00', 0),
+(33, 12, 'yea ur probably fine', '2024-11-25 14:31:27', 1),
+(34, 12, 'aight ty dawg', '2024-11-25 14:31:34', 0),
+(35, 12, 'test', '2024-11-25 14:31:38', 0),
+(36, 12, 't', '2024-11-25 14:31:41', 0),
+(37, 11, 'wow', '2024-11-25 14:50:31', 1),
+(40, 14, 'THIS IS CLEMENT!', '2024-11-25 14:58:03', 0),
+(42, 14, 'HELLO CELEMTN!', '2024-11-25 15:12:32', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_accounts`
 --
 
@@ -155,7 +205,8 @@ CREATE TABLE `user_accounts` (
   `birthday` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `user_profile_picture` longtext NOT NULL,
-  `last_active` timestamp NULL DEFAULT NULL
+  `last_active` timestamp NULL DEFAULT NULL,
+  `full_name` varchar(255) GENERATED ALWAYS AS (concat(`firstName`,' ',`lastName`)) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -163,13 +214,13 @@ CREATE TABLE `user_accounts` (
 --
 
 INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`) VALUES
-(1, 'Clement Harold Miguel', 'Cabus', 'clementcabs', 20, 'male', '497- A', 'zone 3', 'Kalaw Street', '2003-12-22', 'clempassword11', '', NULL),
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732384105_6742156951ff7.jpg', '2024-11-24 09:25:48'),
-(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', '2024-11-24 09:40:57'),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732384105_6742156951ff7.jpg', '2024-11-25 07:14:40'),
+(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', '2024-11-25 07:23:47'),
 (10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL),
-(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', 'Zone 20', 'Lawin', '2003-01-04', 'mjbarbs', '', '2024-11-24 09:36:58'),
-(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', 'Zone 3', 'Agila Street', '2003-08-05', 'despanto', '', '2024-11-24 08:51:05'),
-(13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'December22@', '', NULL);
+(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', '20', 'Lawin', '2003-01-04', 'mjbarbs', 'uploads/user_profile_pictures/1732543036_6744823cb1492.jpg', '2024-11-25 07:29:32'),
+(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', '3', 'Agila', '2003-08-05', 'despanto', 'uploads/user_profile_pictures/1732545006_674489ee76b04.jpg', '2024-11-25 07:31:46'),
+(13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'password', '', NULL),
+(14, 'Clement Harold Miguel', 'Cabus', 'clement', 20, 'male', '497-A', 'Zone 2', 'Kalaw Street', '2003-12-22', 'Clement12@', '', '2024-11-25 08:12:56');
 
 --
 -- Indexes for dumped tables
@@ -201,11 +252,19 @@ ALTER TABLE `incident_reports`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_sender_timestamp` (`sender_id`,`timestamp`);
+
+--
 -- Indexes for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `idx_full_name` (`full_name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -236,10 +295,26 @@ ALTER TABLE `incident_reports`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `user_accounts` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

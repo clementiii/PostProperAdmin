@@ -44,29 +44,25 @@ function findUserByFullName($conn, $fullName) {
 
 
 if (!isset($_POST['recipient'])) {
-    logDebug("No recipient specified");
     echo json_encode(['status' => 'error', 'message' => 'Recipient not specified']);
     exit;
 }
 
 $recipient = $_POST['recipient'];
-logDebug("Fetching messages for recipient", $recipient);
+logDebug("Loading chat for recipient", $recipient);
 
 try {
     $user = findUserByFullName($conn, $recipient);
     
     if (!$user) {
-        logDebug("User not found", $recipient);
-        echo json_encode([]);
+        echo json_encode(['status' => 'error', 'message' => 'User not found']);
         exit;
     }
 
-    $user_id = $user['id'];
-    logDebug("Found user ID", $user_id);
-
-    // Get messages
     $query = "SELECT m.*, 
-              CONCAT(u.firstName, ' ', u.lastName) as sender_name
+              CONCAT(u.firstName, ' ', u.lastName) as sender_name,
+              m.is_admin,
+              m.timestamp
               FROM messages m
               LEFT JOIN user_accounts u ON m.sender_id = u.id
               WHERE m.sender_id = :user_id OR 
@@ -74,8 +70,8 @@ try {
               ORDER BY m.timestamp ASC";
               
     $stmt = $conn->prepare($query);
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->bindParam(':user_id2', $user_id);
+    $stmt->bindParam(':user_id', $user['id']);
+    $stmt->bindParam(':user_id2', $user['id']);
     $stmt->execute();
     
     $messages = [];
@@ -84,17 +80,17 @@ try {
             'id' => $row['id'],
             'sender_id' => $row['sender_id'],
             'message' => $row['message'],
-            'timestamp' => $row['timestamp'],
             'is_admin' => (bool)$row['is_admin'],
+            'timestamp' => $row['timestamp'],
             'sender_name' => $row['sender_name']
         ];
     }
     
-    logDebug("Found messages count", count($messages));
+    logDebug("Found messages", count($messages));
     echo json_encode($messages);
     
 } catch (PDOException $e) {
     logDebug("Database error", $e->getMessage());
-    echo json_encode([]);
+    echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]);
 }
 ?>

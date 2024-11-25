@@ -1,22 +1,36 @@
 .bg-sidebar {
-   background-color: #fafafa; /* Sidebar background color */
+   background-color: #fafafa;
 }
 
 .chat-container {
    background-color: #f0f0fa;
+   position: relative;
+   height: 100vh;
 }
 
 /* List group item styling */
 .list-group-item {
-   margin-bottom: 1rem; /* Space between each user item */
+   margin-bottom: 1rem;
    padding: 0.5rem 1rem;
    border-radius: 0.5rem;
-   height: 5rem; /* Set height of list group item */
+   height: 5rem;
    display: flex;
    align-items: center;
+   transition: background-color 0.2s ease;
+   border: 1px solid #eee;
 }
 
-/* Profile image styling inside list group item */
+.list-group-item:hover {
+   background-color: #f8f9fa;
+   cursor: pointer;
+}
+
+.list-group-item.active {
+   background-color: #61009f;
+   border-color: #61009f;
+}
+
+/* Profile image styling */
 .list-group-item img {
    width: 40px;
    height: 40px;
@@ -24,79 +38,198 @@
    margin-right: 0.75rem;
 }
 
-/* Sidebar styles */
-.bg-purple {
-   background-color: #61009f;
-}
-
+/* Button styling */
 .btn-purple {
    background-color: #61009f;
    color: #fff;
+   border: none;
+   padding: 8px 16px;
 }
 
 .btn-purple:hover {
    background-color: #8a43c5;
+   color: #fff;
+}
+
+.btn-purple:disabled {
+   background-color: #9d85d2;
 }
 
 /* Chat window */
 .chat-window {
-   height: calc(100vh - 120px); /* Adjust height for header/footer if needed */
+   height: calc(100vh - 180px);
    overflow-y: auto;
    padding: 20px;
+   background-color: #f0f0fa;
+}
+
+/* Clear fix for floating messages */
+.chat-window::after {
+   content: "";
+   clear: both;
+   display: table;
 }
 
 /* Chat message styling */
 .chat-message {
-   max-width: 55%; /* Set width of chat message */
-   margin-bottom: 1.5rem; /* Space between each message */
+   max-width: 55%;
+   margin-bottom: 1.5rem;
+   clear: both;
    position: relative;
 }
 
 .chat-message.user {
-   text-align: left;
+   float: left;
 }
 
 .chat-message.admin {
-   text-align: right;
-   margin-left: auto; /* Move admin messages to the far right */
+   float: right;
 }
 
-.chat-message .message-content {
+.message-content {
+   padding: 12px 15px;
+   border-radius: 15px;
    display: inline-block;
-   padding: 15px;
-   border-radius: 10px;
+   word-wrap: break-word;
+   max-width: 100%;
 }
 
 .chat-message.user .message-content {
    background-color: #ffffff;
    color: #333;
+   border: 1px solid #eee;
+   border-top-left-radius: 5px;
 }
 
 .chat-message.admin .message-content {
    background-color: #61009f;
    color: #fff;
+   border-top-right-radius: 5px;
 }
 
-/* Time styling in chat messages */
-.chat-message .message-time {
+/* Time styling */
+.message-time {
    display: block;
-   font-size: 0.8rem;
+   font-size: 0.75rem;
    color: #999;
    margin-top: 0.25rem;
    text-align: right;
 }
 
-/* Chat input */
+/* Chat input area */
 .chat-input {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   right: 0;
    padding: 15px;
+   background: white;
    border-top: 1px solid #ddd;
+   display: flex;
+   align-items: center;
+   gap: 10px;
 }
 
-.chat-input input {
+#messageInput {
    border-radius: 20px;
-   padding: 10px;
+   padding: 10px 15px;
+   border: 1px solid #ddd;
+   flex-grow: 1;
 }
 
-.chat-input button {
+#messageInput:disabled {
+   background-color: #f8f9fa;
+}
+
+#sendMessageBtn {
+   width: 40px;
+   height: 40px;
    border-radius: 50%;
+   padding: 0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+#sendMessageBtn i {
+   font-size: 1rem;
+}
+
+/* Loading and empty states */
+.text-center {
+   text-align: center;
+   padding: 20px;
+   color: #666;
+}
+
+/* Scrollbar styling */
+.chat-window::-webkit-scrollbar {
+   width: 6px;
+}
+
+.chat-window::-webkit-scrollbar-track {
+   background: #f1f1f1;
+}
+
+.chat-window::-webkit-scrollbar-thumb {
+   background: #888;
+   border-radius: 3px;
+}
+
+.chat-window::-webkit-scrollbar-thumb:hover {
+   background: #555;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+   .chat-message {
+       max-width: 75%;
+   }
+
+   .chat-input {
+       padding: 10px;
+   }
+
+   #messageInput {
+       padding: 8px 12px;
+   }
+}
+
+.user-chat-item {
+   transition: background-color 0.2s ease;
+   cursor: pointer;
+   padding: 12px;
+}
+
+.user-chat-item:hover {
+   background-color: rgba(97, 0, 159, 0.05);
+}
+
+.user-chat-item.active {
+   background-color: rgba(97, 0, 159, 0.1);
+}
+
+.user-chat-item .text-truncate {
+   max-width: 200px;
+}
+
+.user-chat-item img {
+   object-fit: cover;
+}
+
+/* Add blue highlight for unread messages */
+.user-chat-item.unread strong:after {
+   content: '';
+   display: inline-block;
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   background-color: #61009f;
+   margin-left: 5px;
+}
+
+/* Style for timestamps */
+.user-chat-item small {
+   font-size: 0.75rem;
+   color: #6c757d;
 }
