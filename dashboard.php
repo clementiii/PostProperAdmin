@@ -59,6 +59,30 @@ $incidentReportsCount = $incidentReportsResult['count'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/DashboardStyle.css">  
+    <!-- Add right after the custom CSS link -->
+<style>
+.modal-backdrop {
+    z-index: 1040;
+}
+
+.modal {
+    z-index: 1050;
+}
+
+#logoutModal {
+    z-index: 1060;
+}
+
+.modal-content {
+    position: relative;
+    z-index: 1051;
+}
+
+body.modal-open {
+    overflow: hidden;
+    padding-right: 0 !important;
+}
+</style>
     <link rel="icon" type="image/png" href="assets/Southside.png">
     
 </head>
@@ -158,40 +182,94 @@ $incidentReportsCount = $incidentReportsResult['count'];
 </div>
 
 <!-- Modal Structure -->
-<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #61009F;">
-                <h5 class="modal-title text-white" id="userModalLabel" style="font-size: 1.5rem; font-weight: bold;">
-                    <span id="modalTransactionIDHeader"></span>
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Transaction ID:</strong> <span id="modalTransactionID"></span></p>
-                <p><strong>Name:</strong> <span id="modalName"></span></p>
-                <p><strong>Alias:</strong> <span id="modalAlias"></span></p>
-                <p><strong>Document Type:</strong> <span id="modalDocumentType"></span></p>
-                <p><strong>Date Requested:</strong> <span id="modalDateRequested"></span></p>
-                <p><strong>Quantity:</strong> <span id="modalQuantity"></span></p>
-                <p><strong>Price:</strong> <span id="modalPrice"></span></p>
-                <p><strong>Address:</strong> <span id="modalAddress"></span></p>
-                <p><strong>Gender:</strong> <span id="modalGender"></span></p>
-                <p><strong>Civil Status:</strong> <span id="modalCivilStatus"></span></p>
-                <p><strong>TIN #:</strong> <span id="modalTIN"></span></p>
-                <p><strong>CTC #:</strong> <span id="modalCTC"></span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+<div id="userModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <div class="custom-modal-header">
+            <h5 class="modal-title">Transaction Details</h5>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="custom-modal-body">
+            <p><strong>Transaction ID:</strong> <span id="modalTransactionID"></span></p>
+            <p><strong>Name:</strong> <span id="modalName"></span></p>
+            <p><strong>Alias:</strong> <span id="modalAlias"></span></p>
+            <p><strong>Document Type:</strong> <span id="modalDocumentType"></span></p>
+            <p><strong>Date Requested:</strong> <span id="modalDateRequested"></span></p>
+            <p><strong>Quantity:</strong> <span id="modalQuantity"></span></p>
+            <p><strong>Price:</strong> <span id="modalPrice"></span></p>
+            <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+            <p><strong>Gender:</strong> <span id="modalGender"></span></p>
+            <p><strong>Civil Status:</strong> <span id="modalCivilStatus"></span></p>
+            <p><strong>TIN #:</strong> <span id="modalTIN"></span></p>
+            <p><strong>CTC #:</strong> <span id="modalCTC"></span></p>
+        </div>
+        <div class="custom-modal-footer">
+            <button class="btn btn-secondary close-modal">Close</button>
         </div>
     </div>
 </div>
 
+<style>
+.custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.custom-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.custom-modal-header {
+    padding: 15px 20px;
+    background-color: #61009F;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-modal-body {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.custom-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-modal {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #f0f0f0;
+}
+</style>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
-// Function to open modal and populate with data
 function openModal(transactionID, name, alias, documentType, dateRequested, quantity, price, address, gender, civilStatus, tin, ctc) {
+    // Set modal content
     document.getElementById('modalTransactionID').innerText = transactionID;
     document.getElementById('modalName').innerText = name;
     document.getElementById('modalAlias').innerText = alias;
@@ -204,7 +282,27 @@ function openModal(transactionID, name, alias, documentType, dateRequested, quan
     document.getElementById('modalCivilStatus').innerText = civilStatus;
     document.getElementById('modalTIN').innerText = tin;
     document.getElementById('modalCTC').innerText = ctc;
-    new bootstrap.Modal(document.getElementById('userModal')).show();
+
+    // Show modal
+    document.getElementById('userModal').style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+// Close modal when clicking the X button or Close button
+document.querySelectorAll('.close-modal').forEach(button => {
+    button.onclick = function() {
+        document.getElementById('userModal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+});
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('userModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }
 }
 </script>
 </body>
