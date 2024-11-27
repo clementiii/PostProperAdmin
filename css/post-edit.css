@@ -49,16 +49,26 @@
    align-items: center;
    padding: 0.3rem 0.5rem;
    border-radius: 4px;
+   background-color: #6c757d;
    position: absolute;
    top: 16%;
    left: 22%;
-   color: #333;
+   color: #f0faf0;
    text-decoration: none;
    transition: background-color 0.3s ease, color 0.3s ease;
 }
-
+.image-limit-warning {
+   color: red;
+   margin-top: 0.5rem;
+   display: none;
+}
 .back-button i {
    margin-right: 8px;
+}
+
+.back-button:hover {
+   background-color: #868e96;
+   color: #f0faf0;
 }
 
 /* Form Styling */

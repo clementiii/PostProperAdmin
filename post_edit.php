@@ -39,38 +39,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <link rel="stylesheet" href="css/post-edit.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/Southside.png">
-    <style>
-        .back-button {
-            position: fixed;
-            top: 80px;
-            left: 280px;
-            padding: 10px 20px;
-            background-color: #6c757d;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 1000;
-        }
-        
-        .back-button:hover {
-            background-color: #5a6268;
-            color: white;
-            text-decoration: none;
-        }
-
-        .back-button i {
-            margin-right: 5px;
-        }
-
-        .image-limit-warning {
-            color: red;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
+    
 </head>
 <body>
 <?php 
