@@ -50,19 +50,6 @@ try {
     <link rel="stylesheet" href="css/users.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="assets/Southside.png">
-    <script>
-        let userIdToDelete;
-
-        function confirmDelete(userId) {
-            userIdToDelete = userId;
-            const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
-            deleteModal.show();
-        }
-
-        function deleteConfirmed() {
-            window.location.href = 'deleteUser.php?id=' + userIdToDelete;
-        }
-    </script>
 </head>
 <body>
 <?php 
@@ -135,61 +122,143 @@ try {
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this user? This action cannot be undone.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="deleteConfirmed()">Delete</button>
-            </div>
+<!-- Custom Delete Modal -->
+<div id="deleteConfirmationModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <div class="custom-modal-header">
+            <h5 class="modal-title">Confirm Deletion</h5>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="custom-modal-body">
+            Are you sure you want to delete this user? This action cannot be undone.
+        </div>
+        <div class="custom-modal-footer">
+            <button class="btn btn-secondary close-modal">Cancel</button>
+            <button class="btn btn-danger" onclick="deleteConfirmed()">Delete</button>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+.custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.custom-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.custom-modal-header {
+    padding: 15px 20px;
+    background-color: #dc3545;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-modal-body {
+    padding: 20px;
+}
+
+.custom-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.close-modal {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #f0f0f0;
+}
+</style>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Add event listeners to header cells to trigger sorting
-        document.querySelectorAll('th').forEach((header, index) => {
-            header.style.cursor = 'pointer';
-            header.addEventListener('click', () => {
-                sortTable(index);
-            });
+let userIdToDelete;
+
+function confirmDelete(userId) {
+    userIdToDelete = userId;
+    document.getElementById('deleteConfirmationModal').style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function deleteConfirmed() {
+    window.location.href = 'deleteUser.php?id=' + userIdToDelete;
+}
+
+// Close modal when clicking the X button or Cancel button
+document.querySelectorAll('.close-modal').forEach(button => {
+    button.onclick = function() {
+        document.getElementById('deleteConfirmationModal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+});
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('deleteConfirmationModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+}
+
+// Table sorting functionality
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('th').forEach((header, index) => {
+        header.style.cursor = 'pointer';
+        header.addEventListener('click', () => {
+            sortTable(index);
         });
     });
+});
 
-    function sortTable(columnIndex) {
-        const table = document.querySelector('table tbody');
-        const rows = Array.from(table.rows);
+function sortTable(columnIndex) {
+    const table = document.querySelector('table tbody');
+    const rows = Array.from(table.rows);
 
-        const isAscending = table.getAttribute('data-sort-asc') === 'true' ? false : true;
-        table.setAttribute('data-sort-asc', isAscending);
+    const isAscending = table.getAttribute('data-sort-asc') === 'true' ? false : true;
+    table.setAttribute('data-sort-asc', isAscending);
 
-        rows.sort((a, b) => {
-            const cellA = a.cells[columnIndex].textContent.trim();
-            const cellB = b.cells[columnIndex].textContent.trim();
+    rows.sort((a, b) => {
+        const cellA = a.cells[columnIndex].textContent.trim();
+        const cellB = b.cells[columnIndex].textContent.trim();
 
-            if (columnIndex === 3) { // Age column (numeric sort)
-                return isAscending ? cellA - cellB : cellB - cellA;
-            } else {
-                return isAscending 
-                    ? cellA.localeCompare(cellB) 
-                    : cellB.localeCompare(cellA);
-            }
-        });
+        if (columnIndex === 3) { // Age column (numeric sort)
+            return isAscending ? cellA - cellB : cellB - cellA;
+        } else {
+            return isAscending 
+                ? cellA.localeCompare(cellB) 
+                : cellB.localeCompare(cellA);
+        }
+    });
 
-        // Append sorted rows to the table
-        rows.forEach(row => table.appendChild(row));
-    }
+    rows.forEach(row => table.appendChild(row));
+}
 </script>
+
 </body>
 </html>
