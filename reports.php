@@ -59,7 +59,7 @@ function truncateDescription($description, $maxWords = 12) {
 </head>
 <body>
 <?php 
-    $pageTitle = "Incident Report and Monitoring";
+    $pageTitle = "Incident Monitoring";
     include 'header.php';
 ?>
 <?php include 'sidebar.php'; ?>
