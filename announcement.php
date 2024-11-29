@@ -122,6 +122,22 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </form>
             </div>
         </div>
+   <!-- Modal HTML -->
+<div id="publishModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <div class="custom-modal-header">
+            <h5 class="modal-title">Confirm Publication</h5>
+            <i class="fas fa-times close-modal" onclick="document.getElementById('publishModal').style.display='none'"></i>
+        </div>
+        <div class="custom-modal-body">
+            Are you sure you want to post this announcement?
+        </div>
+        <div class="custom-modal-footer">
+            <button class="btn-cancel close-modal" onclick="document.getElementById('publishModal').style.display='none'">Cancel</button>
+            <button class="btn-post" onclick="confirmPublish()">Post</button>
+        </div>
+    </div>
+</div>
 
         <div class="right-section">
             <div class="white-card">
@@ -151,12 +167,10 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Existing modals remain the same -->
 
 <script>
-    function validateForm() {
-    // Get all required input elements
+   function validateForm() {
     const titleInput = document.getElementById('title');
     const descriptionInput = document.getElementById('description');
     
-    // Create error message containers if they don't exist
     let titleErrorContainer = document.getElementById('title-error');
     if (!titleErrorContainer) {
         titleErrorContainer = document.createElement('div');
@@ -173,14 +187,11 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
         descriptionInput.parentNode.insertBefore(descriptionErrorContainer, descriptionInput.nextSibling);
     }
 
-    // Reset previous error messages
     titleErrorContainer.textContent = '';
     descriptionErrorContainer.textContent = '';
 
-    // Validation flags
     let isValid = true;
 
-    // Validate Title
     if (titleInput.value.trim() === '') {
         titleErrorContainer.textContent = 'Announcement Title is required.';
         titleInput.classList.add('is-invalid');
@@ -190,7 +201,6 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
         titleErrorContainer.textContent = '';
     }
 
-    // Validate Description
     if (descriptionInput.value.trim() === '') {
         descriptionErrorContainer.textContent = 'Description is required.';
         descriptionInput.classList.add('is-invalid');
@@ -200,99 +210,45 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
         descriptionErrorContainer.textContent = '';
     }
 
-    // If validation fails, prevent form submission
     if (!isValid) {
         return false;
     }
 
-    // If all validations pass, show publish modal
     showPublishModal();
-    return false; // Prevent default form submission
-}
-
-function clearForm() {
-    // Clear all input fields
-    document.getElementById('title').value = '';
-    document.getElementById('description').value = '';
-    
-    // Clear image preview and file input
-    const previewContainer = document.getElementById('image-preview-container');
-    const imageInput = document.getElementById('images');
-    previewContainer.innerHTML = '';
-    imageInput.value = '';
-
-    // Remove validation error messages and styles
-    const titleInput = document.getElementById('title');
-    const descriptionInput = document.getElementById('description');
-    const titleErrorContainer = document.getElementById('title-error');
-    const descriptionErrorContainer = document.getElementById('description-error');
-
-    // Remove error messages if they exist
-    if (titleErrorContainer) {
-        titleErrorContainer.textContent = '';
-    }
-    if (descriptionErrorContainer) {
-        descriptionErrorContainer.textContent = '';
-    }
-
-    // Remove invalid classes
-    titleInput.classList.remove('is-invalid');
-    descriptionInput.classList.remove('is-invalid');
-
-    // Hide any warning divs
-    const imageCountWarning = document.getElementById('imageCountWarning');
-    if (imageCountWarning) {
-        imageCountWarning.style.display = 'none';
-    }
-}
-
-// Update the clear button to use this function
-document.querySelector('.btn-clear').onclick = function(e) {
-    e.preventDefault(); // Prevent default form reset
-    clearForm();
+    return true;
 }
 
 function showPublishModal() {
-    // Check image upload limit
     const input = document.getElementById('images');
     if (input.files.length > 5) {
         alert('You can only upload a maximum of 5 images. Please remove some images before publishing.');
         return false;
     }
-
-    // Show modal for final confirmation
+    
     document.getElementById('publishModal').style.display = 'block';
     document.body.style.overflow = 'hidden';
     return false;
 }
 
-// Modify the form to use the validation function
-document.querySelector('form').onsubmit = function(e) {
-    e.preventDefault();
-    return false;
-};
+function confirmPublish() {
+    document.querySelector('form').submit();
+}
 
-// Update the post button to trigger validation
-document.querySelector('.btn-save').onclick = validateForm;
 function previewImages(input) {
     const previewContainer = document.getElementById('image-preview-container');
     const warningDiv = document.getElementById('imageCountWarning');
     const maxImages = 5;
 
-    // Clear previous previews
     previewContainer.innerHTML = '';
 
-    // Check if too many images
     if (input.files.length > maxImages) {
         warningDiv.style.display = 'block';
-        input.value = ''; // Clear the selection
+        input.value = '';
         return;
     }
 
-    // Hide warning if within limit
     warningDiv.style.display = 'none';
 
-    // Generate previews
     Array.from(input.files).forEach((file, index) => {
         if (index < maxImages) {
             const reader = new FileReader();
@@ -314,9 +270,6 @@ function previewImages(input) {
 
 function removeImage(index) {
     const input = document.getElementById('images');
-    const previewContainer = document.getElementById('image-preview-container');
-    
-    // Remove the specific image from FileList
     const dt = new DataTransfer();
     const files = input.files;
     
@@ -327,21 +280,64 @@ function removeImage(index) {
     }
     
     input.files = dt.files;
-    
-    // Regenerate preview
     previewImages(input);
+}
+
+function clearForm() {
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    
+    const previewContainer = document.getElementById('image-preview-container');
+    const imageInput = document.getElementById('images');
+    previewContainer.innerHTML = '';
+    imageInput.value = '';
+
+    const titleInput = document.getElementById('title');
+    const descriptionInput = document.getElementById('description');
+    const titleErrorContainer = document.getElementById('title-error');
+    const descriptionErrorContainer = document.getElementById('description-error');
+
+    if (titleErrorContainer) {
+        titleErrorContainer.textContent = '';
+    }
+    if (descriptionErrorContainer) {
+        descriptionErrorContainer.textContent = '';
+    }
+
+    titleInput.classList.remove('is-invalid');
+    descriptionInput.classList.remove('is-invalid');
+
+    const imageCountWarning = document.getElementById('imageCountWarning');
+    if (imageCountWarning) {
+        imageCountWarning.style.display = 'none';
+    }
 }
 
 function clearImagePreview() {
     const previewContainer = document.getElementById('image-preview-container');
     const input = document.getElementById('images');
-    
-    // Clear preview container
     previewContainer.innerHTML = '';
-    
-    // Clear file input
     input.value = '';
 }
+
+// Event Listeners
+document.querySelector('form').onsubmit = function(e) {
+    if (!validateForm()) {
+        e.preventDefault();
+    }
+};
+
+document.querySelector('.btn-save').onclick = function(e) {
+    e.preventDefault();
+    if (validateForm()) {
+        showPublishModal();
+    }
+};
+
+document.querySelector('.btn-clear').onclick = function(e) {
+    e.preventDefault();
+    clearForm();
+};
 
 // Existing modal and other script functions remain the same
 </script>
