@@ -122,12 +122,11 @@ try {
     </div>
 </div>
 
-<!-- Custom Delete Modal -->
 <div id="deleteConfirmationModal" class="custom-modal">
     <div class="custom-modal-content">
         <div class="custom-modal-header">
             <h5 class="modal-title">Confirm Deletion</h5>
-            <span class="close-modal">&times;</span>
+            <i class="fas fa-times close-modal"></i>
         </div>
         <div class="custom-modal-body">
             Are you sure you want to delete this user? This action cannot be undone.
@@ -139,62 +138,6 @@ try {
     </div>
 </div>
 
-<style>
-.custom-modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.custom-modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 0;
-    border: 1px solid #888;
-    width: 400px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.custom-modal-header {
-    padding: 15px 20px;
-    background-color: #dc3545;
-    color: white;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.custom-modal-body {
-    padding: 20px;
-}
-
-.custom-modal-footer {
-    padding: 15px 20px;
-    border-top: 1px solid #dee2e6;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.close-modal {
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close-modal:hover {
-    color: #f0f0f0;
-}
-</style>
 
 <script>
 let userIdToDelete;

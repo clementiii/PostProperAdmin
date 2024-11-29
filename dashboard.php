@@ -60,31 +60,8 @@ $incidentReportsCount = $incidentReportsResult['count'];
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/DashboardStyle.css">  
     <!-- Add right after the custom CSS link -->
-<style>
-.modal-backdrop {
-    z-index: 1040;
-}
-
-.modal {
-    z-index: 1050;
-}
-
-#logoutModal {
-    z-index: 1060;
-}
-
-.modal-content {
-    position: relative;
-    z-index: 1051;
-}
-
-body.modal-open {
-    overflow: hidden;
-    padding-right: 0 !important;
-}
-</style>
     <link rel="icon" type="image/png" href="assets/Southside.png">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
@@ -155,7 +132,7 @@ body.modal-open {
                                 <td><?php echo number_format($request['Quantity'] * 50, 2); ?></td>
                                 <td><?php echo htmlspecialchars($request['DateRequested']); ?></td>
                                 <td>
-                                    <button class="action-btn btn-primary btn-sm"
+                                    <button class="action-btn btn-sm"
                                             onclick="openModal('<?php echo htmlspecialchars($request['Id']); ?>', 
                                                                 '<?php echo htmlspecialchars($request['Name']); ?>',
                                                                 '<?php echo htmlspecialchars($request['Alias']); ?>',
@@ -186,7 +163,7 @@ body.modal-open {
     <div class="custom-modal-content">
         <div class="custom-modal-header">
             <h5 class="modal-title">Transaction Details</h5>
-            <span class="close-modal">&times;</span>
+            <i class="fas fa-times close-modal"></i>
         </div>
         <div class="custom-modal-body">
             <p><strong>Transaction ID:</strong> <span id="modalTransactionID"></span></p>
@@ -203,68 +180,10 @@ body.modal-open {
             <p><strong>CTC #:</strong> <span id="modalCTC"></span></p>
         </div>
         <div class="custom-modal-footer">
-            <button class="btn btn-secondary close-modal">Close</button>
+            <button class="btn-close-modal close-modal">Close</button>
         </div>
     </div>
 </div>
-
-<style>
-.custom-modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.custom-modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 0;
-    border: 1px solid #888;
-    width: 50%;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.custom-modal-header {
-    padding: 15px 20px;
-    background-color: #61009F;
-    color: white;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.custom-modal-body {
-    padding: 20px;
-    max-height: 60vh;
-    overflow-y: auto;
-}
-
-.custom-modal-footer {
-    padding: 15px 20px;
-    border-top: 1px solid #dee2e6;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.close-modal {
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close-modal:hover {
-    color: #f0f0f0;
-}
-</style>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
@@ -295,6 +214,8 @@ document.querySelectorAll('.close-modal').forEach(button => {
         document.body.style.overflow = 'auto'; // Restore scrolling
     }
 });
+
+
 
 // Close modal when clicking outside
 window.onclick = function(event) {
