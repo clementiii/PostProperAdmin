@@ -27,56 +27,6 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/Southside.png">
 
-    <style>
-        /* Additional styles for image preview */
-        .image-preview-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .image-preview {
-            position: relative;
-            width: 100px;
-            height: 100px;
-        }
-        .image-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .image-preview .remove-image {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .is-invalid {
-        border-color: #dc3545;
-        padding-right: calc(1.5em + 0.75rem);
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right calc(0.375em + 0.1875rem) center;
-        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-    }
-    
-    .text-danger {
-        color: #dc3545;
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
-    }
-    </style>
 </head>
 <body>
 <?php 
@@ -133,17 +83,29 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
             Are you sure you want to post this announcement?
         </div>
         <div class="custom-modal-footer">
-            <button class="btn-cancel close-modal" onclick="document.getElementById('publishModal').style.display='none'">Cancel</button>
+            <button class="btn-cancel1 close-modal" onclick="document.getElementById('publishModal').style.display='none'">Cancel</button>
             <button class="btn-post" onclick="confirmPublish()">Post</button>
         </div>
     </div>
 </div>
 
-        <div class="right-section">
+         <div class="right-section">
             <div class="white-card">
                 <h2>Recent Posts</h2>
                 <div class="posts-list">
                 <?php
+                    // Display success message if set
+                    if (isset($_SESSION['success_message'])) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($_SESSION['success_message']) . '</div>';
+                        unset($_SESSION['success_message']);
+                    }
+                    
+                    // Display error message if set
+                    if (isset($_SESSION['error_message'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_SESSION['error_message']) . '</div>';
+                        unset($_SESSION['error_message']);
+                    }
+
                     foreach ($announcements as $announcement) {
                         $formattedDate = date("F d, Y", strtotime($announcement['created_at']));
                         echo '<div class="post-item">
@@ -153,7 +115,7 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="post-actions">
                                     <a href="post_edit.php?id=' . $announcement['id'] . '" class="btn-edit">Edit</a>
-                                    <a href="process_announcement.php?action=delete&id=' . $announcement['id'] . '" class="btn-delete">Delete</a>
+                                    <a href="#" class="btn-delete" data-id="' . $announcement['id'] . '">Delete</a>
                                 </div>
                             </div>';
                     }
@@ -163,8 +125,28 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </div>
+<div id="deleteModal" class="custom-modal1">
+    <div class="custom-modal-content1">
+        <div class="custom-modal-header1">
+            <h5 class="modal-title1">Confirm Deletion</h5>
+            <i class="fas fa-times close-modal" onclick="closeDeleteModal()"></i>
+        </div>
+        <div class="custom-modal-body1">
+            Are you sure you want to delete this announcement? This action cannot be undone.
+            <br><br>
+            <strong>Note:</strong> This will permanently delete the announcement and all associated images.
+        </div>
+        <div class="custom-modal-footer1">
+            <button class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn-delete-modal" onclick="confirmDelete()">Delete</button>
+        </div>
+    </div>
+</div>
 
-<!-- Existing modals remain the same -->
+
+
+                    
+
 
 <script>
    function validateForm() {
@@ -339,7 +321,67 @@ document.querySelector('.btn-clear').onclick = function(e) {
     clearForm();
 };
 
-// Existing modal and other script functions remain the same
+let deleteItemId = null;
+let isProcessing = false;
+
+function showDeleteModal(id) {
+    deleteItemId = id;
+    document.getElementById('deleteModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    return false;
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    deleteItemId = null;
+}
+
+function confirmDelete() {
+    if (deleteItemId && !isProcessing) {
+        isProcessing = true;
+        const deleteButton = document.querySelector('#deleteModal .btn-delete-modal');
+        deleteButton.textContent = 'Deleting...';
+        deleteButton.disabled = true;
+        
+        window.location.href = `process_announcement.php?action=delete&id=${deleteItemId}`;
+    }
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const deleteModal = document.getElementById('deleteModal');
+    const publishModal = document.getElementById('publishModal');
+    
+    if (event.target === deleteModal) {
+        closeDeleteModal();
+    }
+    if (event.target === publishModal) {
+        publishModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Add event listeners when the document loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Update all delete links to use the modal
+    const deleteLinks = document.querySelectorAll('.btn-delete');
+    deleteLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = this.getAttribute('data-id');
+            showDeleteModal(id);
+        });
+    });
+    
+    // Hide alerts after 5 seconds
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            alert.style.display = 'none';
+        }, 5000);
+    });
+});
 </script>
 
 </body>
