@@ -77,7 +77,7 @@ $announcements = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="custom-modal-content">
         <div class="custom-modal-header">
             <h5 class="modal-title">Confirm Publication</h5>
-            <i class="fas fa-times close-modal" onclick="document.getElementById('publishModal').style.display='none'"></i>
+            <i class="fas fa-times close-modal" onclick="document.getElementById('publishModal').style.display='none'" style="font-size: 1.5rem;"></i>
         </div>
         <div class="custom-modal-body">
             Are you sure you want to post this announcement?

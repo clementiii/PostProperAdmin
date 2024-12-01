@@ -129,7 +129,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal custom-modal" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -147,53 +147,114 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         </div>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function goBack() {
-            window.history.back();
-        }
+       class ModalManager {
+    constructor() {
+        this.imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        this.confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        this.modalImage = document.getElementById('modalImage');
+        this.setupEventListeners();
+    }
 
-        function showImageModal(src) {
-            const modalImage = document.getElementById('modalImage');
-            modalImage.src = src;
-            new bootstrap.Modal(document.getElementById('imageModal')).show();
-        }
-
-        document.getElementById("resolvedBtn").addEventListener("click", function () {
-            // Show the confirmation modal
-            new bootstrap.Modal(document.getElementById("confirmModal")).show();
+    setupEventListeners() {
+        // Image modal listeners
+        document.querySelectorAll('.zoomable-image').forEach(image => {
+            image.addEventListener('click', () => this.showImageModal(image.src));
         });
 
-        document.getElementById("confirmResolve").addEventListener("click", function () {
-            const reportId = <?php echo $report_id; ?>;
+        // Resolve button and confirmation
+        document.getElementById('resolvedBtn').addEventListener('click', () => 
+            this.confirmModal.show());
 
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "resolve_report.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    new bootstrap.Modal(document.getElementById("confirmModal")).hide();
-                    alert("The report has been marked as resolved.");
-                    window.history.back();
-                } else {
-                    alert("Error: " + xhr.responseText);
-                }
-            };
-
-            xhr.send("report_id=" + reportId);
+        document.getElementById('resolvedBtn').addEventListener('click', () => {
+            this.cleanupModalBackdrop(); // Clean up any existing backdrop
+            this.confirmModal.show();
         });
 
-        // Automatically adjust textarea height
-        const reportDescription = document.getElementById('reportDescription');
+        // Modal cleanup listeners
+        ['imageModal', 'confirmModal'].forEach(modalId => {
+            document.getElementById(modalId).addEventListener('hidden.bs.modal', () => 
+                this.cleanupModalBackdrop());
+        });
+    }
 
-        function adjustHeight(element) {
-            element.style.height = 'auto';
-            element.style.height = element.scrollHeight + 'px';
+    showImageModal(src) {
+        this.modalImage.src = src;
+        this.imageModal.show();
+        this.cleanupModalBackdrop();
+    }
+
+    async handleReportResolution() {
+        const reportId = this.getReportId();
+        try {
+            const response = await fetch('resolve_report.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `report_id=${reportId}`
+            });
+
+            if (response.ok) {
+                this.confirmModal.hide();
+                alert('The report has been marked as resolved.');
+                window.history.back();
+            } else {
+                throw new Error(await response.text());
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
         }
+    }
 
-        adjustHeight(reportDescription);
-        reportDescription.addEventListener('input', () => adjustHeight(reportDescription));
+    cleanupModalBackdrop() {
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => 
+            backdrop.remove());
+    }
+
+    getReportId() {
+        // Assuming the report ID is set in a data attribute or similar
+        return document.querySelector('[data-report-id]')?.dataset.reportId;
+    }
+}
+
+// Textarea Auto-resize Manager
+class TextareaManager {
+    constructor(textareaId) {
+        this.textarea = document.getElementById(textareaId);
+        if (this.textarea) {
+            this.setupAutoResize();
+        }
+    }
+
+    setupAutoResize() {
+        this.adjustHeight();
+        this.textarea.addEventListener('input', () => this.adjustHeight());
+    }
+
+    adjustHeight() {
+        this.textarea.style.height = 'auto';
+        this.textarea.style.height = `${this.textarea.scrollHeight}px`;
+    }
+}
+
+// Navigation Functions
+const navigationManager = {
+    goBack() {
+        window.history.back();
+    }
+};
+
+// Initialize everything when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new ModalManager();
+    new TextareaManager('reportDescription');
+});
+
+// Expose navigation function globally
+window.goBack = navigationManager.goBack;
     </script>
 </body>
 </html>

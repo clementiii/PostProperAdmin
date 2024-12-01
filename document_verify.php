@@ -183,7 +183,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="confirmModalLabel">Confirm Save</h5>
-                        <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="close-btn close-modal" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to save the changes?

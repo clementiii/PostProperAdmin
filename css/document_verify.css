@@ -112,7 +112,15 @@
    gap: 10px;
 }
 
-.btn-close .close-modal {
-   color: white !important;
+.custom-modal .close-modal {
+   font-size: 1.5rem;
+   color: #f0faf0;
+   border: none;
+   background-color: #61009f;
    cursor: pointer;
+   transition: background-color 0.3s ease;
 }
+
+/* .close-btn:hover {
+   color: rgba(255, 255, 255, 0.1);
+} */
