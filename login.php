@@ -22,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
             $_SESSION['admin_id'] = $result['id']; // Store admin ID
-            $_SESSION['name'] = $result['name'];   // Store admin name
+            $_SESSION['name'] = $result['name'];
+               // Store admin name
 
             header("Location: dashboard.php");
             exit;

@@ -7,7 +7,7 @@ function logDebug($message, $data = null) {
 }
 
 function findUserByFullName($conn, $fullName) {
-    $fullName = trim(preg_replace('/\s+/', ' ', $fullName)); // Normalize spaces
+    $fullName = trim(preg_replace('/\s+/', ' ', $fullName));
     logDebug("Normalized full name", $fullName);
 
     try {
@@ -42,7 +42,6 @@ function findUserByFullName($conn, $fullName) {
     }
 }
 
-
 if (!isset($_POST['recipient'])) {
     echo json_encode(['status' => 'error', 'message' => 'Recipient not specified']);
     exit;
@@ -59,8 +58,13 @@ try {
         exit;
     }
 
-    $query = "SELECT m.*, 
-              CONCAT(u.firstName, ' ', u.lastName) as sender_name,
+    $query = "SELECT m.*,
+              CASE 
+                  WHEN m.is_admin = 1 THEN 
+                      (SELECT name FROM admin_accounts WHERE id = m.admin_id)
+                  ELSE 
+                      CONCAT(u.firstName, ' ', u.lastName)
+              END as sender_name,
               m.is_admin,
               m.timestamp
               FROM messages m
@@ -79,6 +83,7 @@ try {
         $messages[] = [
             'id' => $row['id'],
             'sender_id' => $row['sender_id'],
+            'admin_id' => $row['admin_id'],
             'message' => $row['message'],
             'is_admin' => (bool)$row['is_admin'],
             'timestamp' => $row['timestamp'],

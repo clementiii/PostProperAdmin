@@ -212,13 +212,21 @@ function loadChat(userName, userId) {
 
 function displayMessages(messages) {
     const chatWindow = document.getElementById('chat-window');
-    chatWindow.innerHTML = '';
+    
+    // Create a container for messages
+    const messagesContainer = document.createElement('div');
+    messagesContainer.className = 'messages-container';
 
     if (Array.isArray(messages) && messages.length > 0) {
         messages.forEach(msg => {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('chat-message', msg.is_admin ? 'admin' : 'user');
 
+            // Add sender name div
+            const senderName = document.createElement('div');
+            senderName.classList.add('sender-name');
+            senderName.textContent = msg.sender_name;
+            
             const messageContent = document.createElement('div');
             messageContent.classList.add('message-content');
             messageContent.textContent = msg.message;
@@ -228,16 +236,26 @@ function displayMessages(messages) {
             const date = new Date(msg.timestamp);
             messageTime.textContent = date.toLocaleTimeString();
 
+            messageDiv.appendChild(senderName);
             messageDiv.appendChild(messageContent);
             messageDiv.appendChild(messageTime);
-            chatWindow.appendChild(messageDiv);
+            messagesContainer.appendChild(messageDiv);
         });
 
         lastMessageTimestamp = new Date(messages[messages.length - 1].timestamp).getTime();
-        chatWindow.scrollTop = chatWindow.scrollHeight;
     } else {
-        chatWindow.innerHTML = '<div class="text-center"><p>No messages yet</p></div>';
+        const noMessages = document.createElement('div');
+        noMessages.className = 'text-center';
+        noMessages.innerHTML = '<p>No messages yet</p>';
+        messagesContainer.appendChild(noMessages);
     }
+
+    // Clear and add the new messages container
+    chatWindow.innerHTML = '';
+    chatWindow.appendChild(messagesContainer);
+    
+    // Scroll to bottom
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 function sendMessage() {
@@ -258,6 +276,12 @@ function sendMessage() {
             if (data.status === 'success') {
                 messageInput.value = '';
                 loadChat(currentRecipient);
+                
+                // Scroll to bottom after a short delay to ensure messages are loaded
+                setTimeout(() => {
+                    const chatWindow = document.getElementById('chat-window');
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                }, 100);
             } else {
                 console.error('Error sending message:', data.message);
                 alert('Error sending message: ' + data.message);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2024 at 04:14 PM
+-- Generation Time: Dec 03, 2024 at 10:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,8 @@ CREATE TABLE `admin_accounts` (
 INSERT INTO `admin_accounts` (`id`, `name`, `username`, `password`, `profile_picture`) VALUES
 (1, 'Rannie Camba', 'rannie', 'password', 'assets/admin_profile_pictures/testprof1.jpg\n'),
 (2, 'Era ganaban', 'eraganaban', 'password', 'assets/admin_profile_pictures/testprof2.jpg'),
-(4, 'Kap Saruno', 'saruno', 'password', 'uploads/profile_pictures/1732195535_a79b3e17-90b7-49d0-98ea-e3208f8dd1ef.png');
+(4, 'Kap Saruno', 'saruno', 'password', 'uploads/profile_pictures/1732195535_a79b3e17-90b7-49d0-98ea-e3208f8dd1ef.png'),
+(8, 'Admin 2', 'admin2', 'password', '');
 
 -- --------------------------------------------------------
 
@@ -65,9 +66,8 @@ CREATE TABLE `barangay_announcements` (
 
 INSERT INTO `barangay_announcements` (`id`, `announcement_title`, `description_text`, `announcement_images`, `created_at`, `posted_at`) VALUES
 (22, '3rd Quarter BNAO Meeting', '3rd Quarter BNAO Meeting held @Multipurpose Building, Upper Bicutan, Taguig attended by our very own Barangay Nutrition Action Officer himself Kagawad on Health Jobert Quiambao and eventually Voted as one of Taguig BNAO Officers spearheaded by City Nutrition Action Officer Ms Julic Bornabc.', '[\"uploads\\/announcements\\/1732108477_IMG_20201130_145352.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20201130_145406.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20210501_075448.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20211221_140927.jpg\",\"uploads\\/', '2024-11-20 06:14:37', '2024-11-20 14:14:37'),
-(23, 'Test Announcement', 'LOREM IPSUM TAE NA CHOCO NIGGA', '[]', '2024-11-20 07:15:16', '2024-11-20 15:15:16'),
-(24, 'I love niggers', 'man heliotech niggas is some bullshit bruh', '[\"uploads\\/announcements\\/1732115394_419303608_332291319834527_7910766879232352090_n.jpg\"]', '2024-11-20 08:09:54', '2024-11-20 16:09:54'),
-(25, 'Barangay Wins World Cup', 'TEST', '[\"uploads\\/announcements\\/1732191375_b1131726-e89e-47e0-9f90-9c9ca4507f9a.png\",\"uploads\\/announcements\\/1732191375_76754470-13bb-454c-b199-ebcee9ec5821.png\",\"uploads\\/announcements\\/1732191375_07fd3ab8-0331-43db-83dd-cbe4c6abad5f-modified 1.png\",\"uploads\\/announcements\\/1732191375_e24663d4-dbf0-4326-a32d-7e77750043c8.png\",\"uploads\\/announcements\\/1732191375_9cc8e3d9-7854-4ef3-a60d-8cc64fc49291.png\"]', '2024-11-21 23:59:31', '2024-11-22 07:59:31');
+(25, 'Barangay Wins World Cup', 'TEST', '[\"uploads\\/announcements\\/1732191375_b1131726-e89e-47e0-9f90-9c9ca4507f9a.png\",\"uploads\\/announcements\\/1732191375_76754470-13bb-454c-b199-ebcee9ec5821.png\",\"uploads\\/announcements\\/1732191375_07fd3ab8-0331-43db-83dd-cbe4c6abad5f-modified 1.png\",\"uploads\\/announcements\\/1732191375_9cc8e3d9-7854-4ef3-a60d-8cc64fc49291.png\"]', '2024-12-01 08:49:58', '2024-12-01 16:49:58'),
+(33, 'Test', 'Test', '[\"uploads\\/announcements\\/1733118314_78298148_573841626722339_2171899188458029056_n.png\"]', '2024-12-01 22:45:14', '2024-12-02 06:45:14');
 
 -- --------------------------------------------------------
 
@@ -108,7 +108,8 @@ INSERT INTO `document_requests` (`Id`, `userId`, `DocumentType`, `Name`, `Addres
 (30, 12, 'Cedula', 'Darren Espanto', '492-C Lawin Street Zone 2', '123456789012', '123456789012', 'dar', 20, '10-22-04', 7, 'Filipino', 'Male', 'Single', 'for my audition', 'Rejected', 1, '2024-11-24', 'uploads/valid_ids/1732462962_674349722bfc2.jpg', '', 'Cancelled'),
 (31, 2, 'Barangay Clearance', 'test', 'test', '123456789012', '123456789012', 'test', 34, '11-24-99', 2, 'test', 'Male', 'Single', 'test', 'Rejected', 1, '2024-11-24', 'uploads/valid_ids/1732464035_67434da3dfd98.jpg', '', 'Invalid Entry'),
 (32, 11, 'Barangay Certification', 'Test', 'test', '123456789012', '123456789012', 'test', 20, '12-12-03', 3, 'test', 'Male', 'Married', 'test', 'Approved', 3, '2024-11-24', 'uploads/valid_ids/1732466165_674355f574b1f.jpg', '', ''),
-(33, 9, 'Certificate of Indigency', 'test', 'test', '123456789012', '123456789012', 'test', 34, '12-12-33', 3, 'test', 'Male', 'Single', 'test', 'Rejected', 2, '2024-11-24', 'uploads/valid_ids/1732466412_674356ec559ae.jpg', '', 'Invalid entries');
+(33, 9, 'Certificate of Indigency', 'test', 'test', '123456789012', '123456789012', 'test', 34, '12-12-33', 3, 'test', 'Male', 'Single', 'test', 'Rejected', 2, '2024-11-24', 'uploads/valid_ids/1732466412_674356ec559ae.jpg', '', 'Invalid entries'),
+(34, 2, 'Barangay Clearance', 'test', 'test', '123456789012', '123456789012', 'test', 20, '12-22-03', 2, 'test', 'Male', 'Single', 'test', 'Approved', 1, '2024-11-26', 'uploads/valid_ids/1732605128_674574c8b4a51.jpg', '', '');
 
 -- --------------------------------------------------------
 
@@ -145,6 +146,7 @@ INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `incident_
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL,
   `sender_id` int(11) NOT NULL,
+  `admin_id` int(11) DEFAULT NULL,
   `message` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_admin` tinyint(1) DEFAULT 0
@@ -154,37 +156,51 @@ CREATE TABLE `messages` (
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`id`, `sender_id`, `message`, `timestamp`, `is_admin`) VALUES
-(1, 2, 'test', '2024-11-25 13:38:13', 0),
-(2, 2, 'test', '2024-11-25 13:55:19', 1),
-(3, 2, 'yessir', '2024-11-25 14:00:26', 1),
-(4, 2, 'test', '2024-11-25 14:13:27', 0),
-(5, 2, 'hello!', '2024-11-25 14:13:34', 1),
-(6, 2, 'NIGAG TEST MESSAGE MY BOY', '2024-11-25 14:14:27', 0),
-(7, 2, 'HELL NAH!!!', '2024-11-25 14:14:33', 1),
-(9, 12, 'despanto test', '2024-11-25 14:19:42', 0),
-(10, 12, 'test', '2024-11-25 14:19:49', 1),
-(11, 9, 'Dave chappele test', '2024-11-25 14:22:33', 0),
-(12, 9, 'hello dave chappelle', '2024-11-25 14:22:43', 1),
-(21, 11, 'Michael me', '2024-11-25 14:24:09', 0),
-(22, 11, 'test', '2024-11-25 14:29:06', 0),
-(23, 12, 'test', '2024-11-25 14:30:18', 0),
-(24, 12, 'te', '2024-11-25 14:30:20', 0),
-(25, 12, 's', '2024-11-25 14:30:22', 0),
-(26, 12, 'test', '2024-11-25 14:30:24', 0),
-(27, 12, 'yes', '2024-11-25 14:30:27', 0),
-(28, 12, 'hello', '2024-11-25 14:30:31', 0),
-(29, 12, 'what', '2024-11-25 14:30:35', 0),
-(30, 12, 'are you ok?', '2024-11-25 14:30:47', 1),
-(31, 12, 'probably bro', '2024-11-25 14:30:53', 0),
-(32, 12, 'do I not look fine?', '2024-11-25 14:31:00', 0),
-(33, 12, 'yea ur probably fine', '2024-11-25 14:31:27', 1),
-(34, 12, 'aight ty dawg', '2024-11-25 14:31:34', 0),
-(35, 12, 'test', '2024-11-25 14:31:38', 0),
-(36, 12, 't', '2024-11-25 14:31:41', 0),
-(37, 11, 'wow', '2024-11-25 14:50:31', 1),
-(40, 14, 'THIS IS CLEMENT!', '2024-11-25 14:58:03', 0),
-(42, 14, 'HELLO CELEMTN!', '2024-11-25 15:12:32', 1);
+INSERT INTO `messages` (`id`, `sender_id`, `admin_id`, `message`, `timestamp`, `is_admin`) VALUES
+(1, 2, NULL, 'test', '2024-11-25 13:38:13', 0),
+(2, 2, NULL, 'test', '2024-11-25 13:55:19', 1),
+(3, 2, NULL, 'yessir', '2024-11-25 14:00:26', 1),
+(4, 2, NULL, 'test', '2024-11-25 14:13:27', 0),
+(5, 2, NULL, 'hello!', '2024-11-25 14:13:34', 1),
+(7, 2, NULL, 'HELL NAH!!!', '2024-11-25 14:14:33', 1),
+(9, 12, NULL, 'despanto test', '2024-11-25 14:19:42', 0),
+(10, 12, NULL, 'test', '2024-11-25 14:19:49', 1),
+(11, 9, NULL, 'Dave chappele test', '2024-11-25 14:22:33', 0),
+(12, 9, NULL, 'hello dave chappelle', '2024-11-25 14:22:43', 1),
+(21, 11, NULL, 'Michael me', '2024-11-25 14:24:09', 0),
+(22, 11, NULL, 'test', '2024-11-25 14:29:06', 0),
+(23, 12, NULL, 'test', '2024-11-25 14:30:18', 0),
+(24, 12, NULL, 'te', '2024-11-25 14:30:20', 0),
+(25, 12, NULL, 's', '2024-11-25 14:30:22', 0),
+(26, 12, NULL, 'test', '2024-11-25 14:30:24', 0),
+(27, 12, NULL, 'yes', '2024-11-25 14:30:27', 0),
+(28, 12, NULL, 'hello', '2024-11-25 14:30:31', 0),
+(29, 12, NULL, 'what', '2024-11-25 14:30:35', 0),
+(30, 12, NULL, 'are you ok?', '2024-11-25 14:30:47', 1),
+(31, 12, NULL, 'probably bro', '2024-11-25 14:30:53', 0),
+(32, 12, NULL, 'do I not look fine?', '2024-11-25 14:31:00', 0),
+(33, 12, NULL, 'yea ur probably fine', '2024-11-25 14:31:27', 1),
+(34, 12, NULL, 'aight ty dawg', '2024-11-25 14:31:34', 0),
+(35, 12, NULL, 'test', '2024-11-25 14:31:38', 0),
+(36, 12, NULL, 't', '2024-11-25 14:31:41', 0),
+(37, 11, NULL, 'wow', '2024-11-25 14:50:31', 1),
+(40, 14, NULL, 'THIS IS CLEMENT!', '2024-11-25 14:58:03', 0),
+(42, 14, NULL, 'HELLO CELEMTN!', '2024-11-25 15:12:32', 1),
+(43, 2, NULL, 'Hello Admin', '2024-11-26 07:23:07', 0),
+(44, 2, NULL, 'how can I get a clearance', '2024-11-26 07:23:17', 0),
+(45, 2, NULL, 'just fill up the form', '2024-11-26 07:23:46', 1),
+(46, 2, NULL, 'Hello', '2024-12-03 08:27:13', 1),
+(47, 11, NULL, 'hello', '2024-12-03 08:32:55', 1),
+(48, 14, NULL, 'clement', '2024-12-03 08:33:10', 1),
+(49, 12, NULL, 'clement', '2024-12-03 08:33:14', 1),
+(50, 14, NULL, 'clement', '2024-12-03 08:35:40', 1),
+(51, 14, NULL, 'hello', '2024-12-03 08:39:24', 1),
+(52, 12, NULL, 'hello', '2024-12-03 08:39:29', 1),
+(53, 2, NULL, 'hello', '2024-12-03 08:42:25', 1),
+(54, 14, NULL, 'test', '2024-12-03 08:43:02', 1),
+(55, 9, NULL, 'test', '2024-12-03 08:43:45', 1),
+(57, 9, 1, 'asd', '2024-12-03 09:01:12', 1),
+(58, 9, 4, 'asdas', '2024-12-03 09:01:33', 1);
 
 -- --------------------------------------------------------
 
@@ -214,12 +230,11 @@ CREATE TABLE `user_accounts` (
 --
 
 INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`) VALUES
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732384105_6742156951ff7.jpg', '2024-11-25 07:14:40'),
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732604909_674573ed726ce.jpg', '2024-12-01 23:08:09'),
 (9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', '2024-11-25 07:23:47'),
 (10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL),
 (11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', '20', 'Lawin', '2003-01-04', 'mjbarbs', 'uploads/user_profile_pictures/1732543036_6744823cb1492.jpg', '2024-11-25 07:29:32'),
 (12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', '3', 'Agila', '2003-08-05', 'despanto', 'uploads/user_profile_pictures/1732545006_674489ee76b04.jpg', '2024-11-25 07:31:46'),
-(13, 'Dave', 'Chappele', 'dchappele', 40, 'male', '723 - B', 'ZONE 22', 'Hiraya Street', '1988-11-22', 'password', '', NULL),
 (14, 'Clement Harold Miguel', 'Cabus', 'clement', 20, 'male', '497-A', 'Zone 2', 'Kalaw Street', '2003-12-22', 'Clement12@', '', '2024-11-25 08:12:56');
 
 --
@@ -274,47 +289,37 @@ ALTER TABLE `user_accounts`
 -- AUTO_INCREMENT for table `admin_accounts`
 --
 ALTER TABLE `admin_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `barangay_announcements`
 --
 ALTER TABLE `barangay_announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `document_requests`
 --
 ALTER TABLE `document_requests`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `incident_reports`
 --
 ALTER TABLE `incident_reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `messages`
---
-ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `user_accounts` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
