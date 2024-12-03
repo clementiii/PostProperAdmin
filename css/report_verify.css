@@ -129,3 +129,12 @@ body {
    cursor: pointer;
    transition: background-color 0.3s ease;
 }
+.close-btn {
+   border: none;
+   background: none;
+   font-size: 1.5rem;
+   color: #f0f0fa;
+}
+.close-btn i:hover {
+   color: #d3d3d3;
+}

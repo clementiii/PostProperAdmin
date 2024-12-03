@@ -121,6 +121,10 @@
    transition: background-color 0.3s ease;
 }
 
+/* .custom-modal .close-modal:hover {
+   color: #d3d3d3 !;
+} */
+
 /* .close-btn:hover {
    color: rgba(255, 255, 255, 0.1);
 } */
