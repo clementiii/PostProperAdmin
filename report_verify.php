@@ -46,6 +46,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <link rel="icon" type="image/png" href="assets/Southside.png">
     
     <style>
+        .modal-backdrop {
+    display: none !important;
+}
+
         .horizontal-images {
             display: flex;
             overflow-x: auto;
@@ -116,48 +120,45 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     </div>
 
     <!-- Image Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                    <h5 class="modal-title">Image Preview</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="" id="modalImage" class="img-fluid" alt="Zoomed Image">
+                    <img id="modalImage" src="" class="img-fluid" alt="Zoomed Image">
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Confirmation Modal -->
-   <div class="modal custom-modal" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Confirm Resolution</h5>
-                <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </button>
+                <h5 class="modal-title">Confirm Resolution</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to mark this report as resolved?
+                <p>Are you sure you want to mark this report as resolved?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="confirmResolve">Confirm</button>
+                <button type="button" id="confirmResolve" class="btn btn-primary">Confirm</button>
             </div>
         </div>
     </div>
 </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
        class ModalManager {
     constructor() {
-        this.imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
-        this.confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        this.imageModal = new bootstrap.Modal(document.getElementById('imageModal'), {});
+        this.confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'), {});
         this.modalImage = document.getElementById('modalImage');
         this.setupEventListeners();
     }
@@ -168,26 +169,25 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             image.addEventListener('click', () => this.showImageModal(image.src));
         });
 
-        // Resolve button and confirmation
-        document.getElementById('resolvedBtn').addEventListener('click', () => 
-            this.confirmModal.show());
-
+        // Resolve button listener
         document.getElementById('resolvedBtn').addEventListener('click', () => {
-            this.cleanupModalBackdrop(); // Clean up any existing backdrop
+            this.cleanupModalState();
             this.confirmModal.show();
         });
 
-        // Modal cleanup listeners
+        // Confirm resolution button listener
+        document.getElementById('confirmResolve').addEventListener('click', () => this.handleReportResolution());
+
+        // Modal hidden cleanup
         ['imageModal', 'confirmModal'].forEach(modalId => {
-            document.getElementById(modalId).addEventListener('hidden.bs.modal', () => 
-                this.cleanupModalBackdrop());
+            document.getElementById(modalId).addEventListener('hidden.bs.modal', () => this.cleanupModalState());
         });
     }
 
     showImageModal(src) {
         this.modalImage.src = src;
+        this.cleanupModalState(); // Cleanup lingering artifacts
         this.imageModal.show();
-        this.cleanupModalBackdrop();
     }
 
     async handleReportResolution() {
@@ -213,14 +213,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         }
     }
 
-    cleanupModalBackdrop() {
-        document.querySelectorAll('.modal-backdrop').forEach(backdrop => 
-            backdrop.remove());
+    cleanupModalState() {
+        // Remove all backdrops
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+
+        // Ensure body classes are cleaned up
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = ''; // Reset overflow
+        document.body.style.paddingRight = ''; // Reset padding
     }
 
     getReportId() {
-        // Assuming the report ID is set in a data attribute or similar
-        return document.querySelector('[data-report-id]')?.dataset.reportId;
+        return <?php echo json_encode($report_id); ?>;
     }
 }
 
