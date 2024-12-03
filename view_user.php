@@ -218,7 +218,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
                             <?php echo htmlspecialchars($userData['username']); ?>
                         </p>
                         <p><strong>Age:</strong> 
-                            <?php echo htmlspecialchars($userData['age']); ?>
+                            <?php
+                            $birthDate = new DateTime($userData['birthday']);
+                            $currentDate = new DateTime();
+                            $age = $currentDate->diff($birthDate)->y; // Calculate the difference in years
+                            echo htmlspecialchars($age);
+                            ?>
                         </p>
                         <p><strong>Gender:</strong> 
                             <?php echo htmlspecialchars(ucfirst($userData['gender'])); ?>
