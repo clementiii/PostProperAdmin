@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 10:02 AM
+-- Generation Time: Dec 03, 2024 at 04:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -67,7 +67,7 @@ CREATE TABLE `barangay_announcements` (
 INSERT INTO `barangay_announcements` (`id`, `announcement_title`, `description_text`, `announcement_images`, `created_at`, `posted_at`) VALUES
 (22, '3rd Quarter BNAO Meeting', '3rd Quarter BNAO Meeting held @Multipurpose Building, Upper Bicutan, Taguig attended by our very own Barangay Nutrition Action Officer himself Kagawad on Health Jobert Quiambao and eventually Voted as one of Taguig BNAO Officers spearheaded by City Nutrition Action Officer Ms Julic Bornabc.', '[\"uploads\\/announcements\\/1732108477_IMG_20201130_145352.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20201130_145406.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20210501_075448.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20211221_140927.jpg\",\"uploads\\/', '2024-11-20 06:14:37', '2024-11-20 14:14:37'),
 (25, 'Barangay Wins World Cup', 'TEST', '[\"uploads\\/announcements\\/1732191375_b1131726-e89e-47e0-9f90-9c9ca4507f9a.png\",\"uploads\\/announcements\\/1732191375_76754470-13bb-454c-b199-ebcee9ec5821.png\",\"uploads\\/announcements\\/1732191375_07fd3ab8-0331-43db-83dd-cbe4c6abad5f-modified 1.png\",\"uploads\\/announcements\\/1732191375_9cc8e3d9-7854-4ef3-a60d-8cc64fc49291.png\"]', '2024-12-01 08:49:58', '2024-12-01 16:49:58'),
-(33, 'Test', 'Test', '[\"uploads\\/announcements\\/1733118314_78298148_573841626722339_2171899188458029056_n.png\"]', '2024-12-01 22:45:14', '2024-12-02 06:45:14');
+(33, 'Test', 'Test', '[\"uploads\\/announcements\\/1733118314_78298148_573841626722339_2171899188458029056_n.png\"]', '2024-12-03 07:49:14', '2024-12-03 15:49:14');
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE `document_requests` (
 --
 
 INSERT INTO `document_requests` (`Id`, `userId`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `birthday`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `request_picture`, `rejection_reason`) VALUES
-(29, 2, 'Barangay Clearance', 'Diosdado Tempra', '497-A Kalaw Street Zone 4', '123456789012', '123456789012', 'deejay', 20, '12-12-03', 7, 'Filipino', 'Male', 'Single', 'For my job', 'Approved', 2, '2024-11-24', 'uploads/valid_ids/1732449000_674312e8f305b.jpg', '', ''),
+(29, 2, 'Barangay Clearance', 'Diosdado Tempra', '497-A Kalaw Street Zone 4', '123456789012', '123456789012', 'deejay', 20, '12-12-03', 7, 'Filipino', 'Male', 'Single', 'For my job', 'Pending', 2, '2024-11-24', 'uploads/valid_ids/1732449000_674312e8f305b.jpg', '', ''),
 (30, 12, 'Cedula', 'Darren Espanto', '492-C Lawin Street Zone 2', '123456789012', '123456789012', 'dar', 20, '10-22-04', 7, 'Filipino', 'Male', 'Single', 'for my audition', 'Rejected', 1, '2024-11-24', 'uploads/valid_ids/1732462962_674349722bfc2.jpg', '', 'Cancelled'),
 (31, 2, 'Barangay Clearance', 'test', 'test', '123456789012', '123456789012', 'test', 34, '11-24-99', 2, 'test', 'Male', 'Single', 'test', 'Rejected', 1, '2024-11-24', 'uploads/valid_ids/1732464035_67434da3dfd98.jpg', '', 'Invalid Entry'),
 (32, 11, 'Barangay Certification', 'Test', 'test', '123456789012', '123456789012', 'test', 20, '12-12-03', 3, 'test', 'Male', 'Married', 'test', 'Approved', 3, '2024-11-24', 'uploads/valid_ids/1732466165_674355f574b1f.jpg', '', ''),
@@ -200,7 +200,8 @@ INSERT INTO `messages` (`id`, `sender_id`, `admin_id`, `message`, `timestamp`, `
 (54, 14, NULL, 'test', '2024-12-03 08:43:02', 1),
 (55, 9, NULL, 'test', '2024-12-03 08:43:45', 1),
 (57, 9, 1, 'asd', '2024-12-03 09:01:12', 1),
-(58, 9, 4, 'asdas', '2024-12-03 09:01:33', 1);
+(58, 9, 4, 'asdas', '2024-12-03 09:01:33', 1),
+(59, 9, 4, 'hello', '2024-12-03 10:21:52', 1);
 
 -- --------------------------------------------------------
 
@@ -222,20 +223,22 @@ CREATE TABLE `user_accounts` (
   `password` varchar(255) NOT NULL,
   `user_profile_picture` longtext NOT NULL,
   `last_active` timestamp NULL DEFAULT NULL,
-  `full_name` varchar(255) GENERATED ALWAYS AS (concat(`firstName`,' ',`lastName`)) STORED
+  `full_name` varchar(255) GENERATED ALWAYS AS (concat(`firstName`,' ',`lastName`)) STORED,
+  `status` enum('pending','verified','rejected') NOT NULL DEFAULT 'pending',
+  `user_valid_id` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_accounts`
 --
 
-INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`) VALUES
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732604909_674573ed726ce.jpg', '2024-12-01 23:08:09'),
-(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', '2024-11-25 07:23:47'),
-(10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL),
-(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', '20', 'Lawin', '2003-01-04', 'mjbarbs', 'uploads/user_profile_pictures/1732543036_6744823cb1492.jpg', '2024-11-25 07:29:32'),
-(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', '3', 'Agila', '2003-08-05', 'despanto', 'uploads/user_profile_pictures/1732545006_674489ee76b04.jpg', '2024-11-25 07:31:46'),
-(14, 'Clement Harold Miguel', 'Cabus', 'clement', 20, 'male', '497-A', 'Zone 2', 'Kalaw Street', '2003-12-22', 'Clement12@', '', '2024-11-25 08:12:56');
+INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`, `status`, `user_valid_id`) VALUES
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732604909_674573ed726ce.jpg', '2024-12-01 23:08:09', 'verified', NULL),
+(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', '2024-11-25 07:23:47', 'pending', NULL),
+(10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL, 'pending', NULL),
+(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', '20', 'Lawin', '2003-01-04', 'mjbarbs', 'uploads/user_profile_pictures/1732543036_6744823cb1492.jpg', '2024-11-25 07:29:32', 'pending', NULL),
+(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', '3', 'Agila', '2003-08-05', 'despanto', 'uploads/user_profile_pictures/1732545006_674489ee76b04.jpg', '2024-11-25 07:31:46', 'pending', NULL),
+(14, 'Clement Harold Miguel', 'Cabus', 'clement', 20, 'male', '497-A', 'Zone 2', 'Kalaw Street', '2003-12-22', 'Clement12@', '', '2024-11-25 08:12:56', 'pending', NULL);
 
 --
 -- Indexes for dumped tables
@@ -313,7 +316,7 @@ ALTER TABLE `incident_reports`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`

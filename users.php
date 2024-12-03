@@ -13,7 +13,7 @@ $inactiveThreshold = date('Y-m-d H:i:s', strtotime('-30 days'));
 
 try {
     // Fetch basic user data
-    $sql = "SELECT id, firstName, lastName, age, gender, adrHouseNo, adrZone, adrStreet, birthday FROM user_accounts";
+    $sql = "SELECT id, firstName, lastName, age, gender, adrHouseNo, adrZone, adrStreet, birthday, status FROM user_accounts";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -93,6 +93,7 @@ try {
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Date of Birth</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -104,15 +105,34 @@ try {
                         <td>
                             <?php 
                                 echo htmlspecialchars($user['adrHouseNo']) . " " . 
-                                     htmlspecialchars($user['adrStreet']) . " " . 
-                                     htmlspecialchars($user['adrZone']); 
+                                    htmlspecialchars($user['adrStreet']) . " " . 
+                                    htmlspecialchars($user['adrZone']); 
                             ?>
                         </td>
                         <td><?php echo htmlspecialchars($user['age']); ?></td>
                         <td><?php echo htmlspecialchars($user['gender']); ?></td>
                         <td><?php echo date('m/d/Y', strtotime($user['birthday'])); ?></td>
                         <td>
-                            <button class="btn btn-danger" onclick="confirmDelete(<?php echo $user['id']; ?>)">Delete</button>
+                            <span class="badge <?php 
+                                $statusClass = '';
+                                if ($user['status'] === 'verified') {
+                                    $statusClass = 'bg-success';
+                                } elseif ($user['status'] === 'rejected') {
+                                    $statusClass = 'bg-danger';
+                                } else {
+                                    $statusClass = 'bg-warning';
+                                }
+                                echo $statusClass;
+                            ?>">
+                                <?php echo ucfirst($user['status'] ?? 'pending'); ?>
+                            </span>
+                        </td>
+                        <td>
+                            <a href="view_user.php?id=<?php echo $user['id']; ?>" class="btn btn-primary btn-sm">View</a>
+                            <?php if(!isset($user['status']) || $user['status'] === 'pending'): ?>
+                                <a href="verify_user.php?id=<?php echo $user['id']; ?>" class="btn btn-success btn-sm">Verify</a>
+                            <?php endif; ?>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $user['id']; ?>)">Delete</button>
                         </td>
                     </tr>
                     <?php endforeach; ?>
