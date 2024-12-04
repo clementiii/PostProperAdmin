@@ -123,15 +123,19 @@ try {
         $age, $birthday, $houseNo, $zone, $street, $gender, $validIdUpload['filepath']
     );
     
-    if (!$stmt->execute()) {
-        throw new Exception('Database error: ' . $stmt->error);
-    }
-    
+if ($stmt->execute()) {
     echo json_encode([
         'success' => true,
-        'message' => 'Registration successful'
+        'message' => 'Registration successful',
+        'id' => $conn->insert_id 
     ]);
-    
+} else {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Registration failed: ' . $stmt->error
+    ]);
+}
+
 } catch (Exception $e) {
     error_log("Registration error: " . $e->getMessage());
     echo json_encode([
