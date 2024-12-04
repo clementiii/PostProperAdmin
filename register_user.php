@@ -16,9 +16,73 @@ if ($conn->connect_error) {
 // Set response header to JSON
 header('Content-Type: application/json');
 
-// Check if all required fields are present
-if (isset($_POST['firstName']) && isset($_POST['lastName']) && 
-    isset($_POST['username']) && isset($_POST['password'])) {
+// Function to handle file upload
+function handleFileUpload($file, $targetDir) {
+    // Debug file information
+    error_log("File upload details: " . print_r($file, true));
+    
+    if (!isset($file['tmp_name']) || empty($file['tmp_name'])) {
+        return ["success" => false, "message" => "No file was uploaded."];
+    }
+
+    // Create directory if it doesn't exist
+    if (!file_exists($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+
+    // Generate unique filename
+    $uniqueFilename = uniqid() . '_' . basename($file["name"]);
+    $targetFile = $targetDir . $uniqueFilename;
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
+    
+    // Check if image file is actual image
+    try {
+        $check = getimagesize($file["tmp_name"]);
+        if($check === false) {
+            return ["success" => false, "message" => "File is not an image."];
+        }
+    } catch (Exception $e) {
+        return ["success" => false, "message" => "Error checking image: " . $e->getMessage()];
+    }
+    
+    // Check file size (5MB max)
+    if ($file["size"] > 5000000) {
+        return ["success" => false, "message" => "File is too large (max 5MB)."];
+    }
+    
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+        return ["success" => false, "message" => "Only JPG, JPEG, PNG files are allowed."];
+    }
+    
+    // Try to upload file
+    try {
+        if (move_uploaded_file($file["tmp_name"], $targetFile)) {
+            chmod($targetFile, 0644); // Set proper permissions
+            return ["success" => true, "filepath" => $targetFile];
+        } else {
+            error_log("Upload failed. Error: " . error_get_last()['message']);
+            return ["success" => false, "message" => "Failed to move uploaded file."];
+        }
+    } catch (Exception $e) {
+        error_log("Exception during file upload: " . $e->getMessage());
+        return ["success" => false, "message" => "Error during file upload: " . $e->getMessage()];
+    }
+}
+
+// Validate and process registration
+try {
+    // Log received data (excluding password)
+    $logData = $_POST;
+    unset($logData['password']);
+    error_log("Received registration data: " . print_r($logData, true));
+
+    // Check required fields
+    if (!isset($_POST['firstName'], $_POST['lastName'], $_POST['username'], 
+               $_POST['password'], $_FILES['valid_id'])) {
+        throw new Exception('Missing required fields');
+    }
     
     // Get and sanitize input data
     $firstName = $conn->real_escape_string($_POST['firstName']);
@@ -30,53 +94,52 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) &&
     $houseNo = isset($_POST['adrHouseNo']) ? $conn->real_escape_string($_POST['adrHouseNo']) : null;
     $zone = isset($_POST['adrZone']) ? $conn->real_escape_string($_POST['adrZone']) : null;
     $street = isset($_POST['adrStreet']) ? $conn->real_escape_string($_POST['adrStreet']) : null;
+    $gender = isset($_POST['gender']) ? $conn->real_escape_string($_POST['gender']) : null;
     
-    // Check if username already exists
-    $check_query = "SELECT id FROM user_accounts WHERE username = ?";
-    $check_stmt = $conn->prepare($check_query);
+    // Check if username exists
+    $check_stmt = $conn->prepare("SELECT id FROM user_accounts WHERE username = ?");
     $check_stmt->bind_param("s", $username);
     $check_stmt->execute();
-    $result = $check_stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Username already exists'
-        ]);
-        exit();
+    if ($check_stmt->get_result()->num_rows > 0) {
+        throw new Exception('Username already exists');
+    }
+    $check_stmt->close();
+
+    // Handle valid ID upload
+    $uploadDir = "uploads/valid_ids/";
+    $validIdUpload = handleFileUpload($_FILES['valid_id'], $uploadDir);
+    if (!$validIdUpload['success']) {
+        throw new Exception($validIdUpload['message']);
     }
     
-    // Prepare the INSERT statement
+    // Insert new user
     $insert_query = "INSERT INTO user_accounts (firstName, lastName, username, password, 
-                    age, birthday, adrHouseNo, adrZone, adrStreet) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    age, birthday, adrHouseNo, adrZone, adrStreet, gender, user_valid_id, status) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
     
     $stmt = $conn->prepare($insert_query);
-    $stmt->bind_param("ssssissss", 
+    $stmt->bind_param("ssssissssss", 
         $firstName, $lastName, $username, $password, 
-        $age, $birthday, $houseNo, $zone, $street
+        $age, $birthday, $houseNo, $zone, $street, $gender, $validIdUpload['filepath']
     );
     
-    // Execute the statement
-    if ($stmt->execute()) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Registration successful'
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Registration failed: ' . $stmt->error
-        ]);
+    if (!$stmt->execute()) {
+        throw new Exception('Database error: ' . $stmt->error);
     }
     
-    $stmt->close();
-} else {
+    echo json_encode([
+        'success' => true,
+        'message' => 'Registration successful'
+    ]);
+    
+} catch (Exception $e) {
+    error_log("Registration error: " . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => 'Missing required fields'
+        'message' => $e->getMessage()
     ]);
+} finally {
+    if (isset($stmt)) $stmt->close();
+    $conn->close();
 }
-
-$conn->close();
 ?>
