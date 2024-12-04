@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 header('Content-Type: application/json');
 
 // Function to handle file upload
-function handleFileUpload($file, $targetDir) {
+function handleFileUpload($file, $targetDir, $prefix = '') {
     // Debug file information
     error_log("File upload details: " . print_r($file, true));
     
@@ -30,8 +30,8 @@ function handleFileUpload($file, $targetDir) {
         mkdir($targetDir, 0777, true);
     }
 
-    // Generate unique filename
-    $uniqueFilename = uniqid() . '_' . basename($file["name"]);
+    // Generate unique filename with prefix
+    $uniqueFilename = uniqid() . '_' . $prefix . basename($file["name"]);
     $targetFile = $targetDir . $uniqueFilename;
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
@@ -80,7 +80,7 @@ try {
 
     // Check required fields
     if (!isset($_POST['firstName'], $_POST['lastName'], $_POST['username'], 
-               $_POST['password'], $_FILES['valid_id'])) {
+               $_POST['password'], $_FILES['valid_id'], $_FILES['valid_id_back'])) {
         throw new Exception('Missing required fields');
     }
     
@@ -105,36 +105,51 @@ try {
     }
     $check_stmt->close();
 
-    // Handle valid ID upload
+    // Handle front valid ID upload
     $uploadDir = "uploads/valid_ids/";
-    $validIdUpload = handleFileUpload($_FILES['valid_id'], $uploadDir);
+    $validIdUpload = handleFileUpload($_FILES['valid_id'], $uploadDir, 'front_');
     if (!$validIdUpload['success']) {
-        throw new Exception($validIdUpload['message']);
+        throw new Exception('Front ID: ' . $validIdUpload['message']);
+    }
+
+    // Handle back valid ID upload
+    $validIdBackUpload = handleFileUpload($_FILES['valid_id_back'], $uploadDir, 'back_');
+    if (!$validIdBackUpload['success']) {
+        throw new Exception('Back ID: ' . $validIdBackUpload['message']);
     }
     
-    // Insert new user
+    // First, check if the user_valid_id_back column exists
+    $checkColumn = $conn->query("SHOW COLUMNS FROM user_accounts LIKE 'user_valid_id_back'");
+    if ($checkColumn->num_rows == 0) {
+        // Add the column if it doesn't exist
+        $conn->query("ALTER TABLE user_accounts ADD COLUMN user_valid_id_back longtext DEFAULT NULL");
+    }
+    
+    // Insert new user with both front and back IDs
     $insert_query = "INSERT INTO user_accounts (firstName, lastName, username, password, 
-                    age, birthday, adrHouseNo, adrZone, adrStreet, gender, user_valid_id, status) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
+                    age, birthday, adrHouseNo, adrZone, adrStreet, gender, 
+                    user_valid_id, user_valid_id_back, status) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
     
     $stmt = $conn->prepare($insert_query);
-    $stmt->bind_param("ssssissssss", 
+    $stmt->bind_param("ssssisssssss", 
         $firstName, $lastName, $username, $password, 
-        $age, $birthday, $houseNo, $zone, $street, $gender, $validIdUpload['filepath']
+        $age, $birthday, $houseNo, $zone, $street, $gender,
+        $validIdUpload['filepath'], $validIdBackUpload['filepath']
     );
     
-if ($stmt->execute()) {
-    echo json_encode([
-        'success' => true,
-        'message' => 'Registration successful',
-        'id' => $conn->insert_id 
-    ]);
-} else {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Registration failed: ' . $stmt->error
-    ]);
-}
+    if ($stmt->execute()) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Registration successful',
+            'id' => $conn->insert_id 
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Registration failed: ' . $stmt->error
+        ]);
+    }
 
 } catch (Exception $e) {
     error_log("Registration error: " . $e->getMessage());

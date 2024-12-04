@@ -196,14 +196,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
                 <!-- Valid ID -->
                 <div class="id-section">
                     <h5>Valid ID</h5>
-                    <?php if (!empty($userData['user_valid_id'])): ?>
-                        <img src="<?php echo htmlspecialchars($userData['user_valid_id']); ?>" 
-                             class="img-thumbnail zoomable" 
-                             alt="Valid ID"
-                             onclick="document.getElementById('imageModal').style.display='block'; document.getElementById('modalImage').src=this.src;">
-                    <?php else: ?>
-                        <div class="alert alert-info">No valid ID uploaded</div>
-                    <?php endif; ?>
+                    <div class="row">
+                        <!-- Front of ID -->
+                        <div class="col-md-6 mb-3">
+                            <h6>Front</h6>
+                            <?php if (!empty($userData['user_valid_id'])): ?>
+                                <img src="<?php echo htmlspecialchars($userData['user_valid_id']); ?>" 
+                                    class="img-thumbnail zoomable" 
+                                    alt="Valid ID (Front)"
+                                    onclick="document.getElementById('imageModal').style.display='block'; document.getElementById('modalImage').src=this.src;">
+                            <?php else: ?>
+                                <div class="alert alert-info">No front ID uploaded</div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Back of ID -->
+                        <div class="col-md-6 mb-3">
+                            <h6>Back</h6>
+                            <?php if (!empty($userData['user_valid_id_back'])): ?>
+                                <img src="<?php echo htmlspecialchars($userData['user_valid_id_back']); ?>" 
+                                    class="img-thumbnail zoomable" 
+                                    alt="Valid ID (Back)"
+                                    onclick="document.getElementById('imageModal').style.display='block'; document.getElementById('modalImage').src=this.src;">
+                            <?php else: ?>
+                                <div class="alert alert-info">No back ID uploaded</div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
 

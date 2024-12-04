@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 04:04 PM
+-- Generation Time: Dec 04, 2024 at 09:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -133,9 +133,9 @@ CREATE TABLE `incident_reports` (
 
 INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `incident_picture`, `date_submitted`, `status`) VALUES
 (1, 'Robert Youngstown', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '', '2024-11-01 22:29:27', 'resolved'),
-(4, 'Danny Sulaiman', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'pending'),
-(6, 'Diosdado Tempra', 'test', 'test', '[\"uploads\\/incident_reports\\/1732255234_75af0316a0f27f7d.jpg\"]', '2024-11-22 07:00:34', 'pending'),
-(7, 'Diosdado Tempra', 'TEST TECNO 5G', 'physical device test', '[\"uploads\\/incident_reports\\/1732255765_13dc8a2b529c12f1.jpg\"]', '2024-11-22 07:09:25', 'pending');
+(4, 'Danny Sulaiman', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'resolved'),
+(6, 'Diosdado Tempra', 'test', 'test', '[\"uploads\\/incident_reports\\/1732255234_75af0316a0f27f7d.jpg\"]', '2024-11-22 07:00:34', 'resolved'),
+(7, 'Diosdado Tempra', 'TEST TECNO 5G', 'physical device test', '[\"uploads\\/incident_reports\\/1732255765_13dc8a2b529c12f1.jpg\"]', '2024-11-22 07:09:25', 'resolved');
 
 -- --------------------------------------------------------
 
@@ -225,20 +225,27 @@ CREATE TABLE `user_accounts` (
   `last_active` timestamp NULL DEFAULT NULL,
   `full_name` varchar(255) GENERATED ALWAYS AS (concat(`firstName`,' ',`lastName`)) STORED,
   `status` enum('pending','verified','rejected') NOT NULL DEFAULT 'pending',
-  `user_valid_id` longtext DEFAULT NULL
+  `user_valid_id` longtext DEFAULT NULL,
+  `user_valid_id_back` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_accounts`
 --
 
-INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`, `status`, `user_valid_id`) VALUES
-(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732604909_674573ed726ce.jpg', '2024-12-01 23:08:09', 'verified', NULL),
-(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', '2024-11-25 07:23:47', 'pending', NULL),
-(10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL, 'pending', NULL),
-(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', '20', 'Lawin', '2003-01-04', 'mjbarbs', 'uploads/user_profile_pictures/1732543036_6744823cb1492.jpg', '2024-11-25 07:29:32', 'pending', NULL),
-(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', '3', 'Agila', '2003-08-05', 'despanto', 'uploads/user_profile_pictures/1732545006_674489ee76b04.jpg', '2024-11-25 07:31:46', 'pending', NULL),
-(14, 'Clement Harold Miguel', 'Cabus', 'clement', 20, 'male', '497-A', 'Zone 2', 'Kalaw Street', '2003-12-22', 'Clement12@', '', '2024-11-25 08:12:56', 'pending', NULL);
+INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`, `status`, `user_valid_id`, `user_valid_id_back`) VALUES
+(2, 'Diosdado', 'Tempra', 'djtempra', 20, 'male', '497-A', '5', 'Kalaw', '1990-02-12', 'password', 'uploads/user_profile_pictures/1732604909_674573ed726ce.jpg', '2024-12-03 21:44:23', 'verified', NULL, NULL),
+(9, 'Joshua', 'Fernandez', 'jferns', 20, 'male', '497-A', 'zone 4', 'Kalaw Street', '2003-12-22', 'password22', '', '2024-11-25 07:23:47', 'pending', NULL, NULL),
+(10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL, 'pending', NULL, NULL),
+(11, 'Michael Josh', 'Bargabino', 'mjbarbs', 21, 'male', '897-N', '20', 'Lawin', '2003-01-04', 'mjbarbs', 'uploads/user_profile_pictures/1732543036_6744823cb1492.jpg', '2024-12-03 20:01:00', 'pending', NULL, NULL),
+(12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', '3', 'Agila', '2003-08-05', 'despanto', 'uploads/user_profile_pictures/1732545006_674489ee76b04.jpg', '2024-12-03 19:59:30', 'verified', NULL, NULL),
+(14, 'Clement Harold Miguel', 'Cabus', 'clement', 20, 'male', '497-A', 'Zone 2', 'Kalaw Street', '2003-12-22', 'Clement12@', '', '2024-11-25 08:12:56', 'verified', NULL, NULL),
+(15, 'Hector', 'Salamanca', 'hsalamanca', 30, 'male', '123', '2', 'street', '1989-12-04', 'Password@', '', '2024-12-04 00:13:11', 'verified', 'uploads/valid_ids/675000c767f26_valid_id_4565675410922736758.jpg', NULL),
+(16, 'Nacho', 'Varga', 'nacho', 23, 'male', '123', '12', 'street', '2024-12-04', 'Password@', '', '2024-12-04 00:27:27', 'verified', 'uploads/valid_ids/675003c2a0998_valid_id_7182281476320109429.jpg', NULL),
+(17, 'Walter', 'White', 'walter', 23, 'male', '123', '3', 'Street', '2024-06-11', 'Password@', '', '2024-12-04 00:32:24', 'verified', 'uploads/valid_ids/675004ff2dd21_valid_id_3319883894757093984.jpg', NULL),
+(18, 'Jesse', 'Pinkman', 'pinkman', 23, 'male', '123', '3', 'street', '2024-12-04', 'Password@', '', NULL, 'verified', 'uploads/valid_ids/67500ade84aa5_front_valid_id_6693543382322451623.jpg', 'uploads/valid_ids/67500ade84ff3_back_valid_id_back_7051361181550465122.jpg'),
+(19, 'Gus', 'Fring', 'fring', 23, 'male', '123', '12', 'street', '2024-12-04', 'Password@', '', NULL, 'pending', 'uploads/valid_ids/67500b584f91f_front_valid_id_3401948570091644743.jpg', 'uploads/valid_ids/67500b584fecb_back_valid_id_back_8703778548111305547.jpg'),
+(20, 'Hank', 'Schrader', 'hank', 34, 'male', '1233', '2', 'street', '2024-12-04', 'Password@', '', '2024-12-04 01:02:20', 'verified', 'uploads/valid_ids/67500c5dcd998_front_valid_id_2531858628611823380.jpg', 'uploads/valid_ids/67500c5dcdf5c_back_valid_id_back_1203212287863104420.jpg');
 
 --
 -- Indexes for dumped tables
@@ -322,7 +329,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
