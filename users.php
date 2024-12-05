@@ -129,9 +129,6 @@ try {
                         </td>
                         <td>
                             <a href="view_user.php?id=<?php echo $user['id']; ?>" class="btn btn-primary btn-sm">View</a>
-                            <?php if(!isset($user['status']) || $user['status'] === 'pending'): ?>
-                                <a href="verify_user.php?id=<?php echo $user['id']; ?>" class="btn btn-success btn-sm">Verify</a>
-                            <?php endif; ?>
                             <button class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $user['id']; ?>)">Delete</button>
                         </td>
                     </tr>
