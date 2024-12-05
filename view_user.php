@@ -60,108 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View User Details</title>
-    <link rel="stylesheet" href="css/users.css">
+    <link rel="stylesheet" href="css/view_users.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="assets/Southside.png">
-    <style>
-        .custom-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1050;
-        }
 
-        .custom-modal-content {
-            background-color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 500px;
-            position: relative;
-        }
 
-        .custom-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .custom-modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid #dee2e6;
-        }
-
-        .close-modal {
-            cursor: pointer;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .btn-cancel {
-            padding: 5px 15px;
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-confirm {
-            padding: 5px 15px;
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .user-details {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .profile-picture {
-            max-width: 200px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
-        .detail-row {
-            margin-bottom: 15px;
-        }
-        .img-thumbnail.zoomable {
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            max-height: 400px;
-            width: 100%;
-            object-fit: contain;
-        }
-        .img-thumbnail.zoomable:hover {
-            transform: scale(1.05);
-        }
-        .modal-body img {
-            max-height: 80vh;
-            width: auto;
-        }
-        .id-section, .profile-section {
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-    </style>
 </head>
 <body>
 <?php 
@@ -270,14 +173,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
                                 </select>
                             </form>
                         </p>
-                    </div>
-                </div>
-
-                <div class="text-center mt-4">
-                    <button class="btn btn-primary" onclick="document.getElementById('confirmModal').style.display='block'">
+                        <div class="text-start mt-4">
+                    <button class="btn-save" onclick="document.getElementById('confirmModal').style.display='block'">
                         Save Changes
                     </button>
                 </div>
+                    </div>
+                </div>
+
+                
             </div>
         </div>
     </div>
