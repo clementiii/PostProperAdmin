@@ -40,41 +40,50 @@ try {
     $status = 'pending';
     $uploadedImages = array();
 
-    // Handle image upload if present
+    // Handle image uploads if present
     if (!empty($_POST['incident_picture'])) {
         try {
-            $base64Image = $_POST['incident_picture'];
+            // Decode the JSON array of images
+            $imageArray = json_decode($_POST['incident_picture'], true);
             
+            // Check if decode was successful and it's an array
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception('Invalid image data format');
+            }
+
             // Create directory if it doesn't exist
             $uploadDir = 'uploads/incident_reports/';
             if (!file_exists($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
 
-            // Generate unique filename
-            $timestamp = time();
-            $randomString = bin2hex(random_bytes(8));
-            $filename = $timestamp . '_' . $randomString . '.jpg';
-            $filepath = $uploadDir . $filename;
+            // Process each image in the array
+            foreach ($imageArray as $base64Image) {
+                // Remove the data URI header if present
+                $base64Image = str_replace('data:image/jpeg;base64,', '', $base64Image);
+                $base64Image = str_replace(' ', '+', $base64Image);
+                
+                // Generate unique filename for each image
+                $timestamp = time();
+                $randomString = bin2hex(random_bytes(8));
+                $filename = $timestamp . '_' . $randomString . '.jpg';
+                $filepath = $uploadDir . $filename;
+                
+                // Decode and save image
+                $imageData = base64_decode($base64Image);
+                if ($imageData === false) {
+                    throw new Exception('Failed to decode base64 image');
+                }
 
-            // Remove the data URI header if present
-            $base64Image = str_replace('data:image/jpeg;base64,', '', $base64Image);
-            $base64Image = str_replace(' ', '+', $base64Image);
-            
-            // Decode and save image
-            $imageData = base64_decode($base64Image);
-            if ($imageData === false) {
-                throw new Exception('Failed to decode base64 image');
+                if (file_put_contents($filepath, $imageData) === false) {
+                    throw new Exception('Failed to save image file');
+                }
+
+                $uploadedImages[] = $filepath;
             }
-
-            if (file_put_contents($filepath, $imageData) === false) {
-                throw new Exception('Failed to save image file');
-            }
-
-            $uploadedImages[] = $filepath;
         } catch (Exception $e) {
             error_log("Image processing error: " . $e->getMessage());
-            throw new Exception('Failed to process image: ' . $e->getMessage());
+            throw new Exception('Failed to process images: ' . $e->getMessage());
         }
     }
 
