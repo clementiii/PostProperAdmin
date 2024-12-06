@@ -90,9 +90,9 @@ try {
                         <th>Last Name</th>
                         <th>First Name</th>
                         <th>Address</th>
-                        <th>Age</th>
+                        <!-- <th>Age</th>
                         <th>Gender</th>
-                        <th>Date of Birth</th>
+                        <th>Date of Birth</th> -->
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -109,9 +109,9 @@ try {
                                     htmlspecialchars($user['adrZone']); 
                             ?>
                         </td>
-                        <td><?php echo htmlspecialchars($user['age']); ?></td>
+                        <!-- <td><?php echo htmlspecialchars($user['age']); ?></td>
                         <td><?php echo htmlspecialchars($user['gender']); ?></td>
-                        <td><?php echo date('m/d/Y', strtotime($user['birthday'])); ?></td>
+                        <td><?php echo date('m/d/Y', strtotime($user['birthday'])); ?></td> -->
                         <td>
                             <span class="badge <?php 
                                 $statusClass = '';
@@ -128,8 +128,8 @@ try {
                             </span>
                         </td>
                         <td>
-                            <a href="view_user.php?id=<?php echo $user['id']; ?>" class="btn btn-primary btn-sm">View</a>
-                            <button class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $user['id']; ?>)">Delete</button>
+                            <a href="view_user.php?id=<?php echo $user['id']; ?>" class="btn-view btn-sm">View</a>
+                            <button class="btn-delete btn-sm" onclick="confirmDelete(<?php echo $user['id']; ?>)">Delete</button>
                         </td>
                     </tr>
                     <?php endforeach; ?>
