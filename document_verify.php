@@ -58,6 +58,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Verification</title>
     <link rel="stylesheet" href="css/document_verify.css">
+    <link rel="stylesheet" href="css/root.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/Southside.png">
 </head>
@@ -68,7 +69,7 @@
         include 'sidebar.php';
     ?>
 
-    <div class="main-container mt-5">
+    <div class="main-container">
         <div class="document-header mb-4">
             <button onclick="history.back()" class="btn btn-secondary" style="font-size: 1.1rem;">
                 <i class="fas fa-arrow-left"></i> Back
