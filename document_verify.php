@@ -110,12 +110,14 @@
                             <p><strong>Alias:</strong> <?php echo htmlspecialchars($documentRequest['Alias']); ?></p>
                             <p><strong>Age:</strong> <?php echo htmlspecialchars($documentRequest['Age']); ?> years old</p>
                             <p><strong>Birthday:</strong> <?php echo htmlspecialchars($documentRequest['birthday']); ?></p>
+                            <p><strong>Place of Birth:</strong> <?php echo htmlspecialchars($documentRequest['PlaceOfBirth']); ?></p>
                         </div>
                         <div class="col-md-6">
                             <p><strong>Length of Stay:</strong> <?php echo htmlspecialchars($documentRequest['LengthOfStay']); ?> years</p>
                             <p><strong>Citizenship:</strong> <?php echo htmlspecialchars($documentRequest['Citizenship']); ?></p>
                             <p><strong>Gender:</strong> <?php echo htmlspecialchars($documentRequest['Gender']); ?></p>
                             <p><strong>Civil Status:</strong> <?php echo htmlspecialchars($documentRequest['CivilStatus']); ?></p>
+                            <p><strong>Occupation:</strong> <?php echo htmlspecialchars($documentRequest['Occupation']); ?></p>
                             <p><strong>Purpose:</strong> <?php echo htmlspecialchars($documentRequest['Purpose']); ?></p>
                             <p><strong>Document Type:</strong> <?php echo htmlspecialchars($documentRequest['DocumentType']); ?></p>
                             <p><strong>Quantity:</strong> <?php echo htmlspecialchars($documentRequest['Quantity']); ?></p>

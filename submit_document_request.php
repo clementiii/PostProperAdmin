@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $alias = $_POST['alias'] ?? '';
         $age = isset($_POST['age']) ? intval($_POST['age']) : 0;
         $birthday = $_POST['birthday'] ?? '';
+        $placeOfBirth = $_POST['placeOfBirth'] ?? ''; // New field
+        $occupation = $_POST['occupation'] ?? '';      // New field
         $lengthOfStay = isset($_POST['lengthOfStay']) ? intval($_POST['lengthOfStay']) : 0;
         $citizenship = $_POST['citizenship'] ?? '';
         $gender = $_POST['gender'] ?? '';
@@ -31,14 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $sql = "INSERT INTO document_requests (
             userId, DocumentType, Name, Address, TIN_No, CTC_No, 
-            Alias, Age, birthday, LengthOfStay, Citizenship, Gender, 
-            CivilStatus, Purpose, Status, Quantity, DateRequested,
-            valid_id, request_picture, rejection_reason
+            Alias, Age, birthday, PlaceOfBirth, Occupation, LengthOfStay, 
+            Citizenship, Gender, CivilStatus, Purpose, Status, Quantity, 
+            DateRequested, valid_id, request_picture, rejection_reason
         ) VALUES (
             :userId, :documentType, :name, :address, :tin, :ctc,
-            :alias, :age, :birthday, :lengthOfStay, :citizenship, :gender,
-            :civilStatus, :purpose, :status, :quantity, :dateRequested,
-            '', '', ''
+            :alias, :age, :birthday, :placeOfBirth, :occupation, :lengthOfStay,
+            :citizenship, :gender, :civilStatus, :purpose, :status, :quantity,
+            :dateRequested, '', '', ''
         )";
 
         $stmt = $conn->prepare($sql);
@@ -53,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':alias', $alias);
         $stmt->bindParam(':age', $age, PDO::PARAM_INT);
         $stmt->bindParam(':birthday', $birthday);
+        $stmt->bindParam(':placeOfBirth', $placeOfBirth); // New binding
+        $stmt->bindParam(':occupation', $occupation);      // New binding
         $stmt->bindParam(':lengthOfStay', $lengthOfStay, PDO::PARAM_INT);
         $stmt->bindParam(':citizenship', $citizenship);
         $stmt->bindParam(':gender', $gender);
