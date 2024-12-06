@@ -197,20 +197,43 @@
             </div>
 
             <!-- Valid ID Section -->
+            <!-- Valid ID Section -->
             <div class="card shadow-sm mb-4">
                 <div class="card-header">
-                    <h4 class="mb-0">Valid ID</h4>
+                    <h4 class="mb-0">Valid ID Images</h4>
                 </div>
                 <div class="card-body">
-                    <?php if (!empty($documentRequest['valid_id'])): ?>
-                        <img src="<?php echo htmlspecialchars($documentRequest['valid_id']); ?>" 
-                            class="img-thumbnail zoomable" 
-                            alt="Valid ID" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#imageModal">
-                    <?php else: ?>
-                        <div class="alert alert-info">No valid ID uploaded</div>
-                    <?php endif; ?>
+                    <div class="row">
+                        <!-- Front ID -->
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Front Side</h5>
+                            <?php if (!empty($documentRequest['valid_id_front'])): ?>
+                                <img src="<?php echo htmlspecialchars($documentRequest['valid_id_front']); ?>" 
+                                    class="img-thumbnail zoomable" 
+                                    alt="Valid ID Front"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#imageModal"
+                                    style="width: 100%; height: 300px; object-fit: contain;">
+                            <?php else: ?>
+                                <div class="alert alert-info">No front ID image uploaded</div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Back ID -->
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Back Side</h5>
+                            <?php if (!empty($documentRequest['valid_id_back'])): ?>
+                                <img src="<?php echo htmlspecialchars($documentRequest['valid_id_back']); ?>" 
+                                    class="img-thumbnail zoomable" 
+                                    alt="Valid ID Back"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#imageModal"
+                                    style="width: 100%; height: 300px; object-fit: contain;">
+                            <?php else: ?>
+                                <div class="alert alert-info">No back ID image uploaded</div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -225,18 +248,18 @@
 
     <!-- Image Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="imageModalLabel">Document Preview</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center p-0">
-                    <img id="modalImage" src="" class="img-fluid" alt="Document Preview">
-                </div>
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Document Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-0">
+                <img id="modalImage" src="" class="img-fluid" alt="Document Preview" style="max-height: 80vh;">
             </div>
         </div>
     </div>
+</div>
 
     <!-- Confirmation Modal -->
     <div class="modal" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -260,57 +283,60 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Image Modal Handler
-        document.querySelectorAll('.zoomable').forEach(image => {
-            image.addEventListener('click', function() {
-                document.getElementById('modalImage').src = this.src;
-            });
-        });
-
-        // Status Change Handler
-        document.getElementById('statusSelect').addEventListener('change', function() {
-            const reasonContainer = document.getElementById('reasonContainer');
-            const reasonInput = document.getElementById('reason');
+    // Image Modal Handler
+    document.querySelectorAll('.zoomable').forEach(image => {
+        image.addEventListener('click', function() {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = modal.querySelector('.modal-title');
             
-            if (this.value === 'Rejected') {
-                reasonContainer.style.display = 'block';
-            } else {
-                reasonContainer.style.display = 'none';
-                reasonInput.value = '';
-            }
+            modalImage.src = this.src;
+            modalTitle.textContent = this.alt; // Updates the modal title to show which side is being viewed
+            
+            // Update modal title based on the image being viewed
+            modalTitle.textContent = this.alt === 'Valid ID Front' ? 'Front Side of ID' : 'Back Side of ID';
         });
+    });
 
-        // Initial Status Check
-        if (document.getElementById('statusSelect').value === 'Rejected') {
-            document.getElementById('reasonContainer').style.display = 'block';
+    // Status Change Handler
+    document.getElementById('statusSelect').addEventListener('change', function() {
+        const reasonContainer = document.getElementById('reasonContainer');
+        const reasonInput = document.getElementById('reason');
+        
+        if (this.value === 'Rejected') {
+            reasonContainer.style.display = 'block';
+        } else {
+            reasonContainer.style.display = 'none';
+            reasonInput.value = '';
         }
+    });
 
-        // Save Confirmation Handler
-        document.getElementById('confirmSaveBtn').addEventListener('click', function() {
-            const status = document.getElementById('statusSelect').value;
-            const reasonInput = document.getElementById('reason');
-            
-            if (status === 'Rejected' && !reasonInput.value.trim()) {
-                alert('Please provide a reason for rejection.');
-                return;
-            }
-            
-            document.getElementById('statusForm').submit();
-        });
+    // Initial Status Check
+    if (document.getElementById('statusSelect').value === 'Rejected') {
+        document.getElementById('reasonContainer').style.display = 'block';
+    }
 
-        // Clear any lingering backdrops on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-                backdrop.remove();
-            });
-        });
+    // Save Confirmation Handler
+    document.getElementById('confirmSaveBtn').addEventListener('click', function() {
+        const status = document.getElementById('statusSelect').value;
+        const reasonInput = document.getElementById('reason');
+        
+        if (status === 'Rejected' && !reasonInput.value.trim()) {
+            alert('Please provide a reason for rejection.');
+            return;
+        }
+        
+        document.getElementById('statusForm').submit();
+    });
 
-        // Handle modal cleanup when closed
-        document.getElementById('confirmModal').addEventListener('hidden.bs.modal', function() {
-            document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-                backdrop.remove();
-            });
-        });
-    </script>
+    // Modal cleanup handlers
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+    });
+
+    document.getElementById('confirmModal').addEventListener('hidden.bs.modal', function() {
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+    });
+</script>
 </body>
 </html>

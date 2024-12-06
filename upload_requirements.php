@@ -12,49 +12,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
         if (!is_dir($validIdsDir)) mkdir($validIdsDir, 0777, true);
 
-        // Handle valid ID upload
-        if (isset($_FILES['validId']) && $_FILES['validId']['error'] === UPLOAD_ERR_OK) {
-            // Get file info
-            $fileInfo = pathinfo($_FILES['validId']['name']);
-            $extension = strtolower($fileInfo['extension']);
+        $validIdFrontPath = '';
+        $validIdBackPath = '';
+        $errors = [];
+
+        // Function to handle file upload
+        function handleFileUpload($file, $prefix) {
+            global $validIdsDir;
             
-            // Validate file type
-            $allowedTypes = ['jpg', 'jpeg', 'png'];
-            if (!in_array($extension, $allowedTypes)) {
-                throw new Exception('Invalid file type. Only JPG and PNG are allowed.');
-            }
-
-            // Generate unique filename
-            $validIdName = time() . '_' . uniqid() . '.' . $extension;
-            $validIdPath = 'uploads/valid_ids/' . $validIdName; // Database path
-            $fullValidIdPath = __DIR__ . '/' . $validIdPath; // Full server path
-
-            // Move uploaded file
-            if (move_uploaded_file($_FILES['validId']['tmp_name'], $fullValidIdPath)) {
-                // Update database
-                $stmt = $conn->prepare("UPDATE document_requests SET 
-                    valid_id = :validId,
-                    Quantity = :quantity 
-                    WHERE Id = :requestId");
-
-                $stmt->bindParam(':validId', $validIdPath);
-                $stmt->bindParam(':quantity', $_POST['quantity']);
-                $stmt->bindParam(':requestId', $requestId);
-
-                if ($stmt->execute()) {
-                    echo json_encode([
-                        'success' => true,
-                        'message' => 'Requirements uploaded successfully',
-                        'path' => $validIdPath
-                    ]);
-                } else {
-                    throw new Exception('Failed to update database');
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                $fileInfo = pathinfo($file['name']);
+                $extension = strtolower($fileInfo['extension']);
+                
+                // Validate file type
+                $allowedTypes = ['jpg', 'jpeg', 'png'];
+                if (!in_array($extension, $allowedTypes)) {
+                    throw new Exception("Invalid file type for {$prefix}. Only JPG and PNG are allowed.");
                 }
+
+                // Generate unique filename
+                $fileName = time() . '_' . uniqid() . '_' . $prefix . '.' . $extension;
+                $dbPath = 'uploads/valid_ids/' . $fileName;
+                $fullPath = __DIR__ . '/' . $dbPath;
+
+                if (!move_uploaded_file($file['tmp_name'], $fullPath)) {
+                    throw new Exception("Failed to save {$prefix} file");
+                }
+
+                return $dbPath;
             } else {
-                throw new Exception('Failed to save uploaded file');
+                throw new Exception("Error uploading {$prefix}: " . getUploadError($file['error']));
             }
+        }
+
+        // Handle front ID upload
+        if (isset($_FILES['frontId'])) {
+            $validIdFrontPath = handleFileUpload($_FILES['frontId'], 'front');
         } else {
-            throw new Exception('No file uploaded or upload error occurred');
+            $errors[] = 'Front ID image is required';
+        }
+
+        // Handle back ID upload
+        if (isset($_FILES['backId'])) {
+            $validIdBackPath = handleFileUpload($_FILES['backId'], 'back');
+        } else {
+            $errors[] = 'Back ID image is required';
+        }
+
+        // If there are any errors, throw an exception
+        if (!empty($errors)) {
+            throw new Exception(implode(', ', $errors));
+        }
+
+        // Update database
+        $stmt = $conn->prepare("UPDATE document_requests SET 
+            valid_id_front = :frontId,
+            valid_id_back = :backId,
+            Quantity = :quantity 
+            WHERE Id = :requestId");
+
+        $stmt->bindParam(':frontId', $validIdFrontPath);
+        $stmt->bindParam(':backId', $validIdBackPath);
+        $stmt->bindParam(':quantity', $_POST['quantity']);
+        $stmt->bindParam(':requestId', $requestId);
+
+        if ($stmt->execute()) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Requirements uploaded successfully',
+                'front_path' => $validIdFrontPath,
+                'back_path' => $validIdBackPath
+            ]);
+        } else {
+            throw new Exception('Failed to update database');
         }
 
     } catch (Exception $e) {
@@ -71,8 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
 }
 
-// Log error details if any
-if (isset($_FILES['validId']['error']) && $_FILES['validId']['error'] !== UPLOAD_ERR_OK) {
+function getUploadError($errorCode) {
     $uploadErrors = [
         UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
         UPLOAD_ERR_FORM_SIZE => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
@@ -83,10 +112,8 @@ if (isset($_FILES['validId']['error']) && $_FILES['validId']['error'] !== UPLOAD
         UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload'
     ];
     
-    $errorMessage = isset($uploadErrors[$_FILES['validId']['error']]) 
-        ? $uploadErrors[$_FILES['validId']['error']] 
+    return isset($uploadErrors[$errorCode]) 
+        ? $uploadErrors[$errorCode] 
         : 'Unknown upload error';
-    
-    error_log("File upload error: " . $errorMessage);
 }
 ?>

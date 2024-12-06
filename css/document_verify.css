@@ -1,3 +1,22 @@
+.zoomable {
+   cursor: pointer;
+   transition: transform 0.3s ease;
+}
+
+.zoomable:hover {
+   transform: scale(1.02);
+}
+
+#modalImage {
+   max-width: 100%;
+   height: auto;
+}
+
+.img-thumbnail {
+   background-color: #f8f9fa;
+   border: 1px solid #dee2e6;
+}
+
 .main-container {
    margin-left: 28.75rem;
    max-width: 1200px;
