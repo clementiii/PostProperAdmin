@@ -1,130 +1,242 @@
-/* Ensure the main container respects the sidebar width */
 .main-container {
-   margin-left: 28.75rem; /* Shift main content to the right by 18.75rem */
-   max-width: 900px; /* Adjust width as needed */
+   margin-left: 28.75rem;
+   max-width: 1200px;
    padding: 20px;
-   margin-top: 2rem; /* Adds top margin */
+   margin-top: 2rem;
 }
 
-.main-content {
-   margin-left: 18.75rem; /* Aligns main content to start after sidebar */
-   padding: 2rem;
-}
-
-.action-btn {
-   background-color: #4a148c !important;
-   color: #ffffff;
-   width: 7.813rem;
-   height: 2.5rem;
-   border: none;
-   border-radius: 0.5rem;
-   text-decoration: none;
-   cursor: pointer;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.action-btn:hover {
-   background-color: #b52aff !important;
-}
-
-.img-thumbnail {
-   cursor: pointer;
-}
-
-.profile-img {
-   width: 10em;
-   height: 10em;
-   border-radius: 50%;
-   object-fit: cover;
-}
-
-.details-section {
-   display: flex;
-   flex-wrap: wrap;
-   gap: 2rem;
-}
-
-.details-section .detail-item {
-   flex: 1;
-   min-width: 250px;
-}
-
-.id-img {
-   max-width: 100%;
-   height: auto;
-   border: 1px solid #ddd;
-}
-
-.status-select {
-   max-width: 200px;
-}
-
-.modal-dialog-top {
-   top: 10%;
-   position: absolute;
-   left: 50%;
-   transform: translate(-50%, 0);
-}
-
-.modal .custom-modal {
-   display: none;
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   background-color: rgba(0, 0, 0, 0.5);
-   z-index: 1000;
-}
-
-.modal .modal-content {
+.document-header {
    position: relative;
-   background-color: #fff;
-   margin: 15% auto;
-   padding: 0; /* No padding to remove white space */
-   border-radius: 5px;
-   width: 90%;
-   max-width: 500px;
-   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-   overflow: hidden; /* Prevent content overflow */
 }
 
-.custom-modal .modal-header {
-   padding: 1rem;
-   background-color: #61009f !important;
-   color: #f0faf0;
-   border-bottom: 1px solid #dee2e6;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   margin: 0; /* Remove any extra margin */
+.page-title {
+   font-size: 2rem;
+   color: #333;
+   margin: 1.5rem 0;
 }
 
-.custom-modal .modal-body {
-   padding: 1rem;
+.verification-container {
+   max-width: 1200px;
+   margin: 0 auto;
 }
 
-.custom-modal-footer {
-   padding: 1rem;
-   border-top: 1px solid #dee2e6;
-   display: flex;
-   justify-content: flex-end;
-   gap: 10px;
-}
-
-.custom-modal .close-modal {
-   font-size: 1.5rem;
-   color: #f0faf0;
+.card {
    border: none;
-   background-color: #61009f;
-   cursor: pointer;
+   border-radius: 10px;
+   overflow: hidden;
+   margin-bottom: 2rem;
+}
+
+.card-header {
+   background-color: #ffffff !important;
+   color: white;
+   padding: 1rem 1.5rem;
+}
+
+.card-header h4 {
+   color: #3F0070;
+   font-size: 1.2rem;
+   font-weight: 600;
+   margin: 0;
+}
+
+.info-group {
+   margin-bottom: 2rem;
+}
+
+.section-title {
+   color: #3F0070;
+   font-size: 1.1rem;
+   font-weight: 600;
+   margin-bottom: 1rem;
+   padding-bottom: 0.5rem;
+   border-bottom: 2px solid #3F0070;
+}
+
+.info-item {
+   margin-bottom: 0.75rem;
+   padding: 0.75rem;
+   background-color: #f8f9fa;
+   border-radius: 5px;
    transition: background-color 0.3s ease;
 }
 
-/* .custom-modal .close-modal:hover {
-   color: #d3d3d3 !;
-} */
+.info-item:hover {
+   background-color: #f0f0f0;
+}
 
-/* .close-btn:hover {
-   color: rgba(255, 255, 255, 0.1);
-} */
+.info-item strong {
+   color: #3F0070;
+   min-width: 140px;
+   display: inline-block;
+   font-weight: 600;
+}
+
+.status-section {
+   background-color: #f8f9fa;
+   padding: 1.5rem;
+   border-radius: 10px;
+   margin-top: 2rem;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.status-form {
+   margin-top: 1rem;
+}
+
+.form-select, .form-control {
+   border: 1px solid #ced4da;
+   border-radius: 5px;
+   padding: 0.75rem;
+   font-size: 1rem;
+}
+
+.form-select:focus, .form-control:focus {
+   border-color: #3F0070;
+   box-shadow: 0 0 0 0.2rem rgba(63, 0, 112, 0.25);
+}
+
+.form-label {
+   color: #3F0070;
+   font-weight: 500;
+   margin-bottom: 0.5rem;
+}
+
+.img-thumbnail.zoomable {
+   max-height: 400px;
+   width: 100%;
+   object-fit: contain;
+   cursor: pointer;
+   transition: transform 0.3s ease;
+   border: none;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.img-thumbnail.zoomable:hover {
+   transform: scale(1.02);
+}
+
+.btn {
+   font-weight: 500;
+   padding: 0.75rem 1.5rem;
+   border-radius: 5px;
+   transition: all 0.3s ease;
+}
+
+.btn-primary {
+   background-color: #3F0070;
+   border-color: #3F0070;
+}
+
+.btn-primary:hover {
+   background-color: #2a004d;
+   border-color: #2a004d;
+   transform: translateY(-1px);
+}
+
+.btn-secondary {
+   background-color: #6c757d;
+   border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+   background-color: #5a6268;
+   border-color: #545b62;
+}
+
+/* Modal Styles */
+.modal-content {
+   border-radius: 10px;
+   border: none;
+   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+   background-color: #3F0070;
+   color: white;
+   border-bottom: none;
+   border-radius: 10px 10px 0 0;
+   padding: 1rem 1.5rem;
+}
+
+.modal-title {
+   font-weight: 600;
+}
+
+.modal-body {
+   padding: 1.5rem;
+}
+
+.modal-footer {
+   border-top: 1px solid #dee2e6;
+   padding: 1rem 1.5rem;
+}
+
+.btn-close {
+   color: white;
+   opacity: 0.8;
+}
+
+.btn-close:hover {
+   opacity: 1;
+}
+
+/* Alert Styles */
+.alert {
+   border-radius: 8px;
+   padding: 1rem 1.5rem;
+}
+
+.alert-info {
+   background-color: #f8f9fa;
+   border-color: #ddd;
+   color: #6c757d;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+   .main-container {
+       margin-left: 0;
+       padding: 15px;
+   }
+
+   .info-item strong {
+       min-width: 120px;
+   }
+
+   .card-body {
+       padding: 1rem;
+   }
+
+   .status-section {
+       padding: 1rem;
+   }
+
+   .btn {
+       width: 100%;
+       margin-bottom: 0.5rem;
+   }
+}
+
+/* Print Styles */
+@media print {
+   .main-container {
+       margin: 0;
+       padding: 0;
+   }
+
+   .btn, .modal, .status-section {
+       display: none;
+   }
+
+   .card {
+       border: none;
+       box-shadow: none;
+   }
+
+   .info-item {
+       break-inside: avoid;
+       page-break-inside: avoid;
+   }
+}

@@ -1,4 +1,4 @@
-    <?php
+<?php
     include 'db.php';
 
     $documentId = isset($_GET['id']) ? $_GET['id'] : 0;
@@ -49,104 +49,159 @@
         header('Location: documents.php');
         exit;
     }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Verification</title>
+    <link rel="stylesheet" href="css/document_verify.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/Southside.png">
+</head>
+<body>
+    <?php 
+        $pageTitle = "Document Verification";
+        include 'header.php';
+        include 'sidebar.php';
     ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document Verification</title>
-        <link rel="stylesheet" href="css/document_verify.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="icon" type="image/png" href="assets/Southside.png">
-        <style>
-            .img-thumbnail.zoomable {
-                cursor: pointer;
-                transition: transform 0.3s ease;
-                max-height: 400px;
-                width: 100%;
-                object-fit: contain;
-            }
-            .img-thumbnail.zoomable:hover {
-                transform: scale(1.05);
-            }
-            .modal-body img {
-                max-height: 80vh;
-                width: auto;
-            }
-            .alert-info {
-                background-color: #f8f9fa;
-                border-color: #ddd;
-                color: #6c757d;
-                text-align: center;
-                padding: 2rem;
-            }
-        </style>
-    </head>
-    <body>
-        <?php 
-            $pageTitle = "Document Verification";
-            include 'header.php';
-            include 'sidebar.php';
-        ?>
-
-        <div class="main-container mt-5">
-            <button onclick="history.back()" class="btn btn-secondary mb-3" style="font-size: 1.25rem;">
-                <i class="fas fa-arrow-left"></i>
+    <div class="main-container mt-5">
+        <div class="document-header mb-4">
+            <button onclick="history.back()" class="btn btn-secondary" style="font-size: 1.1rem;">
+                <i class="fas fa-arrow-left"></i> Back
             </button>
-            <h2 class="text-center mb-4">Document Verification</h2>
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    
+            <h2 class="page-title text-center">Document Verification</h2>
+        </div>
+
+        <div class="verification-container">
+            <!-- Document Info Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h4 class="mb-0">Document Information</h4>
                 </div>
-                <div class="col-md-8">
-                    <div class="row">
+                <div class="card-body">
+                    <div class="row g-4">
+                        <!-- Left Column -->
                         <div class="col-md-6">
-                            <p><strong>Name:</strong> <?php echo htmlspecialchars($documentRequest['Name']); ?></p>
-                            <p><strong>Address:</strong> <?php echo htmlspecialchars($documentRequest['Address']); ?></p>
-                            <p><strong>TIN No:</strong> <?php echo htmlspecialchars($documentRequest['TIN_No']); ?></p>
-                            <p><strong>CTC No:</strong> <?php echo htmlspecialchars($documentRequest['CTC_No']); ?></p>
-                            <p><strong>Alias:</strong> <?php echo htmlspecialchars($documentRequest['Alias']); ?></p>
-                            <p><strong>Age:</strong> <?php echo htmlspecialchars($documentRequest['Age']); ?> years old</p>
-                            <p><strong>Birthday:</strong> <?php echo htmlspecialchars($documentRequest['birthday']); ?></p>
-                            <p><strong>Place of Birth:</strong> <?php echo htmlspecialchars($documentRequest['PlaceOfBirth']); ?></p>
+                            <div class="info-group">
+                                <h5 class="section-title">Personal Details</h5>
+                                <div class="info-item">
+                                    <strong>Name:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Name']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Address:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Address']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Age:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Age']); ?> years old</span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Birthday:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['birthday']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Place of Birth:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['PlaceOfBirth']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Alias:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Alias']); ?></span>
+                                </div>
+                            </div>
                         </div>
+                        
+                        <!-- Right Column -->
                         <div class="col-md-6">
-                            <p><strong>Length of Stay:</strong> <?php echo htmlspecialchars($documentRequest['LengthOfStay']); ?> years</p>
-                            <p><strong>Citizenship:</strong> <?php echo htmlspecialchars($documentRequest['Citizenship']); ?></p>
-                            <p><strong>Gender:</strong> <?php echo htmlspecialchars($documentRequest['Gender']); ?></p>
-                            <p><strong>Civil Status:</strong> <?php echo htmlspecialchars($documentRequest['CivilStatus']); ?></p>
-                            <p><strong>Occupation:</strong> <?php echo htmlspecialchars($documentRequest['Occupation']); ?></p>
-                            <p><strong>Purpose:</strong> <?php echo htmlspecialchars($documentRequest['Purpose']); ?></p>
-                            <p><strong>Document Type:</strong> <?php echo htmlspecialchars($documentRequest['DocumentType']); ?></p>
-                            <p><strong>Quantity:</strong> <?php echo htmlspecialchars($documentRequest['Quantity']); ?></p>
-                            <p><strong>Price:</strong> <?php echo calculatePrice($documentRequest['DocumentType'], $documentRequest['Quantity']); ?></p>
-                            <p><strong>Status:</strong> 
-                                <form method="POST" id="statusForm">
+                            <div class="info-group">
+                                <h5 class="section-title">Additional Information</h5>
+                                <div class="info-item">
+                                    <strong>Citizenship:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Citizenship']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Occupation:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Occupation']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Gender:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Gender']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Civil Status:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['CivilStatus']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Length of Stay:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['LengthOfStay']); ?> years</span>
+                                </div>
+                            </div>
+
+                            <div class="info-group mt-4">
+                                <h5 class="section-title">Document Details</h5>
+                                <div class="info-item">
+                                    <strong>Document Type:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['DocumentType']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Purpose:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Purpose']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>TIN No:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['TIN_No']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>CTC No:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['CTC_No']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Quantity:</strong> 
+                                    <span><?php echo htmlspecialchars($documentRequest['Quantity']); ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Price:</strong> 
+                                    <span><?php echo calculatePrice($documentRequest['DocumentType'], $documentRequest['Quantity']); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Section -->
+                    <div class="status-section mt-4">
+                        <h5 class="section-title">Status Update</h5>
+                        <form method="POST" id="statusForm" class="status-form">
+                            <div class="row align-items-end">
+                                <div class="col-md-6">
+                                    <label class="form-label">Current Status</label>
                                     <select id="statusSelect" name="status" class="form-select">
                                         <option value="Pending" <?php echo ($documentRequest['Status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
                                         <option value="Approved" <?php echo ($documentRequest['Status'] == 'Approved') ? 'selected' : ''; ?>>Approved</option>
                                         <option value="Rejected" <?php echo ($documentRequest['Status'] == 'Rejected') ? 'selected' : ''; ?>>Rejected</option>
                                     </select>
-                                    
-                                    <div id="reasonContainer" class="mt-3" style="display: none;">
-                                        <label for="reason" class="form-label">Reason for Rejection:</label>
-                                        <input type="text" id="reason" name="reason" class="form-control" 
-                                            placeholder="Enter reason for rejection"
-                                            value="<?php echo htmlspecialchars($documentRequest['rejection_reason'] ?? ''); ?>">
-                                    </div>
-                                </form>
-                            </p>
-                        </div>
+                                </div>
+                                <div id="reasonContainer" class="col-md-6" style="display: none;">
+                                    <label class="form-label">Reason for Rejection</label>
+                                    <input type="text" id="reason" name="reason" class="form-control"
+                                        placeholder="Enter reason for rejection"
+                                        value="<?php echo htmlspecialchars($documentRequest['rejection_reason'] ?? ''); ?>">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            
-            <!-- Display Valid ID -->
-            <div class="row mt-4">
-                <h4 class="mb-3">Uploaded Valid ID</h4>
-                <div class="col-12">
+
+            <!-- Valid ID Section -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h4 class="mb-0">Valid ID</h4>
+                </div>
+                <div class="card-body">
                     <?php if (!empty($documentRequest['valid_id'])): ?>
                         <img src="<?php echo htmlspecialchars($documentRequest['valid_id']); ?>" 
                             class="img-thumbnail zoomable" 
@@ -158,119 +213,106 @@
                     <?php endif; ?>
                 </div>
             </div>
-            
-            <div class="text-center mt-4">
-                <button id="saveBtn" class="action-btn" data-bs-toggle="modal" data-bs-target="#confirmModal">Save</button>
-            </div>
-        </div>
-        
-        <!-- Image Modal -->
-        <div class="modal fade " id="imageModal" tabindex="1" aria-labelledby="imageModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="imageModalLabel">Document Preview</h5>
-                        <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center p-0">
-                        <img id="modalImage" src="" class="img-fluid" alt="Document Preview">
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Confirmation Modal -->
-        <div class="modal custom-modal" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmModalLabel">Confirm Save</h5>
-                        <button type="button" class="close-btn close-modal" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
+            <!-- Save Button -->
+            <div class="text-center">
+                <button id="saveBtn" class="btn btn-primary btn-lg px-5" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                    Save Changes
                 </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure you want to save the changes?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="confirmSaveBtn">Confirm</button>
-                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Document Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-0">
+                    <img id="modalImage" src="" class="img-fluid" alt="Document Preview">
                 </div>
             </div>
-        </div> 
+        </div>
+    </div>
 
-        <!-- Bootstrap and JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            // Set clicked image in the modal
-            document.querySelectorAll('.zoomable').forEach(image => {
-                image.addEventListener('click', function() {
-                    document.getElementById('modalImage').src = this.src;
-                });
-            });
+    <!-- Confirmation Modal -->
+    <div class="modal custom-modal" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirm Save</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to save the changes?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmSaveBtn">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        document.getElementById('statusSelect').addEventListener('change', function () {
-        const reasonContainer = document.getElementById('reasonContainer');
-        const reasonInput = document.getElementById('reason');
-        
-        if (this.value === 'Rejected') {
-            reasonContainer.style.display = 'block';
-        } else {
-            reasonContainer.style.display = 'none';
-            reasonInput.value = ''; // Clear the reason input
-        }
-    });
-
-    // Show reason container if status is "Rejected" on page load
-    if (document.getElementById('statusSelect').value === 'Rejected') {
-        document.getElementById('reasonContainer').style.display = 'block';
-    } else {
-        document.getElementById('reasonContainer').style.display = 'none';
-        document.getElementById('reason').value = ''; // Ensure reason is cleared on page load if not rejected
-    }
-
-    // Confirmation modal actions
-    document.getElementById('confirmSaveBtn').addEventListener('click', function() {
-        const status = document.getElementById('statusSelect').value;
-        const reasonInput = document.getElementById('reason');
-        
-        if (status === 'Rejected' && !reasonInput.value.trim()) {
-            alert('Please provide a reason for rejection.');
-            return;
-        }
-        
-        document.getElementById('statusForm').submit();
-    });
-            
-            document.addEventListener('DOMContentLoaded', function() {
-        // Remove any existing modal backdrop
-        function removeModalBackdrop() {
-            const backdrop = document.querySelector('.modal-backdrop');
-            if (backdrop) {
-                backdrop.remove();
-            }
-        }
-
-        // Run on page load
-        removeModalBackdrop();
-
-        // Image Modal Setup
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Image Modal Handler
         document.querySelectorAll('.zoomable').forEach(image => {
             image.addEventListener('click', function() {
                 document.getElementById('modalImage').src = this.src;
-                removeModalBackdrop(); // Ensure no backdrop lingers
             });
         });
 
-        // Save Button and Modal Handling
-        document.getElementById('saveBtn').addEventListener('click', removeModalBackdrop);
-        
-        // Close buttons in modals
-        document.querySelectorAll('.custom-modal .btn-close').forEach(closeBtn => {
-            closeBtn.addEventListener('click', removeModalBackdrop);
+        // Status Change Handler
+        document.getElementById('statusSelect').addEventListener('change', function() {
+            const reasonContainer = document.getElementById('reasonContainer');
+            const reasonInput = document.getElementById('reason');
+            
+            if (this.value === 'Rejected') {
+                reasonContainer.style.display = 'block';
+            } else {
+                reasonContainer.style.display = 'none';
+                reasonInput.value = '';
+            }
         });
-    });
-        </script>
-    </body>
-    </html>
+
+        // Initial Status Check
+        if (document.getElementById('statusSelect').value === 'Rejected') {
+            document.getElementById('reasonContainer').style.display = 'block';
+        }
+
+        // Save Confirmation Handler
+        document.getElementById('confirmSaveBtn').addEventListener('click', function() {
+            const status = document.getElementById('statusSelect').value;
+            const reasonInput = document.getElementById('reason');
+            
+            if (status === 'Rejected' && !reasonInput.value.trim()) {
+                alert('Please provide a reason for rejection.');
+                return;
+            }
+            
+            document.getElementById('statusForm').submit();
+        });
+
+        // Modal Backdrop Handler
+        document.addEventListener('DOMContentLoaded', function() {
+            function removeModalBackdrop() {
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) {
+                    backdrop.remove();
+                }
+            }
+
+            removeModalBackdrop();
+            
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('hidden.bs.modal', removeModalBackdrop);
+            });
+        });
+    </script>
+</body>
+</html>
