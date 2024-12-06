@@ -239,8 +239,8 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal custom-modal" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmModalLabel">Confirm Save</h5>
@@ -298,19 +298,17 @@
             document.getElementById('statusForm').submit();
         });
 
-        // Modal Backdrop Handler
+        // Clear any lingering backdrops on page load
         document.addEventListener('DOMContentLoaded', function() {
-            function removeModalBackdrop() {
-                const backdrop = document.querySelector('.modal-backdrop');
-                if (backdrop) {
-                    backdrop.remove();
-                }
-            }
+            document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+                backdrop.remove();
+            });
+        });
 
-            removeModalBackdrop();
-            
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('hidden.bs.modal', removeModalBackdrop);
+        // Handle modal cleanup when closed
+        document.getElementById('confirmModal').addEventListener('hidden.bs.modal', function() {
+            document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+                backdrop.remove();
             });
         });
     </script>
