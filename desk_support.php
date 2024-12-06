@@ -55,6 +55,7 @@ try {
     <title>Help Desk Chat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/DeskSupport.css">
+    <link rel="stylesheet" href="css/root.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
     <link rel="icon" type="image/png" href="assets/Southside.png">
 </head>
@@ -87,7 +88,7 @@ try {
                                     htmlspecialchars($user['user_profile_picture']) : 'assets/profile.jpg'; ?>" 
                                     class="rounded-circle me-3" width="40" height="40" alt="User">
                                 <div class="flex-grow-1">
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="name d-flex justify-content-between align-items-center">
                                         <strong><?php echo htmlspecialchars($user['firstName'] . ' ' . $user['lastName']); ?></strong>
                                         <?php if ($timestamp): ?>
                                             <small class="text-muted"><?php echo $timestamp; ?></small>
@@ -162,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loadChat(userName, userId);
         });
     });
-
+    
     // Add send button click handler
     document.getElementById('sendMessageBtn').addEventListener('click', function() {
         debugLog('Send button clicked');
@@ -198,7 +199,7 @@ function loadChat(userName, userId) {
     })
     .then(response => {
         debugLog('Load chat response received');
-        return response.json();
+        return response.json(); 
     })
     .then(data => {
         debugLog('Chat data:', data);
