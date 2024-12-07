@@ -83,23 +83,20 @@ try {
         </div>
 
         <!-- User Table -->
-        <div class="table-responsive" style="max-width: 100vw; margin-left: -1rem;">
-            <table class="table table-bordered text-center align-middle">
+        <div class="table-responsive">
+            <table class="table table-bordered mb-0">
                 <thead>
                     <tr>
-                        <th>Last Name</th>
-                        <th>First Name</th>
-                        <th>Address</th>
-                        <!-- <th>Age</th>
-                        <th>Gender</th>
-                        <th>Date of Birth</th> -->
-                        <th>Status</th>
+                        <th data-sort="string">Last Name</th>
+                        <th data-sort="string">First Name</th>
+                        <th data-sort="string">Address</th>
+                        <th data-sort="status">Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user): ?>
-                    <tr style="background-color: <?php echo ($user['id'] % 2 == 0) ? '#F5F5FB' : '#FFFFFF'; ?>;">
+                    <tr>
                         <td><?php echo htmlspecialchars($user['lastName']); ?></td>
                         <td><?php echo htmlspecialchars($user['firstName']); ?></td>
                         <td>
@@ -109,27 +106,31 @@ try {
                                     htmlspecialchars($user['adrZone']); 
                             ?>
                         </td>
-                        <!-- <td><?php echo htmlspecialchars($user['age']); ?></td>
-                        <td><?php echo htmlspecialchars($user['gender']); ?></td>
-                        <td><?php echo date('m/d/Y', strtotime($user['birthday'])); ?></td> -->
                         <td>
-                            <span class="badge <?php 
-                                $statusClass = '';
-                                if ($user['status'] === 'verified') {
-                                    $statusClass = 'bg-success';
-                                } elseif ($user['status'] === 'rejected') {
-                                    $statusClass = 'bg-danger';
-                                } else {
-                                    $statusClass = 'bg-warning';
+                            <?php 
+                                $statusBadgeClass = '';
+                                $status = strtolower($user['status']);
+                                switch($status) {
+                                    case 'verified':
+                                        $statusBadgeClass = 'badge bg-success';
+                                        break;
+                                    case 'rejected':
+                                        $statusBadgeClass = 'badge bg-danger';
+                                        break;
+                                    default:
+                                        $statusBadgeClass = 'badge bg-warning';
+                                        break;
                                 }
-                                echo $statusClass;
-                            ?>">
-                                <?php echo ucfirst($user['status'] ?? 'pending'); ?>
+                            ?>
+                            <span class="<?php echo $statusBadgeClass; ?>">
+                                <?php echo ucfirst($status ?? 'pending'); ?>
                             </span>
                         </td>
                         <td>
-                            <a href="view_user.php?id=<?php echo $user['id']; ?>" class="btn-view btn-sm">View</a>
-                            <button class="btn-delete btn-sm" onclick="confirmDelete(<?php echo $user['id']; ?>)">Delete</button>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="view_user.php?id=<?php echo $user['id']; ?>" class="action-button">View</a>
+                                <button class="action-button button-delete" onclick="confirmDelete(<?php echo $user['id']; ?>)">Delete</button>
+                            </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>

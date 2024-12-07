@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+/* Root Variables */
 :root {
    /* Text Colors */
    --text-dark: #06070f;
@@ -7,114 +9,159 @@
    /* Main Colors */
    --main-color: #61009f;
    --header-color: #3f0070;
-
-   /* Button Colors */
    --button-default: #8a43c5;
    --button-hover: #b52aff;
-
    --focus-textfield: #9b4dff;
 
    /* Shadows */
-   --box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+   --box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
 
    /* Container Backgrounds */
    --container-blue: linear-gradient(180deg, #3498db, #5dade2);
    --container-yellow: linear-gradient(180deg, #d68910, #f5b041);
-   --container-red: linear-gradient(180deg, #a93226, #e74c3c);
    --container-green: linear-gradient(180deg, #229954, #27ae60);
 }
+
+/* Base Styles */
 body {
    font-family: "Poppins", sans-serif;
-   background-color: var(--text-light);
+   background-color: #f0f0fa !important;
 }
 
+/* Main Content */
 .main-content {
-   padding: 2rem;
-   margin-left: 18vw;
-   flex: 1;
+   padding-bottom: 2rem;
+   margin-left: 18.5rem;
 }
 
+/* Card Styles */
 .stat-box {
-   color: #ffffff;
-   flex: 1;
-   max-width: 20rem;
-   height: 9.375rem;
-   border-radius: 0.5rem;
-   opacity: 0.9;
    display: flex;
+   justify-content: center;
+   font-family: "Poppins", sans-serif;
+   height: 11rem;
+   width: 20rem;
+   border-radius: 0.5rem !important;
+   padding: 1.25rem;
+   border: none !important;
+   box-shadow: var(--box-shadow);
+   transition: transform 0.3s ease;
+   text-align: center;
+   color: var(--text-light);
    flex-direction: column;
    align-items: center;
-   justify-content: center;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-   transition: transform 0.2s ease;
+}
+
+.stat-box:hover {
+   transform: translateY(-5px);
 }
 
 .stat-box h4 {
-   font-family: "Poppins", sans-serif;
-   font-size: 1.5rem;
-   font-weight: 500;
-   margin-bottom: 0.5rem;
+   font-size: 1.75rem;
+   margin-bottom: 1rem;
+   text-align: center;
+   width: 100%;
 }
 
 .stat-number {
-   font-family: "Poppins", sans-serif;
-   font-size: 2rem;
+   font-size: 2.5rem;
    font-weight: 700;
-   width: 15.625rem; /* Approximately 250px equivalent */
-   height: 3.125rem; /* Approximately 50px equivalent */
-   background: rgba(255, 255, 255, 0.1);
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
    border-radius: 0.5rem;
-   margin-top: 0.5rem;
-   background-color: rgba(255, 255, 255, 0.15); /* Light overlay background */
-}
-
-/* Table styling */
-.table-responsive {
-   font-family: "Poppins", sans-serif;
+   width: 100%;
+   padding: 0.5rem;
+   background: rgba(255, 255, 255, 0.15);
    display: flex;
    justify-content: center;
-   padding-left: 0; /* Ensures no unintended padding */
-   padding-right: 0;
+   align-items: center;
+}
+
+/* Container Colors */
+.total-resident { background: var(--container-blue); }
+.active-user { background: var(--container-green); }
+.inactive-user { background: linear-gradient(180deg, #8a8a9e, #b3b3c2); }
+
+/* Table Styles */
+.table-responsive {
+   margin: 2.813rem 1.5rem 0;
+   max-width: 100%;
+   display: flex;
+   justify-content: center;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .table {
-   width: 100%;
-   border: 1px solid #dcdcdc;
-   overflow: hidden;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for table */
-}
-
-/* Column header background color */
-.table thead th {
-   font-weight: 700;
-   color: var(--text-dark);
-   background-color: #d9d9e6; /* Updated color */
-}
-
-/* Row colors: odd rows (#F5F5FB), even rows (#FFFFFF) */
-.table tbody tr:nth-child(odd) {
-   background-color: #ffffff;
-}
-.table tbody tr:nth-child(even) {
-   background-color: #f5f5fb;
-}
-
-.total-resident {
-   background: var(--container-blue);
-}
-.active-user {
-   background: var(--container-green);
-}
-.inactive-user {
-   background: linear-gradient(180deg, #8a8a9e, #b3b3c2);
-}
-
-.modal-dialog {
    font-family: "Poppins", sans-serif;
+   width: 100%;
+   border-collapse: collapse;
+   table-layout: fixed;
+   background-color: white;
+   border-radius: 8px;
+   overflow: hidden;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.table thead th {
+   background-color: var(--header-color) !important;
+   color: white !important;
+   font-weight: 500;
+   padding: 15px 10px;
+   text-align: center;
+}
+
+.table tbody tr:nth-child(odd) { background-color: #ffffff; }
+.table tbody tr:nth-child(even) { background-color: #f5f5fb; }
+
+.table td {
+   word-wrap: break-word;
+   color: #333;
+   padding: 12px 10px;
+   text-align: center;
+   vertical-align: middle;
+}
+
+/* Badge Styles */
+.badge {
+   padding: 8px 12px;
+   font-weight: 500;
+   font-size: 0.85rem;
+   border-radius: 6px;
+}
+
+/* Button Styles */
+.action-button {
+   width: 6.25rem;
+   height: 2.5rem;
+   background-color: var(--main-color);
+   color: var(--text-light);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: none;
+   border-radius: 0.5rem;
+   text-decoration: none;
+   cursor: pointer;
+   margin: 0 auto;
+   transition: all 0.3s ease;
+   font-size: 0.9rem;
+   padding: 8px 16px;
+}
+
+.action-button:hover {
+   background-color: var(--button-hover);
+   color: var(--text-light);
+   text-decoration: none;
+}
+
+.button-delete {
+   background-color: #dc3545 !important;
+}
+
+.button-delete:hover {
+   background-color: #bb2d3b !important;
+   color: var(--text-light);
+}
+
+/* Modal Styles */
 .custom-modal {
    display: none;
    position: fixed;
@@ -152,7 +199,6 @@ body {
 }
 
 .custom-modal-footer {
-   font-family: "Poppins", sans-serif;
    padding: 15px 20px;
    border-top: 1px solid #dee2e6;
    display: flex;
@@ -162,95 +208,67 @@ body {
 
 .close-modal {
    color: #f0f0f0;
-   font-size: 1.25rem; /* Adjusted for icon */
+   font-size: 1.25rem;
    cursor: pointer;
-   transition: color 0.2s ease; /* Smooth transition for hover */
-   padding: 0.5rem; /* Added padding for better touch target */
-   line-height: 1; /* Ensures vertical alignment */
+   transition: color 0.2s ease;
+   padding: 0.5rem;
+   line-height: 1;
 }
 
 .close-modal:hover {
-   color: rgba(255, 255, 255, 0.8); /* Slightly dimmed white on hover */
+   color: rgba(255, 255, 255, 0.8);
 }
 
-.btn-view {
-   width: 4.375rem;
-   height: 2.5rem;
-   border-radius: 0.5rem;
-   text-decoration: none;
-   display: inline-flex;
-   justify-content: center;
-   align-items: center;
-   background-color: #61009f;
-   color: #f0faf0;
-   border: none;
-   cursor: pointer;
-   transition: background-color 0.3s;
+/* Gap utility */
+.gap-2 {
+   gap: 0.5rem !important;
 }
 
-.btn-view:hover {
-   background-color: #8a43c5;
-   color: #f0faf0;
-}
-
-.btn-cancel {
-   background-color: #6c757d !important;
-}
-
-.btn-delete {
-   color: #f0faf0;
-   font-size: 1rem;
-   width: 4.375rem;
-   height: 2.5rem;
-   border: none;
-   text-decoration: none;
-   background-color: #e74c3c;
-   cursor: pointer;
-   transition: background-color 0.3s;
-}
-
-.btn-delete:hover {
-   background-color: #dc3545;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-   .stat-container {
-      gap: 3rem; /* Adjusts the gap for smaller screens */
-      flex-direction: column; /* Stacks containers vertically on small screens */
-      align-items: center;
+/* Media Queries */
+@media (max-width: 1200px) {
+   .main-content { margin-left: 200px; }
+   .stat-box {
+       height: 10rem;
+       width: 18rem;
    }
+   .stat-box h4 { font-size: 1.5rem; }
+   .stat-number { font-size: 2.25rem; }
+}
 
-   .table-responsive {
-      width: 100%; /* Full width on smaller screens */
-      margin-left: 0;
+@media (max-width: 992px) {
+   .main-content { margin-left: 0; }
+   .stat-box {
+       height: 9rem;
+       width: 16rem;
+   }
+   .table { font-size: 0.9rem; }
+   .action-button {
+       padding: 6px 12px;
+       font-size: 0.8rem;
    }
 }
 
 @media (max-width: 768px) {
-   .stat-box {
-      max-width: 80%;
-      height: auto;
+   .stat-box { 
+       margin-bottom: 1.5rem;
+       height: 9rem;
+       width: 16rem;
    }
-
-   .stat-number {
-      font-size: 2rem;
-      width: 100%;
-      height: 2.5rem;
+   .stat-box h4 { font-size: 1.25rem; }
+   .stat-number { font-size: 2rem; }
+   .custom-modal-content {
+       width: 90%;
+       margin: 30% auto;
    }
 }
 
 @media (max-width: 480px) {
    .stat-box {
-      max-width: 90%;
-      height: auto;
+       height: 8rem;
+       width: 14rem;
    }
-
-   .stat-number {
-      font-size: 1.8rem;
-   }
-
-   .main-content {
-      padding: 1rem;
-   }
+   .stat-box h4 { font-size: 1.1rem; }
+   .stat-number { font-size: 1.75rem; }
+   .table { font-size: 14px; }
+   th, td { padding: 10px; }
 }
