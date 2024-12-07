@@ -1,8 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
-body {
-   background-color: #f0f0fa !important;
-}
+/* Root Variables */
 :root {
    /* Text Colors */
    --text-dark: #06070f;
@@ -11,11 +9,8 @@ body {
    /* Main Colors */
    --main-color: #61009f;
    --header-color: #3f0070;
-
-   /* Button Colors */
    --button-default: #8a43c5;
    --button-hover: #b52aff;
-
    --focus-textfield: #9b4dff;
 
    /* Shadows */
@@ -24,100 +19,217 @@ body {
    /* Container Backgrounds */
    --container-blue: linear-gradient(180deg, #3498db, #5dade2);
    --container-yellow: linear-gradient(180deg, #d68910, #f5b041);
-   --container-red: linear-gradient(180deg, #a93226, #e74c3c);
    --container-green: linear-gradient(180deg, #229954, #27ae60);
 }
 
-/* Styling for statistic container */
-.statistic-container {
-   padding-top: 2.813rem;
-   padding-left: 3rem;
-   width: 100%;
+/* Base Styles */
+body {
+   font-family: "Poppins", sans-serif;
+   background-color: #f0f0fa !important;
 }
-.stat-box {
-   color: var(--text-light);
+
+/* Main Content */
+.main-content {
+   padding-bottom: 2rem;
+}
+
+/* Card Styles */
+.card {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-family: "Poppins", sans-serif;
+   height: 11rem;
    width: 20rem;
-   height: 9.375rem;
-   border-radius: 0.5rem;
-   opacity: 0.9;
+   border-radius: 0.5rem !important;
+   padding: 1.25rem;
+   border: none !important;
+   box-shadow: var(--box-shadow);
+   transition: transform 0.3s ease;
+   text-align: center;
+}
+
+.card-content {
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow to match the reference */
+   width: 100%;
 }
 
-.stat-box h4 {
-   font-size: 1.5rem;
-   margin-bottom: 0.5rem;
+.card:hover {
+   transform: translateY(-5px);
 }
 
-.stat-number {
-   font-size: 2rem;
+.card-title {
+   font-size: 1.75rem;
+   color: var(--text-light);
+   margin-bottom: 1rem;
+   text-align: center;
+   width: 100%;
+}
+
+.card-text {
+   font-size: 2.5rem;
    font-weight: 700;
-   width: 15.625rem;
-   height: 3.125rem;
-   background: rgba(255, 255, 255, 0.1);
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border-radius: 5px;
+   border-radius: 0.5rem;
+   color: var(--text-light);
    margin-top: 0.5rem;
-   background-color: rgba(255, 255, 255, 0.1); /* Light overlay background */
-}
-.total-reports {
-   background: var(--container-blue);
-}
-.pending {
-   background: var(--container-yellow);
-}
-.resolved {
-   background: var(--container-green);
+   padding: 0.5rem;
+   background: rgba(255, 255, 255, 0.15);
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
+.statistic-container {
+   padding: 2.813rem 1.5rem 0 1.5rem;
+}
+
+/* Center the row of cards */
+.statistic-container .row {
+   margin: 0 auto;
+   max-width: 1200px;
+}
+
+.gap-5 {
+   gap: 3rem !important;
+}
+
+/* Card Colors */
+.card-request { background: var(--container-blue); }
+.card-pending { background: var(--container-yellow); }
+.card-approved { background: var(--container-green); }
+
+/* Table Styles */
+.table-responsive {
+   margin: 2.813rem 1.5rem 0;
+   max-width: 100%;
+   display: flex;
+   justify-content: center;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+   font-family: "Poppins", sans-serif;
+   width: 100%;
+   border-collapse: collapse;
+   table-layout: fixed;
+   background-color: white;
+   border-radius: 8px;
+   overflow: hidden;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th {
+   background-color: var(--header-color) !important;
+   color: white !important;
+   font-weight: 500;
+   padding: 15px 10px;
+   text-align: center;
+}
+
+.table tbody tr:nth-child(odd) { background-color: #ffffff; }
+.table tbody tr:nth-child(even) { background-color: #f5f5fb; }
+
+.table td {
+   word-wrap: break-word;
+   color: #333;
+   padding: 12px 10px;
+   text-align: center;
+   vertical-align: middle;
+}
+
+/* Button Styles */
 .action-button {
    width: 6.25rem;
    height: 2.5rem;
-   background-color: var(--main-color) !important;
+   background-color: var(--main-color);
    color: var(--text-light);
    display: flex;
    align-items: center;
    justify-content: center;
    border: none;
-   border-radius: 8px;
+   border-radius: 0.5rem;
    text-decoration: none;
+   cursor: pointer;
+   margin: 0 auto;
+   transition: all 0.3s ease;
+   font-size: 0.9rem;
+   padding: 8px 16px;
 }
+
 .action-button:hover {
+   background-color: var(--button-hover);
    color: var(--text-light);
-   background-color: var(--button-hover) !important;
    text-decoration: none;
 }
-.table {
-   font-family: "Poppins", sans-serif;
-   margin-top: 2.813rem;
-   max-width: 100vw;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+.button-approved {
+   background-color: #28a745 !important;
+   cursor: not-allowed;
 }
 
-.table td,
-.table th {
-   text-align: center;
-   vertical-align: middle;
+.button-approved:hover { 
+   background-color: #218838 !important; 
 }
 
-/* Set header background color */
-.table thead th {
-   background-color: #d9d9e6;
+/* Badge Styles */
+.badge {
+   padding: 8px 12px;
+   font-weight: 500;
+   font-size: 0.85rem;
+   border-radius: 6px;
 }
 
-/* Set alternating column colors */
-.table tbody tr:nth-child(odd) {
-   background-color: #ffffff;
+/* Media Queries */
+@media (max-width: 1200px) {
+   .main-content { margin-left: 200px; }
+   .card {
+       height: 10rem;
+       width: 18rem;
+   }
+   .card-title { font-size: 1.5rem; }
+   .card-text { font-size: 2.25rem; }
 }
 
-.table tbody tr:nth-child(even) {
-   background-color: #f5f5fb;
+@media (max-width: 992px) {
+   .main-content { margin-left: 0; }
+   .card {
+       height: 9rem;
+       width: 16rem;
+   }
+   .gap-5 { gap: 2rem !important; }
+   .table { font-size: 0.9rem; }
+   .action-button {
+       padding: 6px 12px;
+       font-size: 0.8rem;
+   }
 }
-.table tbody td:last-child {
-   padding: 1rem; /* Adds spacing inside the cell */
+
+@media (max-width: 768px) {
+   .card { 
+       margin-bottom: 1.5rem;
+       height: 9rem;
+       width: 16rem;
+   }
+   .card-title { font-size: 1.25rem; }
+   .card-text { font-size: 2rem; }
+   .gap-5 { gap: 1.5rem !important; }
+   .statistic-container {
+       padding: 2rem 1rem 0 1rem;
+   }
+}
+
+@media (max-width: 480px) {
+   .card {
+       height: 8rem;
+       width: 14rem;
+   }
+   .card-title { font-size: 1.1rem; }
+   .card-text { font-size: 1.75rem; }
+   .gap-5 { gap: 1rem !important; }
+   .table { font-size: 14px; }
+   th, td { padding: 10px; }
 }
