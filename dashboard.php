@@ -3,47 +3,39 @@ session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: splash.php"); // Redirect to the login page if not logged in
+    header("Location: splash.php");
     exit;
 }
 
-// Database connection
 require 'db.php';
 
-// Fetch the admin's profile picture from the database
-$adminId = $_SESSION['admin_id']; // Ensure 'admin_id' is stored in session
+// Fetch admin's profile picture
 try {
-    $sql = "SELECT profile_picture FROM admin_accounts WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$adminId]);
+    $stmt = $conn->prepare("SELECT profile_picture FROM admin_accounts WHERE id = ?");
+    $stmt->execute([$_SESSION['admin_id']]);
     $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Set profile picture path or default fallback image
     $profilePicture = !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg';
 } catch (PDOException $e) {
-    $profilePicture = 'assets/profile.jpg'; // Set fallback if error occurs
+    $profilePicture = 'assets/profile.jpg';
 }
 
+// Fetch statistics
+$queries = [
+    'residents' => "SELECT COUNT(*) AS count FROM user_accounts",
+    'documents' => "SELECT COUNT(*) AS count FROM document_requests",
+    'incidents' => "SELECT COUNT(*) AS count FROM incident_reports",
+    'recent_requests' => "SELECT * FROM document_requests ORDER BY DateRequested DESC LIMIT 5"
+];
 
-
-// Fetch recent document requests for the table
-$documentRequestsTableQuery = "SELECT * FROM document_requests ORDER BY DateRequested DESC LIMIT 5";
-$documentRequestsTableResult = $conn->query($documentRequestsTableQuery)->fetchAll(PDO::FETCH_ASSOC);
-
-// Fetch count of registered residents (user accounts)
-$registeredResidentsQuery = "SELECT COUNT(*) AS count FROM user_accounts";
-$registeredResidentsResult = $conn->query($registeredResidentsQuery)->fetch(PDO::FETCH_ASSOC);
-$registeredResidentsCount = $registeredResidentsResult['count'];
-
-// Fetch count of document requests
-$documentRequestsQuery = "SELECT COUNT(*) AS count FROM document_requests";
-$documentRequestsResult = $conn->query($documentRequestsQuery)->fetch(PDO::FETCH_ASSOC);
-$documentRequestsCount = $documentRequestsResult['count'];
-
-// Fetch count of incident reports
-$incidentReportsQuery = "SELECT COUNT(*) AS count FROM incident_reports";
-$incidentReportsResult = $conn->query($incidentReportsQuery)->fetch(PDO::FETCH_ASSOC);
-$incidentReportsCount = $incidentReportsResult['count'];
+$stats = [];
+foreach ($queries as $key => $query) {
+    try {
+        $result = $conn->query($query)->fetch(PDO::FETCH_ASSOC);
+        $stats[$key] = ($key === 'recent_requests') ? $conn->query($query)->fetchAll(PDO::FETCH_ASSOC) : $result['count'];
+    } catch (PDOException $e) {
+        $stats[$key] = ($key === 'recent_requests') ? [] : 0;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,180 +43,116 @@ $incidentReportsCount = $incidentReportsResult['count'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barangay Post Proper Southside Barangay Information System</title>
+    <title>Admin Dashboard - Barangay Information System</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/DashboardStyle.css">  
-    <!-- Add right after the custom CSS link -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="css/DashboardStyle.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/Southside.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-
-  <?php include 'sidebar.php'; ?> 
+    <?php include 'sidebar.php'; ?> 
   
-  <div class="main-content">
-        <div class="header-section ">
-            <img src="assets/mckinley.jpg" alt="city">
-            <h1 class="text-center mb-4">Welcome, Admin <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
-            <a href="admin_profile.php">
-                <img src="<?php echo $profilePicture; ?>" alt="Profile" class="profile-icon rounded-circle">
+    <div class="main-content">
+        <div class="header-section">
+            <div class="header-overlay"></div>
+            <img src="assets/mckinley.jpg" alt="city" class="header-image">
+            <h1 class="welcome-text">Welcome, Admin <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
+            <a href="admin_profile.php" class="profile-link">
+                <img src="<?php echo $profilePicture; ?>" alt="Profile" class="profile-icon">
             </a>
         </div>
-    <div class="container mt-5 px-5">
-        <!-- Summary Cards -->
-        <div class="row text-center mb-4">
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="cards card-resident text-white mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Registered Residents</h5>
-                        <h3 class="card-text"><?php echo $registeredResidentsCount; ?></h3>
+
+        <div class="container mt-5 px-4">
+            <!-- Stats Cards -->
+            <div class="row stats-container g-4">
+                <div class="col-md-4">
+                    <div class="stat-card resident">
+                        <i class="fas fa-users stat-icon"></i>
+                        <div class="stat-info">
+                            <h5>Registered Residents</h5>
+                            <h3><?php echo $stats['residents']; ?></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card documents">
+                        <i class="fas fa-file-alt stat-icon"></i>
+                        <div class="stat-info">
+                            <h5>Document Requests</h5>
+                            <h3><?php echo $stats['documents']; ?></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card reports">
+                        <i class="fas fa-exclamation-triangle stat-icon"></i>
+                        <div class="stat-info">
+                            <h5>Incident Reports</h5>
+                            <h3><?php echo $stats['incidents']; ?></h3>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="cards card-request text-white  mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Document Requests</h5>
-                        <h3 class="card-text"><?php echo $documentRequestsCount; ?></h3>
-                    </div>
+
+            <!-- Recent Requests Table -->
+            <div class="table-section mt-5">
+                <div class="section-header">
+                    <h4><i class="fas fa-clock"></i> Recent Document Requests</h4>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="cards card-reports text-white mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Incident Reports</h5>
-                        <h3 class="card-text"><?php echo $incidentReportsCount; ?></h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Scrollable Transactions Table -->
-        <div class="card">
-            <div class="card-header">
-                Recent Document Requests
-            </div>
-            <div class="table-container">
-                <table class="table mb-0" >
-                    <thead>
-                        <tr>
-                            <th>Transaction ID</th>
-                            <th>Name</th>
-                            <th>Document Type</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Date Requested</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($documentRequestsTableResult as $request): ?>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td><?php echo 'TXN-'?><?php echo htmlspecialchars($request['Id']); ?></td>
-                                <td><?php echo htmlspecialchars($request['Name']); ?></td>
-                                <td><?php echo htmlspecialchars($request['DocumentType']); ?></td>
-                                <td><?php echo htmlspecialchars($request['Quantity']); ?></td>
-                                <td><?php echo number_format($request['Quantity'] * 50, 2); ?></td>
-                                <td><?php echo htmlspecialchars($request['DateRequested']); ?></td>
-                                <td>
-                                    <button class="action-btn btn-sm"
-                                            onclick="openModal('<?php echo htmlspecialchars($request['Id']); ?>', 
-                                                                '<?php echo htmlspecialchars($request['Name']); ?>',
-                                                                '<?php echo htmlspecialchars($request['Alias']); ?>',
-                                                                '<?php echo htmlspecialchars($request['DocumentType']); ?>',
-                                                                '<?php echo htmlspecialchars($request['DateRequested']); ?>',
-                                                                '<?php echo htmlspecialchars($request['Quantity']); ?>',
-                                                                '<?php echo number_format($request['Quantity'] * 50, 2); ?>',
-                                                                '<?php echo htmlspecialchars($request['Address']); ?>',
-                                                                '<?php echo htmlspecialchars($request['Gender']); ?>',
-                                                                '<?php echo htmlspecialchars($request['CivilStatus']); ?>',
-                                                                '<?php echo htmlspecialchars($request['TIN_No']); ?>',
-                                                                '<?php echo htmlspecialchars($request['CTC_No']); ?>',
-                                                                )">
-                                        View
-                                    </button>
-                                </td>
+                                <th>TXN ID</th>
+                                <th>Name</th>
+                                <th>Document Type</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($stats['recent_requests'] as $request): ?>
+                                <tr>
+                                    <td>TXN-<?php echo htmlspecialchars($request['Id']); ?></td>
+                                    <td><?php echo htmlspecialchars($request['Name']); ?></td>
+                                    <td><?php echo htmlspecialchars($request['DocumentType']); ?></td>
+                                    <td><?php echo htmlspecialchars($request['Quantity']); ?></td>
+                                    <td>₱<?php echo number_format($request['Quantity'] * 50, 2); ?></td>
+                                    <td><?php echo date('M d, Y', strtotime($request['DateRequested'])); ?></td>
+                                    <td>
+                                        <button class="view-btn" onclick="viewDetails(<?php echo htmlspecialchars(json_encode($request)); ?>)">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal Structure -->
-<div id="userModal" class="custom-modal">
-    <div class="custom-modal-content">
-        <div class="custom-modal-header">
-            <h5 class="modal-title">Transaction Details</h5>
-            <i class="fas fa-times close-modal"></i>
-        </div>
-        <div class="custom-modal-body">
-            <p><strong>Transaction ID:</strong> <span id="modalTransactionID"></span></p>
-            <p><strong>Name:</strong> <span id="modalName"></span></p>
-            <p><strong>Alias:</strong> <span id="modalAlias"></span></p>
-            <p><strong>Document Type:</strong> <span id="modalDocumentType"></span></p>
-            <p><strong>Date Requested:</strong> <span id="modalDateRequested"></span></p>
-            <p><strong>Quantity:</strong> <span id="modalQuantity"></span></p>
-            <p><strong>Price:</strong> <span id="modalPrice"></span></p>
-            <p><strong>Address:</strong> <span id="modalAddress"></span></p>
-            <p><strong>Gender:</strong> <span id="modalGender"></span></p>
-            <p><strong>Civil Status:</strong> <span id="modalCivilStatus"></span></p>
-            <p><strong>TIN #:</strong> <span id="modalTIN"></span></p>
-            <p><strong>CTC #:</strong> <span id="modalCTC"></span></p>
-        </div>
-        <div class="custom-modal-footer">
-            <button class="btn-close-modal close-modal">Close</button>
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Request Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal content will be dynamically populated -->
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script>
-function openModal(transactionID, name, alias, documentType, dateRequested, quantity, price, address, gender, civilStatus, tin, ctc) {
-    // Set modal content
-    document.getElementById('modalTransactionID').innerText = transactionID;
-    document.getElementById('modalName').innerText = name;
-    document.getElementById('modalAlias').innerText = alias;
-    document.getElementById('modalDocumentType').innerText = documentType;
-    document.getElementById('modalDateRequested').innerText = dateRequested;
-    document.getElementById('modalQuantity').innerText = quantity;
-    document.getElementById('modalPrice').innerText = price;
-    document.getElementById('modalAddress').innerText = address;
-    document.getElementById('modalGender').innerText = gender;
-    document.getElementById('modalCivilStatus').innerText = civilStatus;
-    document.getElementById('modalTIN').innerText = tin;
-    document.getElementById('modalCTC').innerText = ctc;
-
-    // Show modal
-    document.getElementById('userModal').style.display = 'block';
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
-}
-
-// Close modal when clicking the X button or Close button
-document.querySelectorAll('.close-modal').forEach(button => {
-    button.onclick = function() {
-        document.getElementById('userModal').style.display = 'none';
-        document.body.style.overflow = 'auto'; // Restore scrolling
-    }
-});
-
-
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('userModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Restore scrolling
-    }
-}
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>
