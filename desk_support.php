@@ -234,8 +234,31 @@ function displayMessages(messages) {
 
             const messageTime = document.createElement('div');
             messageTime.classList.add('message-time');
-            const date = new Date(msg.timestamp);
-            messageTime.textContent = date.toLocaleTimeString();
+            
+            // Create date objects
+            const messageDate = new Date(msg.timestamp);
+            const currentDate = new Date();
+            
+            // Format the time
+            const timeString = messageDate.toLocaleTimeString([], { 
+                hour: 'numeric', 
+                minute: '2-digit', 
+                hour12: true 
+            });
+            
+            // Check if message is from a different day
+            if (isSameDay(messageDate, currentDate)) {
+                // If message is from today, show only time
+                messageTime.textContent = timeString;
+            } else {
+                // If message is not from today, show date and time
+                const dateString = messageDate.toLocaleDateString([], {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+                messageTime.textContent = `${dateString} ${timeString}`;
+            }
 
             messageDiv.appendChild(senderName);
             messageDiv.appendChild(messageContent);
@@ -257,6 +280,13 @@ function displayMessages(messages) {
     
     // Scroll to bottom
     chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+// Helper function to check if two dates are the same day
+function isSameDay(date1, date2) {
+    return date1.getDate() === date2.getDate() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getFullYear() === date2.getFullYear();
 }
 
 function sendMessage() {
