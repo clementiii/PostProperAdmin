@@ -4,16 +4,23 @@
    box-sizing: border-box;
 }
 
+body {
+   padding-top: 90px; /* Add padding to body to account for fixed header */
+}
+
 .header-container {
-   background-color: #3f0070; /* Purple background */
-   padding: 20px 50px; /* Adjusted for smaller padding */
-   margin-left: 18.5rem; /* Adjust to match sidebar width */
+   background-color: #3f0070;
+   padding: 20px 50px;
+   margin-left: 18.5rem;
    text-align: left;
-   position: relative;
+   position: fixed;
    display: flex;
    justify-content: space-between;
    align-items: center;
-   width: auto;
+   width: calc(100% - 18.5rem);
+   z-index: 1000;
+   top: 0; /* Ensure header stays at top */
+   right: 0; /* Align from right edge */
 }
 
 .page-title {
@@ -33,23 +40,28 @@
 }
 
 .account-icon {
-   width: 3.75rem; /* Responsive equivalent of 60px */
-   height: auto; /* Ensures the height follows the aspect ratio */
-   border-radius: 50%; /* Circular shape */
-   aspect-ratio: 1 / 1; /* Maintains a perfect circle */
+   width: 3.75rem;
+   height: auto;
+   border-radius: 50%;
+   aspect-ratio: 1 / 1;
    object-fit: cover;
-   border: 0.125rem solid #ffffff; /* White border */
+   border: 0.125rem solid #ffffff;
    transition: transform 0.3s ease;
 }
 
 .account-icon:hover {
-   transform: scale(1.1); /* Hover effect */
+   transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
+   body {
+      padding-top: 70px; /* Reduced padding for mobile */
+   }
+
    .header-container {
-      padding: 15px; /* Adjust padding for smaller screens */
-      margin-left: 0; /* Remove sidebar margin on small screens */
+      padding: 15px;
+      margin-left: 0;
+      width: 100%;
    }
 
    .page-title {
@@ -57,7 +69,7 @@
    }
 
    .account-icon {
-      width: 40px; /* Smaller icon for small screens */
+      width: 40px;
       height: 40px;
    }
 }
