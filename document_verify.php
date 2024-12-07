@@ -183,7 +183,14 @@
                                         <option value="Pending" <?php echo ($documentRequest['Status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
                                         <option value="Approved" <?php echo ($documentRequest['Status'] == 'Approved') ? 'selected' : ''; ?>>Approved</option>
                                         <option value="Rejected" <?php echo ($documentRequest['Status'] == 'Rejected') ? 'selected' : ''; ?>>Rejected</option>
+                                        <option value="Cancelled" <?php echo ($documentRequest['Status'] == 'Cancelled') ? 'selected' : ''; ?>>Cancelled</option>
                                     </select>
+                                    <?php if ($documentRequest['Status'] == 'Cancelled'): ?>
+                                        <div class="info-item">
+                                            <strong>Cancellation Reason:</strong> 
+                                            <span><?php echo htmlspecialchars($documentRequest['cancellation_reason']); ?></span>
+                                        </div>
+                                        <?php endif; ?>
                                 </div>
                                 <div id="reasonContainer" class="col-md-6" style="display: none;">
                                     <label class="form-label">Reason for Rejection</label>

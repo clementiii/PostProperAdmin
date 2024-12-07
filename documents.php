@@ -23,7 +23,7 @@ function calculatePrice($documentType, $quantity) {
 }
 
 // Query to get document requests with only existing columns
-$query = "SELECT Id, Name, DocumentType, Quantity, birthday, DateRequested, Status FROM document_requests";
+$query = "SELECT Id, Name, DocumentType, Quantity, birthday, DateRequested, Status, cancellation_reason FROM document_requests";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $documentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -49,6 +49,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Documents.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="assets/Southside.png">
 </head>
 <body>
@@ -60,11 +61,11 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
 
 <div class="main-content px-4">
     <!-- Summary Cards for Document Request Statuses -->
-    <div class="statistic-container row text-center ">
+    <div class="statistic-container row text-center">
         <div class="col">
             <div class="card card-request">
                 <h2 class="card-title">Total Request</h2>
-                <div class="card-text" >
+                <div class="card-text">
                     <?php echo $totalRequest; ?>
                 </div>
             </div>
@@ -72,7 +73,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
         <div class="col">
             <div class="card card-pending">
                 <h2 class="card-title">Pending</h2>
-                <div class="card-text" >
+                <div class="card-text">
                     <?php echo $pendingCount; ?>
                 </div>
             </div>
@@ -80,7 +81,7 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
         <div class="col">
             <div class="card card-approved">
                 <h2 class="card-title">Approved</h2>
-                <div class="card-text" >
+                <div class="card-text">
                     <?php echo $approvedCount; ?>
                 </div>
             </div>
@@ -97,68 +98,103 @@ $rejectedCount = $conn->query($rejectedCountQuery)->fetch(PDO::FETCH_ASSOC)['rej
 
     <!-- Document Requests Table -->
     <div class="table-responsive">
-    <table class="table table-bordered mb-0">
-        <thead>
-            <tr>
-                <th data-sort="number">Transaction ID</th>
-                <th data-sort="string">Name</th>
-                <th data-sort="string">Document Type</th>
-                <th data-sort="string">Birthday</th>
-                <th data-sort="number">Quantity</th>
-                <th data-sort="string">Price</th>
-                <th data-sort="date">Date Requested</th>
-                <th data-sort="status">Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if (!empty($documentRequests)) {
-                foreach ($documentRequests as $row) {
-                    echo "<tr>";
-                    echo "<td>TXN-" . htmlspecialchars($row['Id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['Name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['DocumentType']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['birthday']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
-                    echo "<td>" . calculatePrice($row['DocumentType'], $row['Quantity']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
-                    
-                    // Status with color coding
-                    $statusClass = '';
-                    switch(strtolower($row['Status'])) {
-                        case 'pending':
-                            $statusClass = 'text-warning';
-                            break;
-                        case 'approved':
-                            $statusClass = 'text-success';
-                            break;
-                        case 'rejected':
-                            $statusClass = 'text-danger';
-                            break;
-                    }
-                    echo "<td class='{$statusClass}'>" . ucfirst(htmlspecialchars(strtolower($row['Status']))) . "</td>";
+        <table class="table table-bordered mb-0">
+            <thead>
+                <tr>
+                    <th data-sort="number">Transaction ID</th>
+                    <th data-sort="string">Name</th>
+                    <th data-sort="string">Document Type</th>
+                    <th data-sort="number">Quantity</th>
+                    <th data-sort="string">Price</th>
+                    <th data-sort="date">Date Requested</th>
+                    <th data-sort="status">Status</th>
+                    <th>Details</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (!empty($documentRequests)) {
+                    foreach ($documentRequests as $row) {
+                        echo "<tr>";
+                        echo "<td>TXN-" . htmlspecialchars($row['Id']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['Name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DocumentType']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
+                        echo "<td>" . calculatePrice($row['DocumentType'], $row['Quantity']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DateRequested']) . "</td>";
+                        
+                        // Status with color coding and badges
+                        $statusBadgeClass = '';
+                        switch(strtolower($row['Status'])) {
+                            case 'pending':
+                                $statusBadgeClass = 'badge bg-warning';
+                                break;
+                            case 'approved':
+                                $statusBadgeClass = 'badge bg-success';
+                                break;
+                            case 'rejected':
+                                $statusBadgeClass = 'badge bg-danger';
+                                break;
+                            case 'cancelled':
+                                $statusBadgeClass = 'badge bg-secondary';
+                                break;
+                        }
+                        echo "<td><span class='{$statusBadgeClass}'>" . ucfirst(htmlspecialchars(strtolower($row['Status']))) . "</span></td>";
 
-                    if (strtolower($row['Status']) === 'rejected') {
-                        echo '<td><button class="action-button button-rejected" disabled>Rejected</button></td>';
-                    } elseif (strtolower($row['Status']) === 'approved') {
-                        echo '<td><button class="action-button button-approved" disabled>Approved</button></td>';
-                    } else {
-                        echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button">View</a></td>';
+                        // Details column with modal trigger for cancelled requests
+                        echo "<td>";
+                        if (strtolower($row['Status']) === 'cancelled' && !empty($row['cancellation_reason'])) {
+                            echo '<button class="btn btn-info btn-sm" onclick="showCancellationReason(\'' . 
+                                 htmlspecialchars($row['cancellation_reason']) . 
+                                 '\')"><i class="fas fa-info-circle"></i> Reason</button>';
+                        } else {
+                            echo "-";
+                        }
+                        echo "</td>";
+
+                        // Action column
+                        if (strtolower($row['Status']) === 'rejected') {
+                            echo '<td><button class="action-button button-rejected" disabled>Rejected</button></td>';
+                        } elseif (strtolower($row['Status']) === 'approved') {
+                            echo '<td><button class="action-button button-approved" disabled>Approved</button></td>';
+                        } elseif (strtolower($row['Status']) === 'cancelled') {
+                            echo '<td><button class="action-button button-cancelled" disabled>Cancelled</button></td>';
+                        } else {
+                            echo '<td><a href="document_verify.php?id=' . htmlspecialchars($row['Id']) . '" class="action-button">View</a></td>';
+                        }
+                        echo "</tr>";
                     }
-                    echo "</tr>";
+                } else {
+                    echo "<tr><td colspan='9'>No document requests found.</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='9'>No document requests found.</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+                ?>
+            </tbody>
+        </table>
+    </div>
 </div>
-</div>         
+
+<!-- Cancellation Reason Modal -->
+<div class="modal" id="cancellationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cancellation Reason</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="cancellationReason" class="mb-0"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function() {
+    // Table sorting functionality
     const table = document.querySelector(".table");
     const headers = table.querySelectorAll("th[data-sort]");
     const rows = Array.from(table.querySelectorAll("tbody tr"));
@@ -166,40 +202,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
     headers.forEach((header, index) => {
         const type = header.getAttribute("data-sort");
-        sortDirection[type] = 1; // Initialize sorting direction (1 for ascending, -1 for descending)
+        sortDirection[type] = 1;
 
         header.addEventListener("click", () => {
             let sortedRows;
 
-            // Three-way sorting for "status" column
             if (type === "status") {
-                const statusOrderAsc = { "pending": 1, "approved": 2, "rejected": 3 };
-                const statusOrderDesc = { "rejected": 1, "approved": 2, "pending": 3 };
-
+                const statusOrderAsc = { "pending": 1, "approved": 2, "rejected": 3, "cancelled": 4 };
+                const statusOrderDesc = { "cancelled": 1, "rejected": 2, "approved": 3, "pending": 4 };
                 const currentOrder = sortDirection[type] === 1 ? statusOrderAsc : statusOrderDesc;
                 sortedRows = rows.sort((a, b) => currentOrder[a.cells[index].innerText.toLowerCase()] - currentOrder[b.cells[index].innerText.toLowerCase()]);
-                
-                // Toggle sort direction for "status" on each click
-                sortDirection[type] *= -1; 
+                sortDirection[type] *= -1;
             } else if (type === "number") {
-                // Numeric sorting (e.g., Quantity, Price)
                 sortedRows = rows.sort((a, b) => (parseFloat(a.cells[index].innerText.replace(/[^0-9.-]+/g,"")) - parseFloat(b.cells[index].innerText.replace(/[^0-9.-]+/g,""))) * sortDirection[type]);
+                sortDirection[type] *= -1;
             } else if (type === "string") {
-                // Alphabetical sorting (e.g., Name, Document Type)
                 sortedRows = rows.sort((a, b) => a.cells[index].innerText.localeCompare(b.cells[index].innerText) * sortDirection[type]);
+                sortDirection[type] *= -1;
             } else if (type === "date") {
-                // Date sorting (e.g., Date Requested)
                 sortedRows = rows.sort((a, b) => (new Date(b.cells[index].innerText) - new Date(a.cells[index].innerText)) * sortDirection[type]);
+                sortDirection[type] *= -1;
             }
 
-            // Update table with sorted rows
             const tbody = table.querySelector("tbody");
-            tbody.innerHTML = ""; // Clear current rows
+            tbody.innerHTML = "";
             sortedRows.forEach(row => tbody.appendChild(row));
-
-            // Reset other columns' sort direction if not "status"
-            if (type !== "status") sortDirection[type] *= -1; 
         });
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('cancellationModal');
+    const modalInstance = new bootstrap.Modal(modal);
+
+    window.showCancellationReason = function(reason) {
+        document.getElementById('cancellationReason').textContent = reason;
+        modalInstance.show();
+    }
+
+    modal.addEventListener('hidden.bs.modal', function () {
+        document.getElementById('cancellationReason').textContent = '';
     });
 });
 </script>
@@ -209,6 +250,5 @@ document.addEventListener("DOMContentLoaded", function () {
 </html>
 
 <?php
-// Close the database connection
 $conn = null;
 ?>

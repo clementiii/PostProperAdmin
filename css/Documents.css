@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+/* Root Variables */
 :root {
    /* Text Colors */
    --text-dark: #06070f;
@@ -7,11 +9,8 @@
    /* Main Colors */
    --main-color: #61009f;
    --header-color: #3f0070;
-
-   /* Button Colors */
    --button-default: #8a43c5;
    --button-hover: #b52aff;
-
    --focus-textfield: #9b4dff;
 
    /* Shadows */
@@ -24,80 +23,18 @@
    --container-green: linear-gradient(180deg, #229954, #27ae60);
 }
 
+/* Base Styles */
 body {
    font-family: "Poppins", sans-serif;
    background-color: #f0f0fa !important;
 }
 
-.card-request {
-   background: var(--container-blue);
-}
-.card-pending {
-   background: var(--container-yellow);
-}
-.card-approved {
-   background: var(--container-green);
-}
-.card-rejected {
-   background: var(--container-red);
+/* Main Content */
+.main-content {
+   padding-bottom: 2rem;
 }
 
-/* Table styling */
-.table {
-   font-family: "Poppins", sans-serif;
-   width: 100%;
-   border-collapse: collapse;
-
-   table-layout: fixed;
-   border: 1px solid #ccc;
-}
-.table tbody tr:nth-child(odd) {
-   background-color: #ffffff; /* Odd row background color */
-}
-
-.table tbody tr:nth-child(even) {
-   background-color: #f5f5fb; /* Even row background color */
-}
-
-/* Center text for table headers */
-.table th {
-   text-align: center; /* This ensures the header text is centered */
-   background-color: #d9d9e6 !important;
-   color: var(--text-dark);
-}
-
-td {
-   word-wrap: break-word;
-   color: #333;
-}
-
-.table td,
-.table th {
-   text-align: center;
-   vertical-align: middle;
-}
-
-.action-button {
-   width: 6.25rem;
-   height: 2.5rem;
-   background-color: #61009f;
-   color: #f0f0fa;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border: none;
-   border-radius: 0.5rem;
-   text-decoration: none;
-   cursor: pointer;
-   margin-left: 0.8rem;
-}
-
-.action-button:hover {
-   color: var(--text-light);
-   background-color: var(--button-hover);
-   text-decoration: none;
-}
-
+/* Card Styles */
 .card {
    display: flex;
    justify-content: center;
@@ -108,106 +45,256 @@ td {
    padding: 1.25rem;
    border: none !important;
    box-shadow: var(--box-shadow);
+   transition: transform 0.3s ease;
+}
+
+.card:hover {
+   transform: translateY(-5px);
 }
 
 .card-title {
    font-size: 1.5rem;
-   color: #f0f0fa;
+   color: var(--text-light);
 }
 
 .card-text {
    font-size: 2rem;
    font-weight: 700;
    border-radius: 0.5rem;
-   color: #f0f0fa;
+   color: var(--text-light);
    margin-top: 0.5rem;
    background: rgba(255, 255, 255, 0.15);
 }
 
-/* Centering the table in the remaining space */
+.card-request { background: var(--container-blue); }
+.card-pending { background: var(--container-yellow); }
+.card-approved { background: var(--container-green); }
+.card-rejected { background: var(--container-red); }
+
+/* Table Styles */
 .table-responsive {
-   margin-left: 1.5rem;
-   margin-right: 1.5rem;
-   margin-top: 2.813rem;
+   margin: 2.813rem 1.5rem 0;
    max-width: 100%;
    display: flex;
    justify-content: center;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Adding padding to the statistics container */
-.statistic-container {
-   padding-top: 2.813rem;
-   padding-left: 1.5rem;
+.table {
+   font-family: "Poppins", sans-serif;
+   width: 100%;
+   border-collapse: collapse;
+   table-layout: fixed;
+   background-color: white;
+   border-radius: 8px;
+   overflow: hidden;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Ensuring the main content aligns with the sidebar */
-.main-content {
-   padding-bottom: 2rem;
+.table thead th {
+   background-color: var(--header-color) !important;
+   color: white !important;
+   font-weight: 500;
+   padding: 15px 10px;
+   text-align: center;
 }
 
-/* Button Colors for Approved and Rejected Actions */
-.button-rejected {
-   background-color: #fa0000; /* Bright Red for Rejected */
-   color: white; /* White text */
+.table tbody tr:nth-child(odd) { background-color: #ffffff; }
+.table tbody tr:nth-child(even) { background-color: #f5f5fb; }
+
+.table td {
+   word-wrap: break-word;
+   color: #333;
+   padding: 12px 10px;
+   text-align: center;
+   vertical-align: middle;
+}
+
+/* Button Styles */
+.action-button {
+   width: 6.25rem;
+   height: 2.5rem;
+   background-color: var(--main-color);
+   color: var(--text-light);
+   display: flex;
+   align-items: center;
+   justify-content: center;
    border: none;
    border-radius: 0.5rem;
-   padding: 0.5rem 1rem;
-   cursor: not-allowed; /* Disabled cursor */
-   font-weight: 500;
+   text-decoration: none;
+   cursor: pointer;
+   margin: 0 auto;
+   transition: all 0.3s ease;
+   font-size: 0.9rem;
+   padding: 8px 16px;
+}
+
+.action-button:hover {
+   background-color: var(--button-hover);
+   color: var(--text-light);
+   text-decoration: none;
+}
+
+.button-rejected {
+   background-color: #fa0000 !important;
+   cursor: not-allowed;
 }
 
 .button-approved {
-   background-color: #28a745; /* Green for Approved */
-   color: white; /* White text */
-   border: none;
-   border-radius: 0.5rem;
-   padding: 0.5rem 1rem;
-   cursor: not-allowed; /* Disabled cursor */
+   background-color: #28a745 !important;
+   cursor: not-allowed;
+}
+
+.button-cancelled {
+   background-color: #6c757d !important;
+   cursor: not-allowed;
+   opacity: 0.8;
+}
+
+.button-rejected:hover { background-color: #701111 !important; }
+.button-approved:hover { background-color: #218838 !important; }
+
+/* Badge & Info Button Styles */
+.badge {
+   padding: 8px 12px;
    font-weight: 500;
+   font-size: 0.85rem;
+   border-radius: 6px;
 }
 
-/* Rejected button hover */
-.button-rejected:hover {
-   background-color: #701111; /* Darker red on hover for rejected */
-   cursor: not-allowed; /* Maintain the not-allowed behavior */
+.btn-info {
+   background-color: var(--header-color);
+   border: none;
+   color: white;
+   padding: 6px 12px;
+   font-size: 0.85rem;
+   border-radius: 6px;
+   transition: background-color 0.3s ease;
 }
 
-/* Approved button hover */
-.button-approved:hover {
-   background-color: #218838; /* Darker green on hover for approved */
-   cursor: not-allowed; /* Maintain the not-allowed behavior */
+.btn-info:hover {
+   background-color: var(--main-color);
+   color: white;
 }
 
+/* Modal Styles */
+.modal-backdrop {
+   display: none !important;
+}
 
+.modal {
+   background: rgba(0, 0, 0, 0.5);
+}
 
+.modal-content {
+   border-radius: 12px;
+   border: none;
+   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+   margin: 1.75rem auto; /* Add margin */
+   width: 95%; /* Responsive width */
+   max-width: 500px; /* Maximum width */
+}
+
+.modal-header {
+   background-color: var(--header-color);
+   color: white;
+   border-radius: 12px 12px 0 0;
+   padding: 1rem 1.5rem;
+}
+
+.modal-dialog {
+   margin: 1.75rem auto;
+   pointer-events: all;
+}
+
+.modal-title {
+   font-family: "Poppins", sans-serif;
+   font-weight: 500;
+   margin: 0;
+}
+
+.btn-close {
+   filter: brightness(0) invert(1);
+   opacity: 0.8;
+   transition: opacity 0.2s;
+}
+
+.btn-close:hover {
+   opacity: 1;
+}
+
+.modal-body {
+   padding: 1.5rem;
+   font-family: "Poppins", sans-serif;
+}
+
+.modal-footer {
+   border-top: 1px solid #dee2e6;
+   padding: 1rem 1.5rem;
+}
+.modal .btn {
+   padding: 8px 16px;
+   border-radius: 6px;
+   font-family: "Poppins", sans-serif;
+}
+
+.modal .btn-secondary {
+   background-color: var(--header-color);
+   border: none;
+}
+
+.modal .btn-secondary:hover {
+   background-color: var(--main-color);
+}
+/* Remove specific Tooltip styles since we're using modal instead */
+.tooltip {
+   display: none;
+}
+
+/* Info button styling */
+.btn-info {
+   background-color: var(--header-color);
+   border: none;
+   color: white;
+   padding: 6px 12px;
+   font-size: 0.85rem;
+   border-radius: 6px;
+   transition: all 0.2s ease;
+}
+
+.btn-info:hover {
+   background-color: var(--main-color);
+   transform: translateY(-1px);
+}
+
+.btn-info:active {
+   transform: translateY(0);
+}
+/* Container Styles */
+.statistic-container {
+   padding: 2.813rem 0 0 1.5rem;
+}
+
+/* Media Queries */
 @media (max-width: 1200px) {
-   .main-content {
-      margin-left: 200px;
-   }
+   .main-content { margin-left: 200px; }
 }
 
 @media (max-width: 992px) {
-   .main-content {
-      margin-left: 0;
-   }
-   .header-section {
-      height: 200px;
+   .main-content { margin-left: 0; }
+   .header-section { height: 200px; }
+   .table { font-size: 0.9rem; }
+   .action-button {
+       padding: 6px 12px;
+       font-size: 0.8rem;
    }
 }
 
 @media (max-width: 768px) {
-   .card {
-      margin-bottom: 1rem;
-   }
+   .card { margin-bottom: 1rem; }
 }
 
 @media (max-width: 480px) {
-   table {
-      font-size: 14px;
-   }
-   th,
-   td {
-      padding: 10px;
-   }
+   .table { font-size: 14px; }
+   th, td { padding: 10px; }
 }

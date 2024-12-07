@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2024 at 05:00 PM
+-- Generation Time: Dec 07, 2024 at 08:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -101,20 +101,25 @@ CREATE TABLE `document_requests` (
   `valid_id_front` longtext DEFAULT NULL,
   `valid_id_back` longtext DEFAULT NULL,
   `request_picture` longtext NOT NULL,
-  `rejection_reason` varchar(255) NOT NULL
+  `rejection_reason` varchar(255) NOT NULL,
+  `cancellation_reason` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `document_requests`
 --
 
-INSERT INTO `document_requests` (`Id`, `userId`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `birthday`, `PlaceOfBirth`, `Occupation`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `valid_id_front`, `valid_id_back`, `request_picture`, `rejection_reason`) VALUES
-(40, 22, 'Barangay Clearance', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', 'UPLOADREQUIREMENTS', 25, '12-05-99', 'asd', 'awdawd', 12, 'awdaw', 'Male', 'Single', '123456789012', 'Approved', 2, '2024-12-06', '', 'uploads/valid_ids/1733483666_6752dc92ad244_front.jpg', 'uploads/valid_ids/1733483666_6752dc92ad774_back.jpg', '', ''),
-(41, 25, 'Cedula', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'Harry', 25, '12-06-99', 'awdawd', 'awdawd', 23, 'awdaw', 'Male', 'Single', 'awdawd', 'Pending', 3, '2024-12-06', '', 'uploads/valid_ids/1733483974_6752ddc6d3171_front.jpg', 'uploads/valid_ids/1733483974_6752ddc6d3511_back.jpg', '', ''),
-(42, 25, 'Barangay Certification', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'Potter', 25, '12-06-99', 'cedula', 'cedula', 21, 'cedula', 'Male', 'Single', 'cedula', 'Pending', 5, '2024-12-06', '', 'uploads/valid_ids/1733484041_6752de09f37fa_front.jpg', 'uploads/valid_ids/1733484041_6752de09f3a18_back.jpg', '', ''),
-(43, 25, 'Certificate of Indigency', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'COI', 25, '12-06-99', 'COI', 'COI', 12, 'COI', 'Male', 'Single', 'COI', 'Pending', 4, '2024-12-06', '', 'uploads/valid_ids/1733484166_6752de8625cd0_front.jpg', 'uploads/valid_ids/1733484166_6752de8625f6b_back.jpg', '', ''),
-(44, 25, 'Barangay Clearance', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'photo', 25, '12-06-99', 'photo', 'photo', 12, 'photo', 'Male', 'Single', 'photo', 'Pending', 4, '2024-12-06', '', 'uploads/valid_ids/1733484241_6752ded1488bd_front.jpg', 'uploads/valid_ids/1733484241_6752ded148af3_back.jpg', '', ''),
-(45, 23, 'Barangay Clearance', 'Justine Case', '123  Street Zone', '123456789012', '123456789012', 'JSUTINECASE', 25, '07-16-99', 'case', 'case', 12, 'case', 'Male', 'Single', 'case', 'Pending', 5, '2024-12-06', '', 'uploads/valid_ids/1733485197_6752e28d83df8_front.jpg', 'uploads/valid_ids/1733485197_6752e28d840e8_back.jpg', '', '');
+INSERT INTO `document_requests` (`Id`, `userId`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `birthday`, `PlaceOfBirth`, `Occupation`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `valid_id_front`, `valid_id_back`, `request_picture`, `rejection_reason`, `cancellation_reason`) VALUES
+(40, 22, 'Barangay Clearance', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', 'UPLOADREQUIREMENTS', 25, '12-05-99', 'asd', 'awdawd', 12, 'awdaw', 'Male', 'Single', '123456789012', 'Approved', 2, '2024-12-06', '', 'uploads/valid_ids/1733483666_6752dc92ad244_front.jpg', 'uploads/valid_ids/1733483666_6752dc92ad774_back.jpg', '', '', NULL),
+(41, 25, 'Cedula', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'Harry', 25, '12-06-99', 'awdawd', 'awdawd', 23, 'awdaw', 'Male', 'Single', 'awdawd', 'Pending', 3, '2024-12-06', '', 'uploads/valid_ids/1733483974_6752ddc6d3171_front.jpg', 'uploads/valid_ids/1733483974_6752ddc6d3511_back.jpg', '', '', NULL),
+(42, 25, 'Barangay Certification', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'Potter', 25, '12-06-99', 'cedula', 'cedula', 21, 'cedula', 'Male', 'Single', 'cedula', 'Pending', 5, '2024-12-06', '', 'uploads/valid_ids/1733484041_6752de09f37fa_front.jpg', 'uploads/valid_ids/1733484041_6752de09f3a18_back.jpg', '', '', NULL),
+(43, 25, 'Certificate of Indigency', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'COI', 25, '12-06-99', 'COI', 'COI', 12, 'COI', 'Male', 'Single', 'COI', 'Pending', 4, '2024-12-06', '', 'uploads/valid_ids/1733484166_6752de8625cd0_front.jpg', 'uploads/valid_ids/1733484166_6752de8625f6b_back.jpg', '', '', NULL),
+(44, 25, 'Barangay Clearance', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'photo', 25, '12-06-99', 'photo', 'photo', 12, 'photo', 'Male', 'Single', 'photo', 'Pending', 4, '2024-12-06', '', 'uploads/valid_ids/1733484241_6752ded1488bd_front.jpg', 'uploads/valid_ids/1733484241_6752ded148af3_back.jpg', '', '', NULL),
+(45, 23, 'Barangay Clearance', 'Justine Case', '123  Street Zone', '123456789012', '123456789012', 'JSUTINECASE', 25, '07-16-99', 'case', 'case', 12, 'case', 'Male', 'Single', 'case', 'Pending', 5, '2024-12-06', '', 'uploads/valid_ids/1733485197_6752e28d83df8_front.jpg', 'uploads/valid_ids/1733485197_6752e28d840e8_back.jpg', '', '', NULL),
+(46, 22, 'Barangay Clearance', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', 'cancel', 25, '12-05-99', 'cancel', 'cancel', 8, 'cancel', 'Male', 'Single', 'cancel', 'Pending', 3, '2024-12-07', '', 'uploads/valid_ids/1733552883_6753eaf39253a_front.jpg', 'uploads/valid_ids/1733552883_6753eaf39291e_back.jpg', '', '', NULL),
+(47, 22, 'Barangay Clearance', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', '2', 25, '12-05-99', '2', '2', 6, '2', 'Male', 'Single', '2', 'Cancelled', 2, '2024-12-07 14:55:21', '', 'uploads/valid_ids/1733553111_6753ebd76ea04_front.jpg', 'uploads/valid_ids/1733553111_6753ebd76ec26_back.jpg', '', '', ''),
+(48, 22, 'Certificate of Indigency', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', '3', 25, '12-05-99', '3', '3', 7, '3', 'Male', 'Single', '3', 'Cancelled', 4, '2024-12-07 14:34:36', '', 'uploads/valid_ids/1733553310_6753ec9e91eac_front.jpg', 'uploads/valid_ids/1733553310_6753ec9e92880_back.jpg', '', '', NULL),
+(49, 22, 'Barangay Certification', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', 'y', 25, '12-05-99', 'y', '7', 7, 'y', 'Male', 'Single', 'y', 'Cancelled', 2, '2024-12-07 15:00:53', '', 'uploads/valid_ids/1733554220_6753f02ccacd7_front.jpg', 'uploads/valid_ids/1733554220_6753f02ccaf2f_back.jpg', '', '', 'foyditdit');
 
 -- --------------------------------------------------------
 
@@ -225,7 +230,10 @@ INSERT INTO `messages` (`id`, `sender_id`, `admin_id`, `message`, `timestamp`, `
 (73, 2, 2, 'sasa', '2024-12-04 12:48:41', 1),
 (74, 2, NULL, 'awesome', '2024-12-04 12:49:36', 0),
 (75, 21, NULL, 'babaooey', '2024-12-05 10:59:41', 0),
-(76, 21, 2, 'shashumga', '2024-12-05 10:59:56', 1);
+(76, 21, 2, 'shashumga', '2024-12-05 10:59:56', 1),
+(77, 23, NULL, 'babaooe', '2024-12-06 16:02:44', 0),
+(78, 22, NULL, 'hola DEA', '2024-12-07 05:39:18', 0),
+(79, 22, 4, 'hola', '2024-12-06 05:39:25', 1);
 
 -- --------------------------------------------------------
 
@@ -263,10 +271,10 @@ INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `
 (10, 'Gabriel', 'Maglaya', 'Gabmaglaya', 20, 'male', '4783-B', 'Zone 15', 'Lawin Street', '2003-12-22', 'Gabmaglayapass', '', NULL, 'pending', NULL, NULL),
 (12, 'Daren', 'Espanto', 'despanto', 20, 'male', '872', '3', 'Agila', '2003-08-05', 'despanto', 'uploads/user_profile_pictures/1732545006_674489ee76b04.jpg', '2024-12-03 19:59:30', 'verified', NULL, NULL),
 (20, 'Hank', 'Schrader', 'hank', 34, 'male', '1233', '2', 'street', '2024-12-04', 'Password@', '', '2024-12-04 02:50:57', 'verified', 'uploads/valid_ids/67500c5dcd998_front_valid_id_2531858628611823380.jpg', 'uploads/valid_ids/67500c5dcdf5c_back_valid_id_back_1203212287863104420.jpg'),
-(22, 'Raul', 'Menendez', 'walt', 25, 'male', '123', '12', 'asda', '1999-12-05', '1IdXOTyMch/yApTuQoriJvEFXv01l0HTxEPvvwk6w0g=', '', '2024-12-06 04:18:37', 'verified', 'uploads/valid_ids/67519f205a3c4_front_valid_id_3658849476003197956.jpg', 'uploads/valid_ids/67519f205ab49_back_valid_id_back_3791201348274179855.jpg'),
-(23, 'Justine', 'Case', 'justinecase', 25, 'male', '123', '2', '321', '1999-07-16', 'UUjgCjXQOvgO2rU4BeVxDpNJbbNq+bIlgmGN44pt2/0=', '', '2024-12-06 08:58:57', 'verified', 'uploads/valid_ids/6751a0b246966_front_valid_id_2850338238797243267.jpg', 'uploads/valid_ids/6751a0b246f2b_back_valid_id_back_3692865936835824683.jpg'),
+(22, 'Raul', 'Menendez', 'walt', 25, 'male', '123', '12', 'asda', '1999-12-05', '1IdXOTyMch/yApTuQoriJvEFXv01l0HTxEPvvwk6w0g=', '', '2024-12-07 00:04:12', 'verified', 'uploads/valid_ids/67519f205a3c4_front_valid_id_3658849476003197956.jpg', 'uploads/valid_ids/67519f205ab49_back_valid_id_back_3791201348274179855.jpg'),
+(23, 'Justine', 'Case', 'justinecase', 25, 'male', '123', '2', '321', '1999-07-16', 'UUjgCjXQOvgO2rU4BeVxDpNJbbNq+bIlgmGN44pt2/0=', '', '2024-12-06 09:03:11', 'verified', 'uploads/valid_ids/6751a0b246966_front_valid_id_2850338238797243267.jpg', 'uploads/valid_ids/6751a0b246f2b_back_valid_id_back_3692865936835824683.jpg'),
 (24, 'James', 'Charles', 'james', 25, 'male', '123', '12', '123', '1999-12-06', 'kKov9QAModWIO8WVQRy7UK8pToZNkIdumwOCF2wY6iQ=', '', NULL, 'verified', 'uploads/valid_ids/675298f5c2048_front_valid_id_1425142091750092768.jpg', 'uploads/valid_ids/675298f5c263b_back_valid_id_back_1578866002197435821.jpg'),
-(25, 'Harry', 'Potter', 'harry', 25, 'male', '123', '123', '123', '1999-12-06', '1IdXOTyMch/yApTuQoriJvEFXv01l0HTxEPvvwk6w0g=', '', '2024-12-06 04:38:59', 'verified', 'uploads/valid_ids/67529943c7234_front_valid_id_960509828584422992.jpg', 'uploads/valid_ids/67529943c7f68_back_valid_id_back_4268192904904854930.jpg');
+(25, 'Harry', 'Potter', 'harry', 25, 'male', '123', '123', '123', '1999-12-06', '1IdXOTyMch/yApTuQoriJvEFXv01l0HTxEPvvwk6w0g=', '', '2024-12-06 23:24:26', 'verified', 'uploads/valid_ids/67529943c7234_front_valid_id_960509828584422992.jpg', 'uploads/valid_ids/67529943c7f68_back_valid_id_back_4268192904904854930.jpg');
 
 --
 -- Indexes for dumped tables
@@ -332,7 +340,7 @@ ALTER TABLE `barangay_announcements`
 -- AUTO_INCREMENT for table `document_requests`
 --
 ALTER TABLE `document_requests`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `incident_reports`
@@ -344,7 +352,7 @@ ALTER TABLE `incident_reports`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`

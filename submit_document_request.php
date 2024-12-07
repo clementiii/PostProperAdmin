@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+date_default_timezone_set('Asia/Manila');
 require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $purpose = $_POST['purpose'] ?? '';
         $status = 'Pending';
         $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
-        $dateRequested = date('Y-m-d');
+        $dateRequested = date('Y-m-d H:i:s');
         
         $sql = "INSERT INTO document_requests (
             userId, DocumentType, Name, Address, TIN_No, CTC_No, 
