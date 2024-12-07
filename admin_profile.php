@@ -1,13 +1,17 @@
+<title>Admin Profile</title>
 <?php
 session_start();
 
-// Check if the user is logged in
+// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_SESSION['admin_id'])) {
     header("Location: splash.php");
     exit;
 }
 
 include 'db.php';
+$pageTitle = "Admin Profile";
+include 'header.php';
+include 'sidebar.php';
 
 $adminId = isset($_GET['id']) ? (int)$_GET['id'] : $_SESSION['admin_id'];
 
@@ -43,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
         if (in_array(strtolower($fileType), $allowedTypes)) {
             if (!is_dir($targetDir)) {
-                mkdir($targetDir, 0777, true); // Create directory if not exists
+                mkdir($targetDir, 0777, true);
             }
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetFilePath)) {
                 $updatePictureSql = "UPDATE admin_accounts SET profile_picture = ? WHERE id = ?";
@@ -101,80 +105,101 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Admin Profile</title>
     <link rel="stylesheet" href="css/AdminProfile.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="assets/Southside.png">
 </head>
 
 <body>
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="profile-card p-4 position-relative">
-            <!-- Back Button -->
-            <button onclick="goBack()" class="back-btn">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+    <div class="content-wrapper">
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <img src="<?php echo !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg'; ?>" 
+                         alt="Admin Profile" 
+                         class="profile-image" 
+                         id="profilePicturePreview">
+                    <h2 class="admin-name"><?php echo htmlspecialchars($admin['name']); ?></h2>
+                    <p class="admin-role">Administrator</p>
+                </div>
 
-            <div class="text-center mb-3">
-                <!-- Clickable Profile Image -->
-                <img src="<?php echo !empty($admin['profile_picture']) ? $admin['profile_picture'] : 'assets/profile.jpg'; ?>" 
-                    alt="Admin Profile" 
-                    class="profile-image rounded-circle" 
-                    id="profilePicturePreview">
+                <form id="profileForm" method="POST" action="" enctype="multipart/form-data">
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" 
+                                   value="<?php echo htmlspecialchars($admin['name']); ?>" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" 
+                                   value="<?php echo htmlspecialchars($admin['username']); ?>" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" name="old_password" class="form-control" disabled>
+                        </div>
+
+                        <div class="additional-fields d-none" id="newPasswordFields">
+                            <div class="form-group">
+                                <label class="form-label">New Password</label>
+                                <input type="password" name="new_password" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" name="confirm_new_password" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Profile Picture</label>
+                                <input type="file" name="profile_picture" class="form-control" accept="image/*">
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn-edit" onclick="enableEditing()">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                            <button type="submit" class="btn-save d-none">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <form id="profileForm" method="POST" action="" enctype="multipart/form-data">
-                <div class="mb-2 text-start">
-                    <label class="form-label">Name</label>
-                    <input type="text" name="name" class="form-control input-field" value="<?php echo htmlspecialchars($admin['name']); ?>" disabled>
-                </div>
-                <div class="mb-2 text-start">
-                    <label class="form-label">Username</label>
-                    <input type="text" name="username" class="form-control input-field" value="<?php echo htmlspecialchars($admin['username']); ?>" disabled>
-                </div>
-                <div class="mb-2 text-start">
-                    <label class="form-label">Password</label>
-                    <input type="password" name="old_password" class="form-control input-field" disabled>
-                </div>
-                <div class="mb-2 text-start d-none" id="newPasswordFields">
-                    <label class="form-label">New Password</label>
-                    <input type="password" name="new_password" class="form-control input-field">
-                    <label class="form-label">Confirm New Password</label>
-                    <input type="password" name="confirm_new_password" class="form-control input-field">
-                    <label class="form-label">Profile Picture</label>
-                    <input type="file" name="profile_picture" class="form-control">
-                </div>
-                <button type="button" class="action-btn edit-btn" onclick="enableEditing()">Edit Profile</button>
-                <button type="submit" class="action-btn save-btn d-none mt-2">Save Changes</button>
-            </form>
         </div>
     </div>
 
     <script>
         let isEditing = false;
 
-        function goBack() {
-            if (isEditing) {
-                resetToViewMode();
-            } else {
-                window.history.back();
-            }
-        }
-
         function enableEditing() {
             isEditing = true;
-            document.querySelectorAll('.input-field').forEach(field => field.disabled = false);
+            document.querySelectorAll('.form-control').forEach(field => {
+                if (field.type !== 'file') {
+                    field.disabled = false;
+                }
+            });
             document.getElementById('newPasswordFields').classList.remove('d-none');
-            document.querySelector('.edit-btn').classList.add('d-none');
-            document.querySelector('.save-btn').classList.remove('d-none');
+            document.querySelector('.btn-edit').classList.add('d-none');
+            document.querySelector('.btn-save').classList.remove('d-none');
         }
 
-        function resetToViewMode() {
-            isEditing = false;
-            document.querySelectorAll('.input-field').forEach(field => field.disabled = true);
-            document.getElementById('newPasswordFields').classList.add('d-none');
-            document.querySelector('.edit-btn').classList.remove('d-none');
-            document.querySelector('.save-btn').classList.add('d-none');
-        }
+        // Preview profile picture
+        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePicturePreview').src = e.target.result;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
