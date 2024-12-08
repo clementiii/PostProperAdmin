@@ -65,7 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
     <link rel="icon" type="image/png" href="assets/Southside.png">
 </head>
 <body>
-    <?php include 'header.php'; ?>
+    
+    <?php
+    $pageTitle = "Verify User";
+    include 'header.php'; ?>
     <?php include 'sidebar.php'; ?>
 
     <div class="main-container">
