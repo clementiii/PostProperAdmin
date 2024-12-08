@@ -59,176 +59,258 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View User Details</title>
+    <title>View User Details | Post Proper Southside</title>
     <link rel="stylesheet" href="css/view_users.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/Southside.png">
-
-
 </head>
 <body>
-<?php 
-    $pageTitle = "User Details";
-    include 'header.php';
-    include 'sidebar.php';
-?>
+    <?php include 'header.php'; ?>
+    <?php include 'sidebar.php'; ?>
 
-<div class="main-container mt-5">
-    <div class="container">
-        <button onclick="history.back()" class="btn btn-secondary mb-3" style="font-size: 1.25rem;">
-            <i class="fas fa-arrow-left"></i> Back
-        </button>
-        <h2 class="text-center mb-4">User Details</h2>
+    <div class="main-container">
+        <div class="container">
+            <!-- Header Section -->
+            <div class="header-section">
+                <button onclick="history.back()" class="btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </button>
+                <h1 class="page-title">User Details</h1>
+            </div>
 
-        <div class="row">
-            <!-- Profile Picture and Valid ID Column -->
-            <div class="col-md-4 text-center">
-                <!-- Profile Picture -->
-                <div class="profile-section">
-                    <h5>Profile Picture</h5>
-                    <?php if (!empty($userData['user_profile_picture'])): ?>
-                        <img src="<?php echo htmlspecialchars($userData['user_profile_picture']); ?>" 
-                             class="img-thumbnail zoomable" 
-                             alt="Profile Picture"
-                             onclick="document.getElementById('imageModal').style.display='block'; document.getElementById('modalImage').src=this.src;">
-                    <?php else: ?>
-                        <div class="alert alert-info">No profile picture uploaded</div>
-                    <?php endif; ?>
-                </div>
-
-                <!-- Valid ID -->
-                <div class="id-section">
-                    <h5>Valid ID</h5>
-                    <div class="row">
-                        <!-- Front of ID -->
-                        <div class="col-md-6 mb-3">
-                            <h6>Front</h6>
-                            <?php if (!empty($userData['user_valid_id'])): ?>
-                                <img src="<?php echo htmlspecialchars($userData['user_valid_id']); ?>" 
-                                    class="img-thumbnail zoomable" 
-                                    alt="Valid ID (Front)"
-                                    onclick="document.getElementById('imageModal').style.display='block'; document.getElementById('modalImage').src=this.src;">
+            <!-- Main Content Grid -->
+            <div class="content-grid">
+                <!-- Left Column - Profile & ID -->
+                <div class="profile-column">
+                    <!-- Profile Section -->
+                    <div class="profile-section">
+                        <div class="section-header">
+                            <i class="fas fa-user"></i>
+                            <h2>Profile Picture</h2>
+                        </div>
+                        <div class="profile-picture-container">
+                            <?php if (!empty($userData['user_profile_picture'])): ?>
+                                <img src="<?php echo htmlspecialchars($userData['user_profile_picture']); ?>" 
+                                     alt="Profile Picture"
+                                     class="profile-image"
+                                     onclick="openImageModal(this.src)">
                             <?php else: ?>
-                                <div class="alert alert-info">No front ID uploaded</div>
+                                <div class="no-profile-message">
+                                    <i class="fas fa-camera"></i>
+                                    <p>No profile picture uploaded</p>
+                                </div>
                             <?php endif; ?>
                         </div>
-                        
-                        <!-- Back of ID -->
-                        <div class="col-md-6 mb-3">
-                            <h6>Back</h6>
-                            <?php if (!empty($userData['user_valid_id_back'])): ?>
-                                <img src="<?php echo htmlspecialchars($userData['user_valid_id_back']); ?>" 
-                                    class="img-thumbnail zoomable" 
-                                    alt="Valid ID (Back)"
-                                    onclick="document.getElementById('imageModal').style.display='block'; document.getElementById('modalImage').src=this.src;">
-                            <?php else: ?>
-                                <div class="alert alert-info">No back ID uploaded</div>
-                            <?php endif; ?>
+                    </div>
+
+                    <!-- ID Section -->
+                    <div class="id-section">
+                        <div class="section-header">
+                            <i class="fas fa-id-card"></i>
+                            <h2>Valid ID</h2>
+                        </div>
+                        <div class="id-grid">
+                            <!-- Front ID -->
+                            <div class="id-container">
+                                <h3>Front</h3>
+                                <?php if (!empty($userData['user_valid_id'])): ?>
+                                    <div class="id-image-wrapper" onclick="openImageModal('<?php echo htmlspecialchars($userData['user_valid_id']); ?>')">
+                                        <img src="<?php echo htmlspecialchars($userData['user_valid_id']); ?>" 
+                                             alt="Valid ID Front"
+                                             class="id-image">
+                                        <div class="image-overlay">
+                                            <i class="fas fa-search-plus"></i>
+                                        </div>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="no-id-placeholder">
+                                        <i class="fas fa-id-card"></i>
+                                        <p>No front ID uploaded</p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <!-- Back ID -->
+                            <div class="id-container">
+                                <h3>Back</h3>
+                                <?php if (!empty($userData['user_valid_id_back'])): ?>
+                                    <div class="id-image-wrapper" onclick="openImageModal('<?php echo htmlspecialchars($userData['user_valid_id_back']); ?>')">
+                                        <img src="<?php echo htmlspecialchars($userData['user_valid_id_back']); ?>" 
+                                             alt="Valid ID Back"
+                                             class="id-image">
+                                        <div class="image-overlay">
+                                            <i class="fas fa-search-plus"></i>
+                                        </div>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="no-id-placeholder">
+                                        <i class="fas fa-id-card"></i>
+                                        <p>No back ID uploaded</p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - User Details -->
+                <div class="details-column">
+                    <div class="details-card">
+                        <div class="details-grid">
+                            <!-- Personal Information Section -->
+                            <div class="info-section">
+                                <h2>Personal Information</h2>
+                                
+                                <div class="info-group">
+                                    <label>Full Name</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-user"></i>
+                                        <?php echo htmlspecialchars($userData['firstName'] . ' ' . $userData['lastName']); ?>
+                                    </div>
+                                </div>
+
+                                <div class="info-group">
+                                    <label>Username</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-at"></i>
+                                        <?php echo htmlspecialchars($userData['username']); ?>
+                                    </div>
+                                </div>
+
+                                <div class="info-group">
+                                    <label>Address</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <?php 
+                                            $address = $userData['adrHouseNo'] . ' ' . $userData['adrStreet'] . ', Zone ' . $userData['adrZone'];
+                                            echo htmlspecialchars($address);
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="info-group">
+                                    <label>Birthday</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <?php echo date('F d, Y', strtotime($userData['birthday'])); ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Account Information Section -->
+                            <div class="info-section">
+                                <h2>Account Information</h2>
+                                
+                                <div class="info-group">
+                                    <label>Last Active</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-clock"></i>
+                                        <?php echo $userData['last_active'] ? date('F d, Y g:i A', strtotime($userData['last_active'])) : 'Never'; ?>
+                                    </div>
+                                </div>
+
+                                <div class="info-group">
+                                    <label>Account Status</label>
+                                    <form method="POST" id="statusForm">
+                                        <div class="status-select-wrapper">
+                                            <select name="status" class="status-select" id="statusSelect">
+                                                <option value="pending" <?php echo ($userData['status'] === 'pending') ? 'selected' : ''; ?>>
+                                                    Pending
+                                                </option>
+                                                <option value="verified" <?php echo ($userData['status'] === 'verified') ? 'selected' : ''; ?>>
+                                                    Verified
+                                                </option>
+                                                <option value="rejected" <?php echo ($userData['status'] === 'rejected') ? 'selected' : ''; ?>>
+                                                    Rejected
+                                                </option>
+                                            </select>
+                                            <i class="fas fa-chevron-down select-icon"></i>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="button-container">
+                                    <button class="btn-save" onclick="confirmUpdate()">
+                                        <i class="fas fa-save"></i>
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- User Details Column -->
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p><strong>Full Name:</strong> 
-                            <?php echo htmlspecialchars($userData['firstName'] . ' ' . $userData['lastName']); ?>
-                        </p>
-                        <p><strong>Username:</strong> 
-                            <?php echo htmlspecialchars($userData['username']); ?>
-                        </p>
-                        <p><strong>Age:</strong> 
-                            <?php
-                            $birthDate = new DateTime($userData['birthday']);
-                            $currentDate = new DateTime();
-                            $age = $currentDate->diff($birthDate)->y; // Calculate the difference in years
-                            echo htmlspecialchars($age);
-                            ?>
-                        </p>
-                        <p><strong>Gender:</strong> 
-                            <?php echo htmlspecialchars(ucfirst($userData['gender'])); ?>
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p><strong>Address:</strong> 
-                            <?php 
-                                $address = $userData['adrHouseNo'] . ' ' . $userData['adrStreet'] . ', Zone ' . $userData['adrZone'];
-                                echo htmlspecialchars($address);
-                            ?>
-                        </p>
-                        <p><strong>Birthday:</strong> 
-                            <?php echo date('F d, Y', strtotime($userData['birthday'])); ?>
-                        </p>
-                        <p><strong>Last Active:</strong> 
-                            <?php echo $userData['last_active'] ? date('F d, Y g:i A', strtotime($userData['last_active'])) : 'Never'; ?>
-                        </p>
-                        <p><strong>Status:</strong> 
-                            <form method="POST" id="statusForm">
-                                <select id="statusSelect" name="status" class="form-select">
-                                    <option value="pending" <?php echo ($userData['status'] === 'pending') ? 'selected' : ''; ?>>Pending</option>
-                                    <option value="verified" <?php echo ($userData['status'] === 'verified') ? 'selected' : ''; ?>>Verified</option>
-                                    <option value="rejected" <?php echo ($userData['status'] === 'rejected') ? 'selected' : ''; ?>>Rejected</option>
-                                </select>
-                            </form>
-                        </p>
-                        <div class="text-start mt-4">
-                    <button class="btn-save" onclick="document.getElementById('confirmModal').style.display='block'">
-                        Save Changes
-                    </button>
-                </div>
-                    </div>
-                </div>
-
-                
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Image Preview</h3>
+                <button class="close-modal" onclick="closeImageModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Preview">
             </div>
         </div>
     </div>
-</div>
 
-<!-- Image Modal -->
-<div id="imageModal" class="custom-modal">
-    <div class="custom-modal-content">
-        <div class="custom-modal-header">
-            <h5>Image Preview</h5>
-            <i class="fas fa-times close-modal" onclick="document.getElementById('imageModal').style.display='none'"></i>
-        </div>
-        <div class="modal-body text-center p-0">
-            <img id="modalImage" src="" class="img-fluid" alt="Image Preview">
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Changes</h3>
+                <button class="close-modal" onclick="closeConfirmModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to update this user's status?</p>
+                <div class="modal-buttons">
+                    <button class="btn-cancel" onclick="closeConfirmModal()">Cancel</button>
+                    <button class="btn-confirm" onclick="submitForm()">Confirm</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Custom Confirmation Modal -->
-<div id="confirmModal" class="custom-modal">
-    <div class="custom-modal-content">
-        <div class="custom-modal-header">
-            <h5>Confirm Changes</h5>
-            <i class="fas fa-times close-modal" onclick="document.getElementById('confirmModal').style.display='none'"></i>
-        </div>
-        <div class="custom-modal-body">
-            Are you sure you want to update this user's status?
-        </div>
-        <div class="custom-modal-footer">
-            <button class="btn-cancel" onclick="document.getElementById('confirmModal').style.display='none'">Cancel</button>
-            <button class="btn-confirm" onclick="document.getElementById('statusForm').submit();">Confirm</button>
-        </div>
-    </div>
-</div>
+    <script>
+        // Open image modal
+        function openImageModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').classList.add('show');
+        }
 
-<script>
-    // Close modals when clicking outside
-    window.onclick = function(event) {
-        const confirmModal = document.getElementById('confirmModal');
-        const imageModal = document.getElementById('imageModal');
-        if (event.target == confirmModal) {
-            confirmModal.style.display = 'none';
+        // Close image modal
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('show');
         }
-        if (event.target == imageModal) {
-            imageModal.style.display = 'none';
+
+        // Open confirmation modal
+        function confirmUpdate() {
+            document.getElementById('confirmModal').classList.add('show');
         }
-    }
-</script>
+
+        // Close confirmation modal
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+
+        // Submit the form
+        function submitForm() {
+            document.getElementById('statusForm').submit();
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('show');
+            }
+        }
+    </script>
 </body>
 </html>
