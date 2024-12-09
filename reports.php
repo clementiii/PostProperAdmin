@@ -64,8 +64,8 @@ function truncateDescription($description, $maxWords = 12) {
 <div class="main-content px-4">
     <!-- Summary Cards -->
     <div class="statistic-container">
-        <div class="row justify-content-center align-items-center gap-5">
-            <div class="col-auto d-flex justify-content-center">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-4 px-3">
                 <div class="card card-request">
                     <div class="card-content">
                         <h2 class="card-title">Total Reports</h2>
@@ -75,7 +75,7 @@ function truncateDescription($description, $maxWords = 12) {
                     </div>
                 </div>
             </div>
-            <div class="col-auto d-flex justify-content-center">
+            <div class="col-md-4 px-3">
                 <div class="card card-pending">
                     <div class="card-content">
                         <h2 class="card-title">Pending</h2>
@@ -85,7 +85,7 @@ function truncateDescription($description, $maxWords = 12) {
                     </div>
                 </div>
             </div>
-            <div class="col-auto d-flex justify-content-center">
+            <div class="col-md-4 px-3">
                 <div class="card card-approved">
                     <div class="card-content">
                         <h2 class="card-title">Resolved</h2>

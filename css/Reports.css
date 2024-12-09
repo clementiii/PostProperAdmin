@@ -39,14 +39,15 @@ body {
    justify-content: center;
    align-items: center;
    font-family: "Poppins", sans-serif;
-   height: 11rem;
-   width: 20rem;
+   /* height: 11rem;
+   width: 20rem; */
    border-radius: 0.5rem !important;
    padding: 1.25rem;
    border: none !important;
    box-shadow: var(--box-shadow);
    transition: transform 0.3s ease;
    text-align: center;
+   flex-direction: column;
 }
 
 .card-content {
@@ -70,7 +71,7 @@ body {
 }
 
 .card-text {
-   font-size: 2.5rem;
+   font-size: 2rem;
    font-weight: 700;
    border-radius: 0.5rem;
    color: var(--text-light);
@@ -98,9 +99,15 @@ body {
 }
 
 /* Card Colors */
-.card-request { background: var(--container-blue); }
-.card-pending { background: var(--container-yellow); }
-.card-approved { background: var(--container-green); }
+.card-request {
+   background: var(--container-blue);
+}
+.card-pending {
+   background: var(--container-yellow);
+}
+.card-approved {
+   background: var(--container-green);
+}
 
 /* Table Styles */
 .table-responsive {
@@ -130,8 +137,12 @@ body {
    text-align: center;
 }
 
-.table tbody tr:nth-child(odd) { background-color: #ffffff; }
-.table tbody tr:nth-child(even) { background-color: #f5f5fb; }
+.table tbody tr:nth-child(odd) {
+   background-color: #ffffff;
+}
+.table tbody tr:nth-child(even) {
+   background-color: #f5f5fb;
+}
 
 .table td {
    word-wrap: break-word;
@@ -171,8 +182,8 @@ body {
    cursor: not-allowed;
 }
 
-.button-approved:hover { 
-   background-color: #218838 !important; 
+.button-approved:hover {
+   background-color: #218838 !important;
 }
 
 /* Badge Styles */
@@ -185,51 +196,80 @@ body {
 
 /* Media Queries */
 @media (max-width: 1200px) {
-   .main-content { margin-left: 200px; }
-   .card {
-       height: 10rem;
-       width: 18rem;
+   .main-content {
+      margin-left: 200px;
    }
-   .card-title { font-size: 1.5rem; }
-   .card-text { font-size: 2.25rem; }
+   .card {
+      height: 10rem;
+      width: 18rem;
+   }
+   .card-title {
+      font-size: 1.5rem;
+   }
+   .card-text {
+      font-size: 2.25rem;
+   }
 }
 
 @media (max-width: 992px) {
-   .main-content { margin-left: 0; }
-   .card {
-       height: 9rem;
-       width: 16rem;
+   .main-content {
+      margin-left: 0;
    }
-   .gap-5 { gap: 2rem !important; }
-   .table { font-size: 0.9rem; }
+   .card {
+      height: 9rem;
+      width: 16rem;
+   }
+   .gap-5 {
+      gap: 2rem !important;
+   }
+   .table {
+      font-size: 0.9rem;
+   }
    .action-button {
-       padding: 6px 12px;
-       font-size: 0.8rem;
+      padding: 6px 12px;
+      font-size: 0.8rem;
    }
 }
 
 @media (max-width: 768px) {
-   .card { 
-       margin-bottom: 1.5rem;
-       height: 9rem;
-       width: 16rem;
+   .card {
+      margin-bottom: 1.5rem;
+      height: 9rem;
+      width: 16rem;
    }
-   .card-title { font-size: 1.25rem; }
-   .card-text { font-size: 2rem; }
-   .gap-5 { gap: 1.5rem !important; }
+   .card-title {
+      font-size: 1.25rem;
+   }
+   .card-text {
+      font-size: 2rem;
+   }
+   .gap-5 {
+      gap: 1.5rem !important;
+   }
    .statistic-container {
-       padding: 2rem 1rem 0 1rem;
+      padding: 2rem 1rem 0 1rem;
    }
 }
 
 @media (max-width: 480px) {
    .card {
-       height: 8rem;
-       width: 14rem;
+      height: 8rem;
+      width: 14rem;
    }
-   .card-title { font-size: 1.1rem; }
-   .card-text { font-size: 1.75rem; }
-   .gap-5 { gap: 1rem !important; }
-   .table { font-size: 14px; }
-   th, td { padding: 10px; }
+   .card-title {
+      font-size: 1.1rem;
+   }
+   .card-text {
+      font-size: 1.75rem;
+   }
+   .gap-5 {
+      gap: 1rem !important;
+   }
+   .table {
+      font-size: 14px;
+   }
+   th,
+   td {
+      padding: 10px;
+   }
 }

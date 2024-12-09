@@ -30,6 +30,7 @@ body {
 
 /* Main Content */
 .main-content {
+   padding-top: 1.5rem;
    padding-bottom: 2rem;
    margin-left: 18.5rem;
 }
@@ -38,9 +39,10 @@ body {
 .stat-box {
    display: flex;
    justify-content: center;
+   align-items: center;
    font-family: "Poppins", sans-serif;
-   height: 11rem;
-   width: 20rem;
+   /* height: 11rem;
+   width: 20rem; */
    border-radius: 0.5rem !important;
    padding: 1.25rem;
    border: none !important;
@@ -49,7 +51,6 @@ body {
    text-align: center;
    color: var(--text-light);
    flex-direction: column;
-   align-items: center;
 }
 
 .stat-box:hover {
@@ -57,14 +58,14 @@ body {
 }
 
 .stat-box h4 {
-   font-size: 1.75rem;
+   font-size: 1.5rem;
    margin-bottom: 1rem;
    text-align: center;
    width: 100%;
 }
 
 .stat-number {
-   font-size: 2.5rem;
+   font-size: 2rem;
    font-weight: 700;
    border-radius: 0.5rem;
    width: 100%;
@@ -76,9 +77,15 @@ body {
 }
 
 /* Container Colors */
-.total-resident { background: var(--container-blue); }
-.active-user { background: var(--container-green); }
-.inactive-user { background: linear-gradient(180deg, #8a8a9e, #b3b3c2); }
+.total-resident {
+   background: var(--container-blue);
+}
+.active-user {
+   background: var(--container-green);
+}
+.inactive-user {
+   background: linear-gradient(180deg, #8a8a9e, #b3b3c2);
+}
 
 /* Table Styles */
 .table-responsive {
@@ -108,8 +115,12 @@ body {
    text-align: center;
 }
 
-.table tbody tr:nth-child(odd) { background-color: #ffffff; }
-.table tbody tr:nth-child(even) { background-color: #f5f5fb; }
+.table tbody tr:nth-child(odd) {
+   background-color: #ffffff;
+}
+.table tbody tr:nth-child(even) {
+   background-color: #f5f5fb;
+}
 
 .table td {
    word-wrap: break-word;
@@ -226,49 +237,72 @@ body {
 
 /* Media Queries */
 @media (max-width: 1200px) {
-   .main-content { margin-left: 200px; }
-   .stat-box {
-       height: 10rem;
-       width: 18rem;
+   .main-content {
+      margin-left: 200px;
    }
-   .stat-box h4 { font-size: 1.5rem; }
-   .stat-number { font-size: 2.25rem; }
+   .stat-box {
+      height: 10rem;
+      width: 18rem;
+   }
+   .stat-box h4 {
+      font-size: 1.5rem;
+   }
+   .stat-number {
+      font-size: 2.25rem;
+   }
 }
 
 @media (max-width: 992px) {
-   .main-content { margin-left: 0; }
-   .stat-box {
-       height: 9rem;
-       width: 16rem;
+   .main-content {
+      margin-left: 0;
    }
-   .table { font-size: 0.9rem; }
+   .stat-box {
+      height: 9rem;
+      width: 16rem;
+   }
+   .table {
+      font-size: 0.9rem;
+   }
    .action-button {
-       padding: 6px 12px;
-       font-size: 0.8rem;
+      padding: 6px 12px;
+      font-size: 0.8rem;
    }
 }
 
 @media (max-width: 768px) {
-   .stat-box { 
-       margin-bottom: 1.5rem;
-       height: 9rem;
-       width: 16rem;
+   .stat-box {
+      margin-bottom: 1.5rem;
+      height: 9rem;
+      width: 16rem;
    }
-   .stat-box h4 { font-size: 1.25rem; }
-   .stat-number { font-size: 2rem; }
+   .stat-box h4 {
+      font-size: 1.25rem;
+   }
+   .stat-number {
+      font-size: 2rem;
+   }
    .custom-modal-content {
-       width: 90%;
-       margin: 30% auto;
+      width: 90%;
+      margin: 30% auto;
    }
 }
 
 @media (max-width: 480px) {
    .stat-box {
-       height: 8rem;
-       width: 14rem;
+      height: 8rem;
+      width: 14rem;
    }
-   .stat-box h4 { font-size: 1.1rem; }
-   .stat-number { font-size: 1.75rem; }
-   .table { font-size: 14px; }
-   th, td { padding: 10px; }
+   .stat-box h4 {
+      font-size: 1.1rem;
+   }
+   .stat-number {
+      font-size: 1.75rem;
+   }
+   .table {
+      font-size: 14px;
+   }
+   th,
+   td {
+      padding: 10px;
+   }
 }
