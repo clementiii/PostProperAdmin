@@ -89,7 +89,6 @@ body {
 
 /* Stats Cards */
 .stats-container {
-   margin-top: -2rem;
    position: relative;
    z-index: 3;
 }
