@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
                     </div>
 
                     <!-- ID Section -->
-                    <div class="id-section">
+                    <div class="id-section mt-4">
                         <div class="section-header">
                             <i class="fas fa-id-card"></i>
                             <h2>Valid ID</h2>
@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
                                 </div>
 
                                 <div class="info-group">
-                                    <label>Birthday</label>
+                                    <label>Birthdate</label>
                                     <div class="info-value">
                                         <i class="fas fa-birthday-cake"></i>
                                         <?php echo date('F d, Y', strtotime($userData['birthday'])); ?>

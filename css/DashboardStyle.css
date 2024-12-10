@@ -1,304 +1,316 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 :root {
-    /* Colors */
-    --primary-color: #61009f;
-    --primary-dark: #3f0070;
-    --primary-light: #b52aff;
-    --text-dark: #06070f;
-    --text-light: #f0f0fa;
-    --background-light: #f0f0f0;
-    
-    /* Gradients */
-    --gradient-blue: linear-gradient(135deg, #3498db, #5dade2);
-    --gradient-yellow: linear-gradient(135deg, #d68910, #f5b041);
-    --gradient-red: linear-gradient(135deg, #a93226, #e74c3c);
-    
-    /* Shadows */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+   /* Colors */
+   --primary-color: #61009f;
+   --primary-dark: #3f0070;
+   --primary-light: #b52aff;
+   --text-dark: #06070f;
+   --text-light: #f0f0fa;
+   --background-light: #f0f0f0;
+
+   /* Gradients */
+   --gradient-blue: linear-gradient(135deg, #3498db, #5dade2);
+   --gradient-yellow: linear-gradient(135deg, #d68910, #f5b041);
+   --gradient-red: linear-gradient(135deg, #a93226, #e74c3c);
+
+   /* Shadows */
+   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Base Styles */
 body {
-    font-family: "Poppins", sans-serif;
-    background-color: var(--background-light);
-    color: var(--text-dark);
+   font-family: "Poppins", sans-serif;
+   background-color: var(--background-light);
+   color: var(--text-dark);
 }
 
 .main-content {
-    min-height: 100vh;
-    padding-bottom: 2rem;
+   min-height: 100vh;
+   padding-bottom: 2rem;
 }
 
 /* Header Section */
 .header-section {
-    position: relative;
-    height: 50vh;
-    width: 100%;
-    overflow: hidden;
+   position: relative;
+   height: 50vh;
+   width: 100%;
+   overflow: hidden;
 }
 
 .header-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
 }
 
 .header-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));
-    z-index: 1;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+   z-index: 1;
 }
 
 .welcome-text {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--text-light);
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-align: center;
-    z-index: 2;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+   position: absolute;
+   bottom: 2rem;
+   left: 50%;
+   transform: translateX(-50%);
+   color: var(--text-light);
+   font-size: 2.5rem;
+   font-weight: 700;
+   text-align: center;
+   z-index: 2;
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .profile-icon {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: var(--shadow-md);
-    object-fit: cover;
-    z-index: 2;
-    transition: transform 0.3s ease;
+   position: absolute;
+   top: 1rem;
+   right: 1rem;
+   width: 3.5rem;
+   height: 3.5rem;
+   border-radius: 50%;
+   border: 3px solid white;
+   box-shadow: var(--shadow-md);
+   object-fit: cover;
+   z-index: 2;
+   transition: transform 0.3s ease;
 }
 
 .profile-icon:hover {
-    transform: scale(1.1);
+   transform: scale(1.1);
 }
 
 /* Stats Cards */
 .stats-container {
-    margin-top: -2rem;
-    position: relative;
-    z-index: 3;
+   position: relative;
+   z-index: 3;
 }
 
 .stat-card {
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s ease;
+   background: white;
+   border-radius: 1rem;
+   padding: 1.5rem;
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   box-shadow: var(--shadow-md);
+   transition: transform 0.3s ease;
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
+   transform: translateY(-5px);
 }
 
-.stat-card.resident { background: var(--gradient-blue); }
-.stat-card.documents { background: var(--gradient-yellow); }
-.stat-card.reports { background: var(--gradient-red); }
+.stat-card.resident {
+   background: var(--gradient-blue);
+}
+.stat-card.documents {
+   background: var(--gradient-yellow);
+}
+.stat-card.reports {
+   background: var(--gradient-red);
+}
 
 .stat-icon {
-    font-size: 2.5rem;
-    color: var(--text-light);
-    background: rgba(255, 255, 255, 0.2);
-    padding: 1rem;
-    border-radius: 0.75rem;
+   font-size: 2.5rem;
+   color: var(--text-light);
+   background: rgba(255, 255, 255, 0.2);
+   padding: 1rem;
+   border-radius: 0.75rem;
 }
 
 .stat-info {
-    color: var(--text-light);
+   color: var(--text-light);
 }
 
 .stat-info h5 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    opacity: 0.9;
+   font-size: 1.2rem;
+   margin-bottom: 0.5rem;
+   opacity: 0.9;
 }
 
 .stat-info h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
+   font-size: 2rem;
+   font-weight: 700;
+   margin: 0;
 }
 
 /* Table Section */
 .table-section {
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: var(--shadow-md);
-    margin-top: 2rem;
+   background: white;
+   border-radius: 1rem;
+   padding: 1.5rem;
+   box-shadow: var(--shadow-md);
+   margin-top: 2rem;
 }
 
 .section-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   margin-bottom: 1.5rem;
 }
 
 .section-header h4 {
-    margin: 0;
-    color: var(--primary-dark);
+   margin: 0;
+   color: var(--primary-dark);
 }
 
 .table {
-    margin: 0;
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+   margin: 0;
+   width: 100%;
+   border-collapse: separate;
+   border-spacing: 0;
 }
 
 .table thead th {
-    background: var(--primary-dark);
-    color: var(--text-light);
-    font-weight: 500;
-    padding: 1rem;
-    text-align: center;
+   background: var(--primary-dark);
+   color: var(--text-light);
+   font-weight: 500;
+   padding: 1rem;
+   text-align: center;
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #f8f9fa;
+   background-color: #f8f9fa;
 }
 
 .table td {
-    padding: 1rem;
-    text-align: center;
-    vertical-align: middle;
+   padding: 1rem;
+   text-align: center;
+   vertical-align: middle;
 }
 
 .view-btn {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
+   background: var(--primary-color);
+   color: white;
+   border: none;
+   padding: 0.5rem 1rem;
+   border-radius: 0.5rem;
+   font-size: 0.9rem;
+   transition: background-color 0.3s ease;
+   cursor: pointer;
 }
 
 .view-btn:hover {
-    background: var(--primary-light);
+   background: var(--primary-light);
 }
 
 /* Modal Fixes */
 .modal-backdrop {
-    display: none !important;
+   display: none !important;
 }
 
 .modal {
-    background: rgba(0, 0, 0, 0.5);
+   background: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-    border-radius: 1rem;
-    border: none;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    margin: 1.75rem auto;
+   border-radius: 1rem;
+   border: none;
+   box-shadow: var(--shadow-lg);
+   position: relative;
+   margin: 1.75rem auto;
+   overflow: hidden; /* Ensures the header spans full width */
 }
 
 .modal-header {
-    background: var(--primary-color);
-    color: var(--text-light);
-    border-radius: 1rem 1rem 0 0;
-    padding: 1rem 1.5rem;
+   background: var(--primary-color);
+   color: var(--text-light);
+   border-radius: 0;
+   padding: 1rem 1.5rem;
+   position: absolute; /* Position absolutely */
+   top: 0;
+   left: 0;
+   right: 0;
+   z-index: 10; /* Ensure it's above other content */
 }
 
 .modal-body {
-    padding: 1.5rem;
+   padding: 1.5rem;
+   margin-top: 3.5rem; /* Add top margin to push content below header */
 }
 
 .modal-body p {
-    margin-bottom: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.75rem;
+   margin-bottom: 0.75rem;
+   display: flex;
+   justify-content: space-between;
+   border-bottom: 1px solid #eee;
+   padding-bottom: 0.75rem;
 }
 
 .modal-body strong {
-    color: var(--primary-dark);
+   color: var(--primary-dark);
 }
 
 .btn-close {
-    filter: brightness(0) invert(1);
+   filter: brightness(0) invert(1);
 }
 
 /* Responsive Design */
 @media (max-width: 992px) {
-    .welcome-text {
-        font-size: 2rem;
-    }
-    
-    .stat-card {
-        padding: 1rem;
-    }
-    
-    .stat-icon {
-        font-size: 2rem;
-        padding: 0.75rem;
-    }
-    
-    .stat-info h3 {
-        font-size: 1.5rem;
-    }
+   .welcome-text {
+      font-size: 2rem;
+   }
+
+   .stat-card {
+      padding: 1rem;
+   }
+
+   .stat-icon {
+      font-size: 2rem;
+      padding: 0.75rem;
+   }
+
+   .stat-info h3 {
+      font-size: 1.5rem;
+   }
 }
 
 @media (max-width: 768px) {
-    .header-section {
-        height: 40vh;
-    }
-    
-    .welcome-text {
-        font-size: 1.5rem;
-        width: 90%;
-    }
-    
-    .table-responsive {
-        font-size: 0.9rem;
-    }
-    
-    .modal-container {
-        margin: 20px auto;
-        width: 95%;
-    }
+   .header-section {
+      height: 40vh;
+   }
+
+   .welcome-text {
+      font-size: 1.5rem;
+      width: 90%;
+   }
+
+   .table-responsive {
+      font-size: 0.9rem;
+   }
+
+   .modal-container {
+      margin: 20px auto;
+      width: 95%;
+   }
 }
 
 @media (max-width: 576px) {
-    .stat-card {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .welcome-text {
-        font-size: 1.25rem;
-    }
-    
-    .table-section {
-        padding: 1rem;
-    }
-    
-    .detail-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
+   .stat-card {
+      flex-direction: column;
+      text-align: center;
+   }
+
+   .welcome-text {
+      font-size: 1.25rem;
+   }
+
+   .table-section {
+      padding: 1rem;
+   }
+
+   .detail-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+   }
 }
