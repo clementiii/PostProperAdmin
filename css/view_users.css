@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 
+/* Root Variables */
 :root {
    /* Color System */
    --primary: #61009f;
@@ -50,7 +51,14 @@ body {
    padding: 0 1rem;
 }
 
-/* Header Section */
+/* Content Layout */
+.content-grid {
+   display: grid;
+   grid-template-columns: minmax(400px, 1fr) 2fr;
+   gap: 2rem;
+}
+
+/* Header Styles */
 .header-section {
    display: flex;
    align-items: center;
@@ -63,13 +71,6 @@ body {
    font-weight: 600;
    color: var(--text-light);
    margin: 0;
-}
-
-/* Content Grid */
-.content-grid {
-   display: grid;
-   grid-template-columns: minmax(400px, 1fr) 2fr;
-   gap: 2rem;
 }
 
 /* Button Styles */
@@ -90,7 +91,8 @@ body {
 .btn-secondary:hover {
    background-color: var(--surface-light);
    transform: translateY(-2px);
-}/* Profile Section */
+}
+/* Profile and ID Sections */
 .profile-section,
 .id-section {
    background-color: var(--surface-white);
@@ -121,6 +123,7 @@ body {
    color: var(--text-dark);
 }
 
+/* Profile Picture */
 .profile-picture-container {
    aspect-ratio: 1;
    background-color: var(--surface-purple);
@@ -143,7 +146,7 @@ body {
    transform: scale(1.05);
 }
 
-/* ID Section */
+/* ID Section Layout */
 .id-grid {
    display: grid;
    grid-template-columns: 1fr;
@@ -163,6 +166,7 @@ body {
    margin: 0;
 }
 
+/* ID Images */
 .id-image-wrapper {
    position: relative;
    aspect-ratio: 16/10;
@@ -182,6 +186,7 @@ body {
    transition: transform var(--transition-fast);
 }
 
+/* ID Image Overlay */
 .image-overlay {
    position: absolute;
    inset: 0;
@@ -204,7 +209,9 @@ body {
 
 .id-image-wrapper:hover .image-overlay {
    opacity: 1;
-}/* Details Card */
+}
+
+/* Details Card */
 .details-card {
    background-color: var(--surface-white);
    border-radius: 1rem;
@@ -218,6 +225,7 @@ body {
    gap: 2rem;
 }
 
+/* Info Sections */
 .info-section {
    display: flex;
    flex-direction: column;
@@ -256,7 +264,6 @@ body {
    text-align: center;
    color: var(--primary);
 }
-
 /* Base Modal Styles */
 .modal {
    display: none;
@@ -272,11 +279,11 @@ body {
    justify-content: center;
 }
 
-/* Image Preview Modal Specific */
+/* Image Preview Modal */
 .image-modal .modal-content {
    position: relative;
-   width: 800px;  /* Fixed width */
-   height: 800px; /* Fixed height to make it square */
+   width: 800px;
+   height: 800px;
    background-color: white;
    border-radius: 0.5rem;
    overflow: hidden;
@@ -289,8 +296,9 @@ body {
    align-items: center;
    justify-content: space-between;
    padding: 1rem;
-   background-color: #61009f;
+   background-color: var(--primary);
    color: white;
+   flex-shrink: 0;  /* Prevents header from shrinking */
 }
 
 .image-modal .modal-controls {
@@ -301,19 +309,25 @@ body {
 
 .image-modal .modal-body {
    flex: 1;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+   position: relative;
+   overflow: hidden;  /* Contains zoomed image */
    padding: 1rem;
    background-color: white;
-}
-
-.image-container {
-   width: 100%;
-   height: 100%;
    display: flex;
    justify-content: center;
    align-items: center;
+}
+
+
+/* Image Container */
+.image-container {
+   position: relative;
+   width: calc(100% - 2rem);  /* Account for padding */
+   height: calc(100% - 2rem); /* Account for padding */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   overflow: hidden;
    cursor: grab;
 }
 
@@ -324,12 +338,17 @@ body {
 #modalImage {
    max-width: 100%;
    max-height: 100%;
+   width: auto;
+   height: auto;
    object-fit: contain;
    user-select: none;
    -webkit-user-drag: none;
+   transform-origin: center;  /* Ensures zoom happens from center */
 }
 
-.zoom-btn {
+/* Modal Controls */
+.zoom-btn,
+.close-modal {
    background: rgba(255, 255, 255, 0.2);
    border: none;
    color: white;
@@ -343,11 +362,12 @@ body {
    transition: all var(--transition-fast);
 }
 
-.zoom-btn:hover {
+.zoom-btn:hover,
+.close-modal:hover {
    background: rgba(255, 255, 255, 0.3);
 }
 
-/* Confirm Changes Modal Specific */
+/* Confirmation Modal */
 .confirm-modal .modal-content {
    width: 400px;
    background-color: white;
@@ -357,7 +377,7 @@ body {
 
 .confirm-modal .modal-header {
    padding: 1rem;
-   background-color: #61009f;
+   background-color: var(--primary);
    color: white;
    display: flex;
    align-items: center;
@@ -374,26 +394,7 @@ body {
    gap: 1rem;
    margin-top: 1.5rem;
 }
-
-.close-modal {
-   background: rgba(255, 255, 255, 0.2);
-   border: none;
-   color: white;
-   width: 2.5rem;
-   height: 2.5rem;
-   border-radius: 0.5rem;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   cursor: pointer;
-   transition: all var(--transition-fast);
-}
-
-.close-modal:hover {
-   background: rgba(255, 255, 255, 0.3);
-}
-
-/* Status Select */
+/* Form Controls */
 .status-select-wrapper {
    position: relative;
    margin-top: 0.5rem;
@@ -428,12 +429,31 @@ body {
    pointer-events: none;
 }
 
-/* Modal Buttons */
-.modal-buttons {
+/* Button Styles */
+.button-container {
+   margin-top: 2rem;
+}
+
+.btn-save {
+   width: 100%;
+   padding: 0.875rem;
    display: flex;
-   justify-content: flex-end;
-   gap: 1rem;
-   margin-top: 1.5rem;
+   align-items: center;
+   justify-content: center;
+   gap: 0.75rem;
+   background-color: var(--primary);
+   color: white;
+   border: none;
+   border-radius: 0.75rem;
+   font-size: 1rem;
+   font-weight: 500;
+   cursor: pointer;
+   transition: all var(--transition-fast);
+}
+
+.btn-save:hover {
+   background-color: var(--primary-light);
+   transform: translateY(-2px);
 }
 
 .btn-cancel,
@@ -458,33 +478,6 @@ body {
 }
 
 .btn-confirm:hover {
-   background-color: var(--primary-light);
-   transform: translateY(-2px);
-}
-
-/* Save Button */
-.button-container {
-   margin-top: 2rem;
-}
-
-.btn-save {
-   width: 100%;
-   padding: 0.875rem;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   gap: 0.75rem;
-   background-color: var(--primary);
-   color: white;
-   border: none;
-   border-radius: 0.75rem;
-   font-size: 1rem;
-   font-weight: 500;
-   cursor: pointer;
-   transition: all var(--transition-fast);
-}
-
-.btn-save:hover {
    background-color: var(--primary-light);
    transform: translateY(-2px);
 }
@@ -523,9 +516,11 @@ body {
       max-height: 200px;
    }
 
-   .modal-content {
-      width: 98vw;
-      height: 98vh;
+   .image-modal .modal-content {
+      width: 90vw;
+      height: 90vw;
+      max-width: 800px;
+      max-height: 800px;
    }
 }
 
@@ -544,10 +539,15 @@ body {
       max-height: 180px;
    }
 
-   .modal-content {
+   .image-modal .modal-content {
       width: 100vw;
-      height: 100vh;
+      height: 100vw;
       border-radius: 0;
+   }
+
+   .confirm-modal .modal-content {
+      width: 95vw;
+      margin: 1rem;
    }
 
    .info-section {
@@ -562,5 +562,11 @@ body {
 
    .modal-controls {
       gap: 0.25rem;
+   }
+
+   .btn-cancel,
+   .btn-confirm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
    }
 }
