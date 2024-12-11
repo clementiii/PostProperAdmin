@@ -3,6 +3,9 @@ require_once 'db.php';
 
 header('Content-Type: application/json');
 
+// Enable error reporting for debugging
+error_log("Starting password update process");
+
 $response = array();
 
 try {
@@ -42,7 +45,33 @@ try {
     if (isset($_POST['adrZone']) && !empty($_POST['adrZone'])) {
         $updates['adrZone'] = $_POST['adrZone'];
     }
-    if (isset($_POST['password']) && !empty($_POST['password'])) {
+
+    // Handle password update with verification
+    if (isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['currentPassword']) && !empty($_POST['currentPassword'])) {
+        error_log("Attempting password update");
+        
+        // First verify the current password
+        $stmt = $conn->prepare("SELECT password FROM user_accounts WHERE id = ?");
+        $stmt->execute([$userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$user) {
+            error_log("User not found for ID: " . $userId);
+            throw new Exception('User not found');
+        }
+
+        // Log password verification details (be careful with sensitive data in production)
+        error_log("Stored password from DB: " . $user['password']);
+        error_log("Current password from input: " . $_POST['currentPassword']);
+        
+        // Direct comparison of hashes
+        if ($_POST['currentPassword'] !== $user['password']) {
+            error_log("Password verification failed - Hashes don't match");
+            throw new Exception('Current password is incorrect');
+        }
+
+        error_log("Password verification successful");
+        // If verification passed, set the new password directly
         $updates['password'] = $_POST['password'];
     }
 
@@ -61,6 +90,9 @@ try {
             $sql = rtrim($sql, ', ');
             $sql .= " WHERE id = ?";
             $params[] = $userId;
+
+            error_log("Update SQL: " . $sql);
+            error_log("Update params (excluding sensitive data): " . count($params) . " parameters");
 
             $stmt = $conn->prepare($sql);
             if ($stmt->execute($params)) {
@@ -101,9 +133,11 @@ try {
     }
 
 } catch (Exception $e) {
+    error_log("Error in update_user_profile: " . $e->getMessage());
     $response['status'] = 'error';
     $response['message'] = $e->getMessage();
 }
 
+error_log("Final response: " . json_encode($response));
 echo json_encode($response);
 ?>
