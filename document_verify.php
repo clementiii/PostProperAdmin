@@ -39,11 +39,25 @@
             exit;
         }
 
-        $updateQuery = "UPDATE document_requests SET Status = :status, rejection_reason = :reason WHERE Id = :id";
+        // Set current date for approval
+        $dateApproved = null;
+        if ($newStatus === 'Approved') {
+            date_default_timezone_set('Asia/Manila'); // Set timezone to Philippines
+            $dateApproved = date('Y-m-d H:i:s');
+        }
+
+        // Updated query to include date_approved
+        $updateQuery = "UPDATE document_requests 
+                       SET Status = :status, 
+                           rejection_reason = :reason,
+                           date_approved = :date_approved 
+                       WHERE Id = :id";
+
         $updateStmt = $conn->prepare($updateQuery);
         $updateStmt->bindParam(':status', $newStatus, PDO::PARAM_STR);
         $updateStmt->bindParam(':id', $documentId, PDO::PARAM_INT);
         $updateStmt->bindParam(':reason', $reason, PDO::PARAM_STR);
+        $updateStmt->bindParam(':date_approved', $dateApproved, PDO::PARAM_STR);
         $updateStmt->execute();
 
         header('Location: documents.php');

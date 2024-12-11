@@ -24,7 +24,7 @@ $queries = [
     'residents' => "SELECT COUNT(*) AS count FROM user_accounts",
     'documents' => "SELECT COUNT(*) AS count FROM document_requests",
     'incidents' => "SELECT COUNT(*) AS count FROM incident_reports",
-    'recent_requests' => "SELECT * FROM document_requests ORDER BY DateRequested DESC LIMIT 5"
+    'recent_requests' => "SELECT * FROM document_requests WHERE status = 'pending' ORDER BY DateRequested DESC LIMIT 5"
 ];
 
 $stats = [];
@@ -99,7 +99,7 @@ foreach ($queries as $key => $query) {
             <!-- Recent Requests Table -->
             <div class="table-section mt-5">
                 <div class="section-header">
-                    <h4><i class="fas fa-clock"></i> Recent Document Requests</h4>
+                    <h4><i class="fas fa-clock"></i> Pending Document Requests</h4>
                 </div>
                 <div class="table-responsive">
                     <table class="table">
@@ -111,25 +111,33 @@ foreach ($queries as $key => $query) {
                                 <th>Qty</th>
                                 <th>Price</th>
                                 <th>Date</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($stats['recent_requests'] as $request): ?>
+                            <?php if (!empty($stats['recent_requests'])): ?>
+                                <?php foreach ($stats['recent_requests'] as $request): ?>
+                                    <tr>
+                                        <td>TXN-<?php echo htmlspecialchars($request['Id']); ?></td>
+                                        <td><?php echo htmlspecialchars($request['Name']); ?></td>
+                                        <td><?php echo htmlspecialchars($request['DocumentType']); ?></td>
+                                        <td><?php echo htmlspecialchars($request['Quantity']); ?></td>
+                                        <td>₱<?php echo number_format($request['Quantity'] * 50, 2); ?></td>
+                                        <td><?php echo date('M d, Y', strtotime($request['DateRequested'])); ?></td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>
+                                            <button class="view-btn" onclick="viewDetails(<?php echo htmlspecialchars(json_encode($request)); ?>)">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
                                 <tr>
-                                    <td>TXN-<?php echo htmlspecialchars($request['Id']); ?></td>
-                                    <td><?php echo htmlspecialchars($request['Name']); ?></td>
-                                    <td><?php echo htmlspecialchars($request['DocumentType']); ?></td>
-                                    <td><?php echo htmlspecialchars($request['Quantity']); ?></td>
-                                    <td>₱<?php echo number_format($request['Quantity'] * 50, 2); ?></td>
-                                    <td><?php echo date('M d, Y', strtotime($request['DateRequested'])); ?></td>
-                                    <td>
-                                        <button class="view-btn" onclick="viewDetails(<?php echo htmlspecialchars(json_encode($request)); ?>)">
-                                            <i class="fas fa-eye"></i> View
-                                        </button>
-                                    </td>
+                                    <td colspan="8" class="text-center">No pending requests found</td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
