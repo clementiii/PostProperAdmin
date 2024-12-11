@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-group">
                             <label class="form-label">Name</label>
                             <input type="text" name="name" class="form-control" 
-                                   value="<?php echo htmlspecialchars($admin['name']); ?>" disabled>
+                                value="<?php echo htmlspecialchars($admin['name']); ?>" readonly>
                         </div>
 
                         <div class="form-group">

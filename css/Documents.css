@@ -70,6 +70,7 @@ body {
 .card-pending { background: var(--container-yellow); }
 .card-approved { background: var(--container-green); }
 .card-rejected { background: var(--container-red); }
+.card-overdue { background: var(--container-red); }
 
 /* Table Styles */
 .table-responsive {
