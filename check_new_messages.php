@@ -15,7 +15,15 @@ $last_timestamp = $_GET['last_message_timestamp'] / 1000; // Convert from millis
 $last_timestamp = date('Y-m-d H:i:s', $last_timestamp);
 
 try {
-    $query = "SELECT m.*, u.firstName, u.lastName 
+    $query = "SELECT m.*,
+              CASE 
+                  WHEN m.is_admin = 1 AND m.admin_id IS NOT NULL THEN 
+                      (SELECT name FROM admin_accounts WHERE id = m.admin_id)
+                  WHEN m.is_admin = 1 AND m.admin_id IS NULL THEN
+                      'Admin'
+                  ELSE 
+                      CONCAT(u.firstName, ' ', u.lastName)
+              END as sender_name
               FROM messages m 
               LEFT JOIN user_accounts u ON m.sender_id = u.id 
               WHERE (m.sender_id = :user_id OR (m.is_admin = 1 AND m.sender_id IN 
@@ -37,7 +45,8 @@ try {
             'message' => $row['message'],
             'timestamp' => strtotime($row['timestamp']) * 1000,
             'is_admin' => (bool)$row['is_admin'],
-            'sender_name' => $row['firstName'] . ' ' . $row['lastName']
+            'admin_id' => $row['admin_id'],
+            'sender_name' => $row['sender_name']
         ];
     }
     
