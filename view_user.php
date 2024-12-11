@@ -212,7 +212,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
                                         <?php echo $userData['last_active'] ? date('F d, Y g:i A', strtotime($userData['last_active'])) : 'Never'; ?>
                                     </div>
                                 </div>
+                                <?php
+                                // Calculate age
+                                $birthDate = new DateTime($userData['birthday']);
+                                $today = new DateTime('today');
+                                $age = $birthDate->diff($today)->y;
+                                ?>
 
+                                <div class="info-group">
+                                    <label>Age</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-user-clock"></i>
+                                        <?php echo $age; ?> years old
+                                    </div>
+                                </div>
                                 <div class="info-group">
                                     <label>Account Status</label>
                                     <form method="POST" id="statusForm">
@@ -247,63 +260,164 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
         </div>
     </div>
 
-    <!-- Image Modal -->
-    <div id="imageModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Image Preview</h3>
-                <button class="close-modal" onclick="closeImageModal()">
+<!-- Image Preview Modal -->
+<div id="imageModal" class="modal image-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Image Preview</h3>
+            <div class="modal-controls">
+                <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="zoom-btn" onclick="resetZoom()" title="Reset">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="close-modal" onclick="closeImageModal()" title="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <img id="modalImage" src="" alt="Preview">
+        </div>
+        <div class="modal-body">
+            <div class="image-container" id="imageContainer">
+                <img id="modalImage" src="" alt="Preview" draggable="false">
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Confirm Changes</h3>
-                <button class="close-modal" onclick="closeConfirmModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to update this user's status?</p>
-                <div class="modal-buttons">
-                    <button class="btn-cancel" onclick="closeConfirmModal()">Cancel</button>
-                    <button class="btn-confirm" onclick="submitForm()">Confirm</button>
-                </div>
+<!-- Confirm Changes Modal -->
+<div id="confirmModal" class="modal confirm-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Confirm Changes</h3>
+            <button class="close-modal" onclick="closeConfirmModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to update this user's status?</p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn-confirm" onclick="submitForm()">Confirm</button>
             </div>
         </div>
     </div>
+</div>
 
     <script>
+        let currentZoom = 1;
+        const ZOOM_STEP = 0.5;
+        const MAX_ZOOM = 4;
+        const MIN_ZOOM = 1;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+
         // Open image modal
         function openImageModal(src) {
-            document.getElementById('modalImage').src = src;
+            const modalImage = document.getElementById('modalImage');
+            const imageContainer = document.getElementById('imageContainer');
+            modalImage.src = src;
             document.getElementById('imageModal').classList.add('show');
+            resetZoom();
+            
+            // Reset transform when opening new image
+            imageContainer.style.transform = 'translate(0, 0)';
+            translateX = 0;
+            translateY = 0;
         }
 
         // Close image modal
         function closeImageModal() {
             document.getElementById('imageModal').classList.remove('show');
+            resetZoom();
         }
 
-        // Open confirmation modal
+        // Zoom in
+        function zoomIn() {
+            if (currentZoom < MAX_ZOOM) {
+                currentZoom += ZOOM_STEP;
+                updateZoom();
+            }
+        }
+
+        // Zoom out
+        function zoomOut() {
+            if (currentZoom > MIN_ZOOM) {
+                currentZoom -= ZOOM_STEP;
+                updateZoom();
+            }
+        }
+
+        // Reset zoom
+        function resetZoom() {
+            currentZoom = 1;
+            updateZoom();
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.style.transform = 'translate(0, 0)';
+            translateX = 0;
+            translateY = 0;
+        }
+
+        // Update zoom level
+        function updateZoom() {
+            const modalImage = document.getElementById('modalImage');
+            modalImage.style.transform = `scale(${currentZoom})`;
+        }
+
+        // Mouse down handler
+        function handleMouseDown(e) {
+            if (currentZoom > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                document.getElementById('imageContainer').style.cursor = 'grabbing';
+            }
+        }
+
+        // Mouse move handler
+        function handleMouseMove(e) {
+            if (!isDragging) return;
+            
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.style.transform = `translate(${translateX}px, ${translateY}px)`;
+        }
+
+        // Mouse up handler
+        function handleMouseUp() {
+            isDragging = false;
+            document.getElementById('imageContainer').style.cursor = 'grab';
+        }
+
+        // Add event listeners for dragging
+        document.getElementById('imageContainer').addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+
+        // Mouse wheel zoom
+        document.getElementById('modalBody').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                zoomIn();
+            } else {
+                zoomOut();
+            }
+        });
+
+        // Confirmation modal functions
         function confirmUpdate() {
             document.getElementById('confirmModal').classList.add('show');
         }
 
-        // Close confirmation modal
         function closeConfirmModal() {
             document.getElementById('confirmModal').classList.remove('show');
         }
 
-        // Submit the form
         function submitForm() {
             document.getElementById('statusForm').submit();
         }
@@ -311,7 +425,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
         // Close modals when clicking outside
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('show');
+                if (event.target.id === 'imageModal') {
+                    closeImageModal();
+                } else if (event.target.id === 'confirmModal') {
+                    closeConfirmModal();
+                }
             }
         }
     </script>
