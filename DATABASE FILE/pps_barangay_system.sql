@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2024 at 12:42 PM
+-- Generation Time: Dec 12, 2024 at 02:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,18 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `pps_barangay_system`
 --
-
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_pickup_status` (IN `request_id` INT, IN `new_status` VARCHAR(20))   BEGIN
-    UPDATE document_requests
-    SET pickup_status = new_status
-    WHERE Id = request_id;
-END$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -53,7 +41,7 @@ CREATE TABLE `admin_accounts` (
 
 INSERT INTO `admin_accounts` (`id`, `name`, `username`, `password`, `profile_picture`) VALUES
 (1, 'Rannie Camba', 'rannie', 'password', 'assets/admin_profile_pictures/testprof1.jpg\n'),
-(4, 'Quirino Saruno', 'saruno', 'Password@', 'uploads/profile_pictures/1733591478_a79b3e17-90b7-49d0-98ea-e3208f8dd1ef.png'),
+(4, 'Quirino Saruno', 'sarunoquirino', 'password', 'uploads/profile_pictures/1733966300_a79b3e17-90b7-49d0-98ea-e3208f8dd1ef.png'),
 (8, 'Admin 2', 'admin2', 'password', '');
 
 -- --------------------------------------------------------
@@ -76,8 +64,11 @@ CREATE TABLE `barangay_announcements` (
 --
 
 INSERT INTO `barangay_announcements` (`id`, `announcement_title`, `description_text`, `announcement_images`, `created_at`, `posted_at`) VALUES
-(22, '3rd Quarter BNAO Meeting', '3rd Quarter BNAO Meeting held @Multipurpose Building, Upper Bicutan, Taguig attended by our very own Barangay Nutrition Action Officer himself Kagawad on Health Jobert Quiambao and eventually Voted as one of Taguig BNAO Officers spearheaded by City Nutrition Action Officer Ms Julic Bornabc.', '[\"uploads\\/announcements\\/1732108477_IMG_20201130_145352.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20201130_145406.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20210501_075448.jpg\",\"uploads\\/announcements\\/1732108477_IMG_20211221_140927.jpg\",\"uploads\\/', '2024-11-20 06:14:37', '2024-11-20 14:14:37'),
-(34, 'Nagsagawa ng pagti-trim ng puno sa Agila Street,G2 Village sina Kagawad on Clean and Green', 'Bilang tugon sa concerned citizen ay nagsagawa ng pagti-trim ng puno sa Agila Street,G2 Village sina Kagawad on Clean and Green, Kagawad Elmer Baldonado kasama ang ating masisipag na Environmental Police at Barangay Enforcers.\r\nAng nasabing puno ang nakaharang na sa mga wire ng kuryente kung kaya\'t kinakailangan na itong bawasan upang maiwasan ang anumang hindi magandang pwedeng mangyari.\r\nMula sa Pamunuan ng ating Punong Barangay Quirino Sarono ay nais naming laging maging ligtas ang bawat mamamayan ng Barangay Post Proper Southside.\r\n.\r\n.\r\n#ᴋᴀᴘQꜱ\r\n#ꜱᴇʀʙɪꜱʏᴏɴɢꜱᴀʀᴏɴᴏ\r\n#ɪ????ꜱᴏᴜᴛʜꜱɪᴅᴇ\r\n#ꜱᴏᴜᴛʜꜱɪᴅᴇ2024', '[\"uploads\\/announcements\\/1733500679_469533685_960707952771984_4186303642133741615_n.jpg\",\"uploads\\/announcements\\/1733500679_469545587_960707896105323_7268418601890999976_n.jpg\",\"uploads\\/announcements\\/1733500679_469651827_960707949438651_6966504280532260782_n.jpg\",\"uploads\\/announcements\\/1733500679_469465618_960707826105330_8388280861290474215_n.jpg\",\"uploads\\/announcements\\/1733500679_469547374_960707966105316_7787706121310746654_n.jpg\"]', '2024-12-06 08:58:24', '2024-12-06 16:58:24');
+(34, 'Nagsagawa ng pagti-trim ng puno sa Agila Street,G2 Village sina Kagawad on Clean and Green', 'Bilang tugon sa concerned citizen ay nagsagawa ng pagti-trim ng puno sa Agila Street,G2 Village sina Kagawad on Clean and Green, Kagawad Elmer Baldonado kasama ang ating masisipag na Environmental Police at Barangay Enforcers.\r\nAng nasabing puno ang nakaharang na sa mga wire ng kuryente kung kaya\'t kinakailangan na itong bawasan upang maiwasan ang anumang hindi magandang pwedeng mangyari.\r\nMula sa Pamunuan ng ating Punong Barangay Quirino Sarono ay nais naming laging maging ligtas ang bawat mamamayan ng Barangay Post Proper Southside.\r\n.\r\n.\r\n#ᴋᴀᴘQꜱ\r\n#ꜱᴇʀʙɪꜱʏᴏɴɢꜱᴀʀᴏɴᴏ\r\n#ɪLOVEꜱᴏᴜᴛʜꜱɪᴅᴇ\r\n#ꜱᴏᴜᴛʜꜱɪᴅᴇ2024', '[\"uploads\\/announcements\\/1733500679_469533685_960707952771984_4186303642133741615_n.jpg\",\"uploads\\/announcements\\/1733500679_469545587_960707896105323_7268418601890999976_n.jpg\",\"uploads\\/announcements\\/1733500679_469465618_960707826105330_8388280861290474215_n.jpg\",\"uploads\\/announcements\\/1733500679_469547374_960707966105316_7787706121310746654_n.jpg\"]', '2024-12-11 18:22:53', '2024-12-12 02:22:53'),
+(35, 'Ongoing FREE Eye Check -up', 'Ongoing FREE Eye Check -up\r\n@Fox Satellite office', '[\"uploads\\/announcements\\/1733924287_469710194_962336132609166_5394994954942165739_n.jpg\",\"uploads\\/announcements\\/1733924287_469863653_962336075942505_1188672549198688813_n.jpg\",\"uploads\\/announcements\\/1733924287_469793291_962336029275843_1649697623784366509_n.jpg\"]', '2024-12-11 06:38:07', '2024-12-11 14:38:07'),
+(36, 'FREE EYE CHECKUP', '@FOX SATELITE OFFICE\r\nDEC. 9, 2024 8am - 4pm\r\n(Eye check-up only)', '[]', '2024-12-11 06:39:33', '2024-12-11 14:39:33'),
+(37, 'TAGUIG BARANGAY NUTRITION ACTION OFFICER QUARTERLY MEETING ANDOATH-TAKING CEREMONY FOR NEWLY ELECTED OFFICERS', 'TAGUIG BARANGAY NUTRITION ACTION OFFICER QUARTERLY MEETING ANDOATH-TAKING CEREMONY FOR NEWLY ELECTED OFFICERS\r\nIsinagawa ang Taguig Barangay Nutrition Action Officer Quarterly Meeting and Oath-Taking Ceremony for Newly Elected Officers ngayong araw, Disyembre 5 sa Training Plaza, Multipurpose Building, Purok 2, Barangay Upper Bicutan.\r\nPinangunahan ni Mayor Ate Lani Cayetano  ang pagbubukas ng programa kasama sina Congressman Ricardo Ading Cruz, Jr.  (Representative 1st District, Taguig City),\r\nKonsehal Rodil \"Tikboy\" Marcelino (Chair, Committee on Health), Konsehala Marisse Balina-Eron  (Co-Chair, Committee on Health), Dr. Norena R. Osano (City Health Officer), at Ms. Julie S. Bernabe (City Nutrition Action Officer).\r\nNanumpa rin ang mga bagong halal na opisyales ng Taguig City Barangay Nutrition Action Officers Association kasama ang ating Kagawad on Health at BNAO Jobert Quiambao  matapos ang naganap na special election noong Setyembre 27 upang mapunan ang mga bakanteng posisyong naiwan ng mga opisyales na nagtapos na ang termino sa kanilang mga barangay.\r\nNagkaroon din ng lecture tungkol sa kahalagahan ng pagpapatupad ng Nutrition in Emergencies (NiE) sa mga barangay at kung ano ang tungkulin ng mga Barangay Nutrition Action Officers (BNAO) sa panahon ng kalamidad.\r\nCtto: Taguig Nutrition Office', '[\"uploads\\/announcements\\/1733924411_469223371_960587896117323_5318530719560085577_n.jpg\",\"uploads\\/announcements\\/1733924411_469340425_960587886117324_1436298450426928014_n.jpg\",\"uploads\\/announcements\\/1733924411_469165537_960587669450679_3822209838079120184_n.jpg\",\"uploads\\/announcements\\/1733924411_469409440_960587579450688_8226622029199845635_n.jpg\"]', '2024-12-11 06:43:10', '2024-12-11 14:43:10'),
+(39, 'Nagsagawa ng pagti-trim ng puno sa Agila Street,G2 Village sina Kagawad on Clean and Green', 'Bilang tugon sa concerned citizen ay nagsagawa ng pagti-trim ng puno sa Agila Street,G2 Village sina Kagawad on Clean and Green, Kagawad Elmer Baldonado kasama ang ating masisipag na Environmental Police at Barangay Enforcers.\r\nAng nasabing puno ang nakaharang na sa mga wire ng kuryente kung kaya\'t kinakailangan na itong bawasan upang maiwasan ang anumang hindi magandang pwedeng mangyari.\r\nMula sa Pamunuan ng ating Punong Barangay Quirino Sarono ay nais naming laging maging ligtas ang bawat mamamayan ng Barangay Post Proper Southside.\r\n.\r\n.\r\n#ᴋᴀᴘQꜱ\r\n#ꜱᴇʀʙɪꜱʏᴏɴɢꜱᴀʀᴏɴᴏ\r\n#ɪLOVEꜱᴏᴜᴛʜꜱɪᴅᴇ\r\n#ꜱᴏᴜᴛʜꜱɪᴅᴇ2024', '[\"uploads\\/announcements\\/1733966654_469223371_960587896117323_5318530719560085577_n.jpg\",\"uploads\\/announcements\\/1733966654_469340425_960587886117324_1436298450426928014_n.jpg\",\"uploads\\/announcements\\/1733966654_469165537_960587669450679_3822209838079120184_n.jpg\",\"uploads\\/announcements\\/1733966654_469409440_960587579450688_8226622029199845635_n.jpg\",\"uploads\\/announcements\\/1733966654_469710194_962336132609166_5394994954942165739_n.jpg\"]', '2024-12-11 18:24:14', '2024-12-12 02:24:14');
 
 -- --------------------------------------------------------
 
@@ -122,9 +113,9 @@ CREATE TABLE `document_requests` (
 
 INSERT INTO `document_requests` (`Id`, `userId`, `DocumentType`, `Name`, `Address`, `TIN_No`, `CTC_No`, `Alias`, `Age`, `birthday`, `PlaceOfBirth`, `Occupation`, `LengthOfStay`, `Citizenship`, `Gender`, `CivilStatus`, `Purpose`, `Status`, `Quantity`, `DateRequested`, `valid_id`, `valid_id_front`, `valid_id_back`, `request_picture`, `rejection_reason`, `cancellation_reason`, `pickup_status`, `date_approved`) VALUES
 (40, 22, 'Barangay Clearance', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', 'UPLOADREQUIREMENTS', 25, '12-05-99', 'asd', 'awdawd', 12, 'awdaw', 'Male', 'Single', '123456789012', 'approved', 2, '2024-12-06', '', 'uploads/valid_ids/1733483666_6752dc92ad244_front.jpg', 'uploads/valid_ids/1733483666_6752dc92ad774_back.jpg', '', '', NULL, 'picked_up', NULL),
-(41, 25, 'Cedula', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'Harry', 25, '12-06-99', 'awdawd', 'awdawd', 23, 'awdaw', 'Male', 'Single', 'awdawd', 'approved', 3, '2024-12-06', '', 'uploads/valid_ids/1733483974_6752ddc6d3171_front.jpg', 'uploads/valid_ids/1733483974_6752ddc6d3511_back.jpg', '', '', NULL, 'pending', NULL),
-(42, 25, 'Barangay Certification', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'Potter', 25, '12-06-99', 'cedula', 'cedula', 21, 'cedula', 'Male', 'Single', 'cedula', 'pending', 5, '2024-12-06', '', 'uploads/valid_ids/1733484041_6752de09f37fa_front.jpg', 'uploads/valid_ids/1733484041_6752de09f3a18_back.jpg', '', '', NULL, 'pending', NULL),
-(43, 25, 'Certificate of Indigency', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'COI', 25, '12-06-99', 'COI', 'COI', 12, 'COI', 'Male', 'Single', 'COI', 'pending', 4, '2024-12-06', '', 'uploads/valid_ids/1733484166_6752de8625cd0_front.jpg', 'uploads/valid_ids/1733484166_6752de8625f6b_back.jpg', '', '', NULL, 'pending', NULL),
+(41, 25, 'Cedula', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'Harry', 25, '12-06-99', 'awdawd', 'awdawd', 23, 'awdaw', 'Male', 'Single', 'awdawd', 'approved', 3, '2024-12-06', '', 'uploads/valid_ids/1733483974_6752ddc6d3171_front.jpg', 'uploads/valid_ids/1733483974_6752ddc6d3511_back.jpg', '', '', NULL, 'picked_up', NULL),
+(42, 25, 'Barangay Certification', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'Potter', 25, '12-06-99', 'cedula', 'cedula', 21, 'cedula', 'Male', 'Single', 'cedula', 'approved', 5, '2024-12-06', '', 'uploads/valid_ids/1733484041_6752de09f37fa_front.jpg', 'uploads/valid_ids/1733484041_6752de09f3a18_back.jpg', '', '', NULL, 'pending', NULL),
+(43, 25, 'Certificate of Indigency', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'COI', 25, '12-06-99', 'COI', 'COI', 12, 'COI', 'Male', 'Single', 'COI', 'approved', 4, '2024-12-06', '', 'uploads/valid_ids/1733484166_6752de8625cd0_front.jpg', 'uploads/valid_ids/1733484166_6752de8625f6b_back.jpg', '', '', NULL, 'pending', '2024-12-11 22:25:17'),
 (44, 25, 'Barangay Clearance', 'Harry Potter', '123  Street Zone', '123456789012', '123456789012', 'photo', 25, '12-06-99', 'photo', 'photo', 12, 'photo', 'Male', 'Single', 'photo', 'pending', 4, '2024-12-06', '', 'uploads/valid_ids/1733484241_6752ded1488bd_front.jpg', 'uploads/valid_ids/1733484241_6752ded148af3_back.jpg', '', '', NULL, 'pending', NULL),
 (45, 23, 'Barangay Clearance', 'Justine Case', '123  Street Zone', '123456789012', '123456789012', 'JSUTINECASE', 25, '07-16-99', 'case', 'case', 12, 'case', 'Male', 'Single', 'case', 'pending', 5, '2024-12-06', '', 'uploads/valid_ids/1733485197_6752e28d83df8_front.jpg', 'uploads/valid_ids/1733485197_6752e28d840e8_back.jpg', '', '', NULL, 'pending', NULL),
 (46, 22, 'Barangay Clearance', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', 'cancel', 25, '12-05-99', 'cancel', 'cancel', 8, 'cancel', 'Male', 'Single', 'cancel', 'OVERDUE', 3, '2024-12-07', '', 'uploads/valid_ids/1733552883_6753eaf39253a_front.jpg', 'uploads/valid_ids/1733552883_6753eaf39291e_back.jpg', '', '', NULL, 'pending', NULL),
@@ -132,7 +123,8 @@ INSERT INTO `document_requests` (`Id`, `userId`, `DocumentType`, `Name`, `Addres
 (48, 22, 'Certificate of Indigency', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', '3', 25, '12-05-99', '3', '3', 7, '3', 'Male', 'Single', '3', 'cancelled', 4, '2024-12-07 14:34:36', '', 'uploads/valid_ids/1733553310_6753ec9e91eac_front.jpg', 'uploads/valid_ids/1733553310_6753ec9e92880_back.jpg', '', '', NULL, 'pending', NULL),
 (49, 22, 'Barangay Certification', 'Raul Menendez', '123  Street Zone', '123456789012', '123456789012', 'y', 25, '12-05-99', 'y', '7', 7, 'y', 'Male', 'Single', 'y', 'cancelled', 2, '2024-12-07 15:00:53', '', 'uploads/valid_ids/1733554220_6753f02ccacd7_front.jpg', 'uploads/valid_ids/1733554220_6753f02ccaf2f_back.jpg', '', '', 'foyditdit', 'pending', NULL),
 (50, 22, 'Barangay Clearance', 'Raul Menendez', '123  Street Zone', '921586239123', '921586239123', 'joy', 25, '12-05-99', 'tacloban  city', 'govt employee', 23, 'filipino', 'Male', 'Single', 'for nbi clearance', 'cancelled', 2, '2024-12-07 20:44:08', '', 'uploads/valid_ids/1733575501_6754434dd82a9_front.jpg', 'uploads/valid_ids/1733575501_6754434dd8c4a_back.jpg', '', '', 'No longer needed', 'pending', NULL),
-(51, 27, 'Barangay Certification', 'John Marston', '123  Street Zone', '123456789012', '123456789012', 'john', 34, '12-07-90', 'asfddf', 'Student', 15, 'dasfsdf', 'Male', 'Single', 'For my lani scholarship', 'pending', 2, '2024-12-11 19:17:16', '', 'uploads/valid_ids/1733915849_675974c96b286_front.jpg', 'uploads/valid_ids/1733915849_675974c96bb50_back.jpg', '', '', NULL, 'pending', NULL);
+(51, 27, 'Barangay Certification', 'John Marston', '123  Street Zone', '123456789012', '123456789012', 'john', 34, '12-07-90', 'asfddf', 'Student', 15, 'dasfsdf', 'Male', 'Single', 'For my lani scholarship', 'rejected', 2, '2024-12-11 19:17:16', '', 'uploads/valid_ids/1733915849_675974c96b286_front.jpg', 'uploads/valid_ids/1733915849_675974c96bb50_back.jpg', '', 'You have inputted the wrong information', NULL, 'pending', NULL),
+(52, 30, 'Barangay Clearance', 'Clement Harold Miguel Cabus', '497-A  Street Zone', '123456789012', '123456789012', 'chummy', 20, '12-22-03', 'Makati Medical Center', 'Student', 15, 'Filipino', 'Male', 'Single', 'For my business transaction', 'approved', 1, '2024-12-12 09:09:42', '', 'uploads/valid_ids/1733965821_675a37fd13db9_front.jpg', 'uploads/valid_ids/1733965821_675a37fd14085_back.jpg', '', '', NULL, 'pending', '2024-12-12 09:27:05');
 
 -- --------------------------------------------------------
 
@@ -155,14 +147,9 @@ CREATE TABLE `incident_reports` (
 --
 
 INSERT INTO `incident_reports` (`id`, `name`, `title`, `description`, `incident_picture`, `date_submitted`, `status`) VALUES
-(1, 'Robert Youngstown', 'Noise Disturbance', 'Maingay pa dito banda sa Sampaguita St.', '', '2024-11-01 22:29:27', 'resolved'),
-(4, 'Danny Sulaiman', 'Mabaho', 'pahingi po ng tulong ang baho ng kapitbahay namin na si dj tempra', '', '2024-11-06 15:37:08', 'resolved'),
-(6, 'Diosdado Tempra', 'test', 'test', '[\"uploads\\/incident_reports\\/1732255234_75af0316a0f27f7d.jpg\"]', '2024-11-22 07:00:34', 'resolved'),
-(7, 'Diosdado Tempra', 'TEST TECNO 5G', 'physical device test', '[\"uploads\\/incident_reports\\/1732255765_13dc8a2b529c12f1.jpg\"]', '2024-11-22 07:09:25', 'resolved'),
-(9, 'Diosdado Tempra', 'Accident', 'Meron pong nagsuntukan dito sa kalaw street', '[\"uploads\\/incident_reports\\/1733395260_a7a9098b62533758.jpg\"]', '2024-12-05 11:41:00', 'pending'),
-(10, 'Diosdado Tempra', 'Property Damage', 'jdieodj', '[\"uploads\\/incident_reports\\/1733395871_9e898d3b780300d9.jpg\",\"uploads\\/incident_reports\\/1733395871_b9d03787d2f284a4.jpg\",\"uploads\\/incident_reports\\/1733395871_5fe70acc821247d6.jpg\"]', '2024-12-05 11:51:11', 'resolved'),
-(11, 'John Marston', 'Accident', 'HASJKDHKAJSFsdasdasdJKAHSfa', '[\"uploads\\/incident_reports\\/1733817959_1431350a7596aef4.jpg\",\"uploads\\/incident_reports\\/1733817959_bf4fed8deb39d340.jpg\",\"uploads\\/incident_reports\\/1733817959_ddfda2616110f9d9.jpg\"]', '2024-12-10 09:05:59', 'pending'),
-(12, 'Raul Menendez', 'Property Damage', 'hnfjksdjkasdfm,asndfansdfjkdfasd', '[\"uploads\\/incident_reports\\/1733818104_c2c55a86659d9d09.jpg\"]', '2024-12-10 09:08:24', 'pending');
+(11, 'John Marston', 'Accident', 'HASJKDHKAJSFsdasdasdJKAHSfa', '[\"uploads\\/incident_reports\\/1733817959_1431350a7596aef4.jpg\",\"uploads\\/incident_reports\\/1733817959_bf4fed8deb39d340.jpg\",\"uploads\\/incident_reports\\/1733817959_ddfda2616110f9d9.jpg\"]', '2024-12-10 09:05:59', 'resolved'),
+(12, 'Raul Menendez', 'Property Damage', 'hnfjksdjkasdfm,asndfansdfjkdfasd', '[\"uploads\\/incident_reports\\/1733818104_c2c55a86659d9d09.jpg\"]', '2024-12-10 09:08:24', 'pending'),
+(13, 'Clement Harold Miguel Cabus', 'Theft', 'ninakaw po Yung mga paninda naming chichirya sa kalaw Street 497-A', '[\"uploads\\/incident_reports\\/1733966063_4437ff679464f3e2.jpg\"]', '2024-12-12 02:14:23', 'pending');
 
 -- --------------------------------------------------------
 
@@ -253,7 +240,16 @@ INSERT INTO `messages` (`id`, `sender_id`, `admin_id`, `message`, `timestamp`, `
 (81, 22, NULL, 'hello', '2024-12-07 12:40:07', 0),
 (82, 22, NULL, 'hello', '2024-12-07 12:40:07', 0),
 (83, 22, 4, 'hi', '2024-12-08 02:48:34', 1),
-(84, 22, NULL, 'hh', '2024-12-08 04:57:13', 0);
+(84, 22, NULL, 'hh', '2024-12-08 04:57:13', 0),
+(85, 22, NULL, 'hello men', '2024-12-11 12:45:14', 0),
+(86, 22, 4, 'hi', '2024-12-11 12:45:19', 1),
+(87, 22, NULL, 'hello', '2024-12-11 12:55:18', 0),
+(88, 22, 4, 'hi', '2024-12-11 12:55:24', 1),
+(89, 22, NULL, 'heusisjs', '2024-12-11 12:55:31', 0),
+(90, 22, 4, 'dhfljasdfjkashdfkjasdfla', '2024-12-11 12:55:35', 1),
+(91, 22, 4, '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"', '2024-12-11 12:56:05', 1),
+(92, 30, NULL, 'Hello po paano po mag request ng document na barangay clearance', '2024-12-12 01:11:48', 0),
+(93, 30, 4, 'Kailangan nyo lang po sundin yung instruction yada yada', '2024-12-12 01:12:30', 1);
 
 -- --------------------------------------------------------
 
@@ -309,12 +305,12 @@ CREATE TABLE `user_accounts` (
 --
 
 INSERT INTO `user_accounts` (`id`, `firstName`, `lastName`, `username`, `age`, `gender`, `adrHouseNo`, `adrZone`, `adrStreet`, `birthday`, `password`, `user_profile_picture`, `last_active`, `status`, `user_valid_id`, `user_valid_id_back`) VALUES
-(20, 'Hank', 'Schrader', 'hank', 34, 'male', '1233', '2', 'street', '2024-12-04', 'Password@', '', '2024-12-04 02:50:57', 'verified', 'uploads/valid_ids/67500c5dcd998_front_valid_id_2531858628611823380.jpg', 'uploads/valid_ids/67500c5dcdf5c_back_valid_id_back_1203212287863104420.jpg'),
-(22, 'Raul', 'Menendez', 'walt', 25, 'male', '123', '12', 'asda', '1999-12-05', '1IdXOTyMch/yApTuQoriJvEFXv01l0HTxEPvvwk6w0g=', 'uploads/user_profile_pictures/1733909661_67595c9d43914.jpg', '2024-12-11 04:15:55', 'verified', 'uploads/valid_ids/67519f205a3c4_front_valid_id_3658849476003197956.jpg', 'uploads/valid_ids/67519f205ab49_back_valid_id_back_3791201348274179855.jpg'),
-(23, 'Justine', 'Case', 'justinecase', 25, 'male', '123', '2', '321', '1999-07-16', 'UUjgCjXQOvgO2rU4BeVxDpNJbbNq+bIlgmGN44pt2/0=', '', '2024-12-07 04:21:43', 'verified', 'uploads/valid_ids/6751a0b246966_front_valid_id_2850338238797243267.jpg', 'uploads/valid_ids/6751a0b246f2b_back_valid_id_back_3692865936835824683.jpg'),
-(24, 'James', 'Charles', 'james', 25, 'male', '123', '12', '123', '1999-12-06', 'kKov9QAModWIO8WVQRy7UK8pToZNkIdumwOCF2wY6iQ=', '', NULL, 'verified', 'uploads/valid_ids/675298f5c2048_front_valid_id_1425142091750092768.jpg', 'uploads/valid_ids/675298f5c263b_back_valid_id_back_1578866002197435821.jpg'),
+(22, 'Raul', 'Menendez', 'walt', 25, 'male', '123', '12', 'asda', '1999-12-05', '1IdXOTyMch/yApTuQoriJvEFXv01l0HTxEPvvwk6w0g=', 'uploads/user_profile_pictures/1733909661_67595c9d43914.jpg', '2024-12-11 17:57:44', 'verified', 'uploads/valid_ids/67519f205a3c4_front_valid_id_3658849476003197956.jpg', 'uploads/valid_ids/67519f205ab49_back_valid_id_back_3791201348274179855.jpg'),
+(23, 'Justine', 'Case', 'justinecase', 25, 'male', '123', '2', '321', '1999-07-16', 'UUjgCjXQOvgO2rU4BeVxDpNJbbNq+bIlgmGN44pt2/0=', '', '2024-12-07 04:21:43', 'rejected', 'uploads/valid_ids/6751a0b246966_front_valid_id_2850338238797243267.jpg', 'uploads/valid_ids/6751a0b246f2b_back_valid_id_back_3692865936835824683.jpg'),
+(24, 'James', 'Charles', 'james', 25, 'male', '123', '12', '123', '1999-12-06', 'kKov9QAModWIO8WVQRy7UK8pToZNkIdumwOCF2wY6iQ=', '', NULL, 'rejected', 'uploads/valid_ids/675298f5c2048_front_valid_id_1425142091750092768.jpg', 'uploads/valid_ids/675298f5c263b_back_valid_id_back_1578866002197435821.jpg'),
 (25, 'Harry', 'Potter', 'harry', 25, 'male', '123', '123', '123', '1999-12-06', '1IdXOTyMch/yApTuQoriJvEFXv01l0HTxEPvvwk6w0g=', '', '2024-12-06 23:24:26', 'verified', 'uploads/valid_ids/67529943c7234_front_valid_id_960509828584422992.jpg', 'uploads/valid_ids/67529943c7f68_back_valid_id_back_4268192904904854930.jpg'),
-(27, 'John', 'Marston', 'john', 34, 'male', '123', '123', '123', '1990-12-07', '1IdXOTyMch/yApTuQoriJvEFXv01l0HTxEPvvwk6w0g=', 'uploads/user_profile_pictures/1733915875_675974e393a46.jpg', '2024-12-11 04:18:00', 'verified', 'uploads/valid_ids/675436666a43b_front_valid_id_55441369582974318.jpg', 'uploads/valid_ids/675436666a901_back_valid_id_back_2213364385378847230.jpg');
+(27, 'John', 'Marston', 'john', 34, 'male', '123', '123', '123', '1990-12-07', '+GWRDCz+w/V2Vx3dwBDMMT+QIYR5k9J7iEL5+fFpBKk=', 'uploads/user_profile_pictures/1733915875_675974e393a46.jpg', '2024-12-11 08:08:42', 'verified', 'uploads/valid_ids/675436666a43b_front_valid_id_55441369582974318.jpg', 'uploads/valid_ids/675436666a901_back_valid_id_back_2213364385378847230.jpg'),
+(30, 'Clement Harold Miguel', 'Cabus', 'clementcabus', 20, 'male', '497-A', 'ISU Village', 'Kalaw', '2003-12-22', '+GWRDCz+w/V2Vx3dwBDMMT+QIYR5k9J7iEL5+fFpBKk=', 'uploads/user_profile_pictures/1733965649_675a37512b1c9.jpg', '2024-12-11 18:15:51', 'verified', 'uploads/valid_ids/675a36276edb5_front_valid_id_821736209743354799.jpg', 'uploads/valid_ids/675a36276f409_back_valid_id_back_7021366835071120687.jpg');
 
 --
 -- Indexes for dumped tables
@@ -381,25 +377,25 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `barangay_announcements`
 --
 ALTER TABLE `barangay_announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `document_requests`
 --
 ALTER TABLE `document_requests`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `incident_reports`
 --
 ALTER TABLE `incident_reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `status_change_logs`
@@ -411,7 +407,7 @@ ALTER TABLE `status_change_logs`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
